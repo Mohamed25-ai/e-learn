@@ -1,0 +1,72 @@
+{
+    "Navbar": {
+        "getStarted": "Get Started"
+    },
+    "Home": {},
+    "Auth": {
+        "common": {
+            "login": "Login",
+            "register": "Register",
+            "email": "Email",
+            "password": "Password",
+            "confirmPassword": "Confirm Password",
+            "goToRegister": "Don't have an account?",
+            "goToLogin": "Already have an account?"
+        },
+        "loginPage": {
+            "title": "Welcome Back",
+            "subtitle": "Log in to your account to continue",
+            "forgotPassword": "Forgot Password?",
+            "submitButton": "Login"
+            
+        },
+        "registerPage": {
+            "title": "Create Account",
+            "subtitle": "Sign up to get started",
+            "submitButton": "Register"
+        },
+        "forgotPasswordPage": {
+            "title": "Forgot Password?",
+            "subtitle": "Enter your email address and we'll send you a verification code to reset your password",
+            "emailLabel": "Enter Your Email",
+            "emailPlaceholder": "Enter Your Email",
+            "submitButton": "Send Verification Code",
+            "rememberPassword": "Remember your password?",
+            "backToLogin": "Login"
+        },
+        "verifyCodePage": {
+            "title": "Verify Code",
+            "subtitle": "We've sent a 6-digit verification code to",
+            "codeLabel": "Enter Verification Code",
+            "digitsEntered": "{count} / 6 digits entered",
+            "submitButton": "Verify Code",
+            "didNotReceiveCode": "Didn't receive the code?",
+            "resendCode": "Resend Code"
+        },
+        "resetPasswordPage": {
+            "title": "Create New Password",
+            "subtitle": "Your new password must be different from previously used passwords",
+            "newPasswordLabel": "New Password",
+            "newPasswordPlaceholder": "Enter New Password",
+            "confirmNewPasswordLabel": "Confirm New Password",
+            "confirmNewPasswordPlaceholder": "Enter New Password",
+            "submitButton": "Reset Password"
+        },
+        "fields": {
+            "fullName": "Full Name",
+            "userName": "UserName",
+            "email": "Email",
+            "password": "Password",
+            "confirmPassword": "Confirm Password",
+            "profilePicture": "Profile Picture"
+        },
+        "placeholders": {
+            "fullName": "Enter Your Full Name",
+            "userName": "Enter Your User Name",
+            "email": "Enter Your Email",
+            "password": "Enter Your Password",
+            "confirmPassword": "Enter Your Password",
+            "profilePicture": "Choose Picture"
+        }
+    }
+}

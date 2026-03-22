@@ -1,0 +1,71 @@
+{
+    "Navbar": {
+        "getStarted": "ابدأ الآن"
+    },
+    "Home": {},
+    "Auth": {
+        "common": {
+            "login": "تسجيل الدخول",
+            "register": "إنشاء حساب",
+            "email": "البريد الإلكتروني",
+            "password": "كلمة المرور",
+            "confirmPassword": "تأكيد كلمة المرور",
+            "goToRegister": "ليس لديك حساب؟",
+            "goToLogin": "هل لديك حساب بالفعل؟"
+        },
+        "loginPage": {
+            "title": "مرحبًا بعودتك",
+            "subtitle": "سجّل الدخول إلى حسابك للمتابعة",
+            "forgotPassword": "هل نسيت كلمة المرور؟",
+            "submitButton": "تسجيل الدخول"
+        },
+        "registerPage": {
+            "title": "إنشاء حساب",
+            "subtitle": "أنشئ حسابك للبدء",
+            "submitButton": "إنشاء حساب"
+        },
+        "forgotPasswordPage": {
+            "title": "هل نسيت كلمة المرور؟",
+            "subtitle": "أدخل بريدك الإلكتروني وسنرسل لك رمز تحقق لإعادة تعيين كلمة المرور",
+            "emailLabel": "أدخل بريدك الإلكتروني",
+            "emailPlaceholder": "أدخل بريدك الإلكتروني",
+            "submitButton": "إرسال رمز التحقق",
+            "rememberPassword": "تتذكر كلمة المرور؟",
+            "backToLogin": "تسجيل الدخول"
+        },
+        "verifyCodePage": {
+            "title": "تأكيد الرمز",
+            "subtitle": "لقد أرسلنا رمز تحقق مكوّنًا من 6 أرقام إلى",
+            "codeLabel": "أدخل رمز التحقق",
+            "digitsEntered": "{count} / 6 أرقام تم إدخالها",
+            "submitButton": "تأكيد الرمز",
+            "didNotReceiveCode": "لم تستلم الرمز؟",
+            "resendCode": "إعادة إرسال الرمز"
+        },
+        "resetPasswordPage": {
+            "title": "إنشاء كلمة مرور جديدة",
+            "subtitle": "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمات المرور المستخدمة سابقًا",
+            "newPasswordLabel": "كلمة المرور الجديدة",
+            "newPasswordPlaceholder": "أدخل كلمة المرور الجديدة",
+            "confirmNewPasswordLabel": "تأكيد كلمة المرور الجديدة",
+            "confirmNewPasswordPlaceholder": "أعد إدخال كلمة المرور الجديدة",
+            "submitButton": "إعادة تعيين كلمة المرور"
+        },
+        "fields": {
+            "fullName": "الاسم الكامل",
+            "userName": "اسم المستخدم",
+            "email": "البريد الإلكتروني",
+            "password": "كلمة المرور",
+            "confirmPassword": "تأكيد كلمة المرور",
+            "profilePicture": "الصورة الشخصية"
+        },
+        "placeholders": {
+            "fullName": "أدخل اسمك الكامل",
+            "userName": "أدخل اسم المستخدم",
+            "email": "أدخل بريدك الإلكتروني",
+            "password": "أدخل كلمة المرور",
+            "confirmPassword": "أعد إدخال كلمة المرور",
+            "profilePicture": "اختر صورة"
+        }
+    }
+}
