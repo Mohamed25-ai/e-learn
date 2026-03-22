@@ -134,6 +134,7 @@ const PROTECTED = ["/cart", "/courses", "/settings","/createcourse","/categories
 const AUTH_PAGES = ["/login", "/confirmemail", "/forgot-password"];
 
 export default async function proxy(req: NextRequest) {
+    const cookieName=process.env.NODE_ENV==="production"?'__Secure-next-auth.session-token':'next-auth.session-token';
     const { pathname } = req.nextUrl;
     const segments = pathname.split("/").filter(Boolean);
     const firstSegment = segments[0];
@@ -150,7 +151,7 @@ export default async function proxy(req: NextRequest) {
     const isProtected = PROTECTED.some((p) => restPath === p ||restPath.startsWith(p));
     const isAuthPage = AUTH_PAGES.some((p) => restPath === p ||restPath.startsWith(p));
 
-    const token = await getToken({ req });
+    const token = await getToken({ req ,cookieName});
     const isLoggedIn = !!token?.userToken;
 
     // protected + logged in
