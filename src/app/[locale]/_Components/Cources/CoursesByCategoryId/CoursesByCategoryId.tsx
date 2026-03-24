@@ -1,5 +1,5 @@
 
-import { CourseByCategoryIdProps, CourseData, CoursesType } from "./coursebycategoryId.type"
+import { CourseByCategoryIdProps, CourseData, CoursesType } from "./coursebycategoryId.types"
 import { getCoursesByCategorieIdAction } from "@/actions/courses/courses.actions";
 import CourseCard from "../CourseCard/CourseCard";
 

@@ -1,4 +1,4 @@
-import { CourseData } from "../CoursesByCategoryId/coursebycategoryId.type";
+import { CourseData } from "../CoursesByCategoryId/coursebycategoryId.types";
 
 export interface CourseCardProps{
     course:CourseData,

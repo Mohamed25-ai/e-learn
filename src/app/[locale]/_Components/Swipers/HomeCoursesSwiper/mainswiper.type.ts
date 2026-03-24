@@ -1,4 +1,5 @@
-import { CourseData } from "../Cources/CoursesByCategoryId/coursebycategoryId.type";
+
+import { CourseData } from "../../Cources/CoursesByCategoryId/coursebycategoryId.types";
 
 export interface MainSwiperType{
     courseData?:CourseData[],
