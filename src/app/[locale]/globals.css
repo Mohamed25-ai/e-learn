@@ -27,7 +27,6 @@
   /* Borders */
   --border: #E6E8F0;
   --input-border: #D8DCE8;
-
   /* Text Colors */
   --foreground: #252641;
   --text-secondary: #696984;
@@ -253,5 +252,23 @@
     background-color: var(--primary-hover);
     color: white;
     border-color: var(--primary-color);
+  }
+
+  .INPUT_STYLE[type="number"]::-webkit-outer-spin-button,
+  .INPUT_STYLE[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .INPUT_STYLE[type="number"] {
+    -moz-appearance: textfield;
+  }
+  .INPUT_STYLE.input-error {
+    border-color: var(--error) !important;
+  }
+
+  .INPUT_STYLE.input-error:focus-visible {
+    border-color: var(--error) !important;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15) !important;
   }
 }

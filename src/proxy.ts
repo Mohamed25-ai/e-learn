@@ -130,7 +130,7 @@ import { routing } from "./i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
 
-const PROTECTED = ["/cart", "/courses", "/settings","/createcourse","/categories"];
+const PROTECTED = ["/cart", "/courses", "/settings","/createcourse","/categories","/create-course"];
 const AUTH_PAGES = ["/login", "/confirmemail", "/forgot-password"];
 
 export default async function proxy(req: NextRequest) {

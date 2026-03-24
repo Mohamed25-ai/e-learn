@@ -1,4 +1,4 @@
-import {  CategoriesType } from "../../../(main)/categories/categories.type";
+import {  CategoriesType } from "../../../(main)/(Categories)/categories/categories.type";
 export interface CategoriesListProps{
     categories:CategoriesType,
 };

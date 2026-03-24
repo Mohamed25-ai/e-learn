@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { listAllCategories } from "@/services/categories/categories.service"
-import { CategoriesType } from "../(main)/categories/categories.type";
+import { CategoriesType } from "../(main)/(Categories)/categories/categories.type";
 import SwiperCourses from "../_Components/Cources/SwiperCourses/SwiperCourses";
 
 export default async function page() {

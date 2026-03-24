@@ -1,5 +1,5 @@
 import { listAllCategories } from "@/services/categories/categories.service"
-import CategoriesList from "../../_Components/Categories/CategoriesList/CategoriesList";
+import CategoriesList from "../../../_Components/Categories/CategoriesList/CategoriesList";
 import { CategoriesType } from "./categories.type";
 
 export default async function page() {

@@ -1,26 +1,14 @@
-'use client'
-import { getCoursesByCategorieIdAction } from "@/actions/courses/courses.actions";
-import MainSwiper from "../../HomeCoursesSwiper/HomeCoursesSwiper";
-import { CategoriesType } from "@/app/[locale]/(main)/categories/categories.type";
-import { listAllCategoriesAction } from "@/actions/categories/categories.actions";
-import { CategoriesListProps } from "../../Categories/CategoriesList/categorieslist.type";
+// 'use client'
+
 import { HomeCoursesProps } from "./swipercourses.type";
 import { getCoursesByCategorieId } from "@/services/courses/courses.service";
-import { useEffect, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import HomeCoursesSwiper from "../../HomeCoursesSwiper/HomeCoursesSwiper";
-import CardsLoader from "../../Loaders/CardsLoader/CardsLoader";
-import { BUTTON_STYLE, MAIN_BUTTON } from "@/utils/utils";
-import { CourseData } from "../CoursesByCategoryId/coursebycategoryId.type";
+import { Link } from "@/i18n/navigation";
+import HomeCoursesSwiper from "../../Swipers/HomeCoursesSwiper/HomeCoursesSwiper";
 
 
-export default function SwiperCourses({ id, name }: HomeCoursesProps) {
-    const { data, isLoading } = useQuery({
-        queryKey: ["courses", id],
-        queryFn: () => getCoursesByCategorieId(id),
-    });
+export default async function SwiperCourses({ id, name }: HomeCoursesProps) {
+    const data=await getCoursesByCategorieId(id);
     const courseData=data?.data?.data;
-
     return (
         <section className="space-y-6">
             <header className="flex items-center justify-between px-5">
@@ -33,21 +21,21 @@ export default function SwiperCourses({ id, name }: HomeCoursesProps) {
                     </p>
                 </div>
 
-                <button
+                <Link href={'/'}
                     className="MAIN_BUTTON px-3 text-nowrap "
                 >
                     See All
-                </button>
+                </Link>
             </header>
 
             <section className="px-5">
-                {isLoading ? (
+                {/* {isLoading ? (
                     <CardsLoader length={courseData?.length??10} />
                 ) : (
+                )} */}
                     <div className="rounded-(--radius) bg-background">
                         <HomeCoursesSwiper courseData={courseData} />
                     </div>
-                )}
             </section>
         </section>
     );

@@ -12,7 +12,7 @@ export default function Navbar() {
     const path = usePathname();
     const router = useRouter();
     const userSession = useSession();
-    console.log('userSession', userSession)
+    // console.log('userSession', userSession)
     const sidebarToggle = useSidebar((state) => state.toggle);
     const [isOpen, setisOpen] = useState(false);
     function navtoggle(open: boolean) {
@@ -54,6 +54,7 @@ export default function Navbar() {
                                 {userSession.status === "unauthenticated" && <li><Link href={`/login`}>Get Started</Link></li>}
                                 {userSession.status === "authenticated" && <li><Link href={`/courses`}>courses</Link></li>}
                                 {userSession.status === "authenticated" && <li><Link href={`/categories`}>categories</Link></li>}
+                                {userSession.status === "authenticated" && <li><Link href={`/create-course`}>Create Course</Link></li>}
                                 <li><LanguageToggle /></li>
                                 {userSession.status === "authenticated" && <li className='cursor-pointer' onClick={handleLogout}>Log out</li>}
                             </ul>

@@ -3,10 +3,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { Swiper, SwiperSlide, useSwiperSlide } from 'swiper/react';
 import { MainSwiperType } from './mainswiper.type';
-import CourseCard from '../Cources/CourseCard/CourseCard';
 import { Navigation, Autoplay, EffectCoverflow } from 'swiper/modules';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import CourseCard from '../../Cources/CourseCard/CourseCard';
 
 
 export default function HomeCoursesSwiper({ courseData }: MainSwiperType) {
