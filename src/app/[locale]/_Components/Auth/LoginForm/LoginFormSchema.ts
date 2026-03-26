@@ -1,14 +1,21 @@
 import * as z from 'zod'
 
-export const loginSchema = z.object({
-    Email: z
-        .email("Invalid email address").nonempty("Email  Is Required"),
-    Password: z
-        .string().nonempty("Password  Is Required")
-        .min(8, "Password must be at least 8 characters")
-        .max(64, "Password is too long")
-        .regex(/[A-Z]/, "Password must contain at least 1 uppercase letter")
-        .regex(/[a-z]/, "Password must contain at least 1 lowercase letter")
-        .regex(/[0-9]/, "Password must contain at least 1 number"),
-});
-export type LoginFormType=z.infer<typeof loginSchema>;
+type TFunction = (key: string, values?: Record<string, any>) => string;
+
+export const loginSchema = (t: TFunction) =>
+    z.object({
+        Email: z
+            .email(t("errors.email.invalid"))
+            .nonempty(t("errors.email.required")),
+
+        Password: z
+            .string()
+            .nonempty(t("errors.password.required"))
+            .min(8, t("errors.password.minLength", { min: 8 }))
+            .max(64, "Password is too long")
+            .regex(/[A-Z]/, t("errors.password.uppercase"))
+            .regex(/[a-z]/, t("errors.password.lowercase"))
+            .regex(/[0-9]/, t("errors.password.digit")),
+    });
+
+export type LoginFormType=z.infer<ReturnType<typeof loginSchema>>;

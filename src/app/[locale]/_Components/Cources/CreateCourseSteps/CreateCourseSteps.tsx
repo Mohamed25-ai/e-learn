@@ -1,63 +1,80 @@
-import { Check } from 'lucide-react';
+import { Check } from "lucide-react";
+import { useTranslations } from "next-intl";
+
 type Step = {
-    title: string;
-    description: string;
+    titleKey: string;
+    descriptionKey: string;
 };
 
 const STEPS: Step[] = [
-    { title: "Basic Information", description: "Step 1" },
-    { title: "Course Content", description: "Step 2" },
-    { title: "Pricing", description: "Step 3" },
-    { title: "Publish", description: "Step 4" },
+    { titleKey: "basicInformation.title", descriptionKey: "basicInformation.description" },
+    { titleKey: "courseContent.title", descriptionKey: "courseContent.description" },
+    { titleKey: "pricing.title", descriptionKey: "pricing.description" },
+    { titleKey: "publish.title", descriptionKey: "publish.description" },
 ];
 
-export default function CreateCourseSteps({currentStep = 0,}: {currentStep?: number;}) {
+export default function CreateCourseSteps({ currentStep = 0 }: { currentStep?: number }) {
+    const t = useTranslations("Course.createcourse.steps");
+
     return (
-        <header className="flex items-center bg-amber-300 ps-0.5 md:ps-5  justify-between md:gap-x-4">
-            {STEPS.map((step, index) => {
-                const isActive = index === currentStep;
-                const isCompleted = index < currentStep;
-                return (
-                    <div key={index} className="flex   items-center flex-1 gap-x-1.5 md:gap-x-3">
+    <header className="w-full lg:w-3/4 mx-auto flex items-center justify-between px-2 py-4 sm:px-4 md:px-6 md:py-5">
+        {STEPS.map((step, index) => {
+            const isActive = index === currentStep;
+            const isCompleted = index < currentStep;
 
-                        {/* 🔵 Circle */}
-                        <div
-                            className={`flex h-10 w-10  items-center justify-center rounded-full text-sm font-semibold border transition-all
-                                    ${isCompleted
-                                    ? "bg-(--primary-color) text-white border-(--primary-color) "
-                                    : isActive
-                                        ? "bg-(--primary-color) text-white border-(--primary-color)"
-                                        : "bg-(--primary-light) text-(--text-secondary) border-borde "
-                                }`}
-                        >
-                            {isCompleted?<Check />:index + 1}
-                        </div>
+            return (
+                <div key={index} className="flex flex-1 items-center gap-x-1.5 sm:gap-x-2 md:gap-x-3">
 
-                        {/* 🔵 Text */}
-                        <div className="flex flex-col ">
-                            <span className={`${isCompleted&& "text-(--primary-color)!" }  text-xs text-(--text-muted)`}>
-                                {step.description}
-                            </span>
-
-                            <h2
-                                className={`text-sm  font-bold transition-colors 
-                    ${isActive
-                                        ? "text-(--primary-color)"
-                                        : "text-foreground"
-                                    }
-                `}
-                            >
-                                {step.title}
-                            </h2>
-                        </div>
-
-                        {/* 🔵 Line */}
-                        {index !== STEPS.length - 1 && (
-                            <div className={`${isCompleted&& " bg-(--primary-color)! "} hidden  md:block flex-1 h-0.5 bg-border mx-2 `} />
+                    {/* Circle */}
+                    <div
+                        className={`relative flex shrink-0 items-center justify-center rounded-full
+                            border-2 font-bold transition-all duration-300
+                            h-8 w-8 text-xs sm:h-9 sm:w-9 sm:text-sm md:h-11 md:w-11 md:text-sm
+                            ${isCompleted
+                                ? "border-(--primary-color) bg-(--primary-color) text-white shadow-[0_0_0_4px_color-mix(in_srgb,var(--primary-color)_15%,transparent)]"
+                                : isActive
+                                ? "border-(--primary-color) bg-(--primary-color) text-white shadow-[0_0_0_4px_color-mix(in_srgb,var(--primary-color)_15%,transparent)] scale-105"
+                                : "border-border bg-(--primary-light) text-(--text-secondary)"
+                            }`}
+                    >
+                        {isCompleted ? (
+                            <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4" strokeWidth={2.5} />
+                        ) : (
+                            index + 1
+                        )}
+                        {isActive && (
+                            <span className="absolute inset-0 rounded-full border-2 border-(--primary-color) opacity-40 animate-ping" />
                         )}
                     </div>
-                );
-            })}
-        </header>
-    );
+
+                    {/* Text */}
+                    <div className="hidden flex-col sm:flex">
+                        <span
+                            className={`text-[10px] font-semibold uppercase tracking-wider transition-colors duration-300 md:text-xs
+                                ${isCompleted ? "text-(--primary-color)" : "text-(--text-muted)"}`}
+                        >
+                            {t(step.descriptionKey)}
+                        </span>
+                        <h2
+                            className={`text-xs font-bold transition-colors duration-300 md:text-sm
+                                ${isActive ? "text-(--primary-color)" : "text-foreground"}`}
+                        >
+                            {t(step.titleKey)}
+                        </h2>
+                    </div>
+
+                    {/* Connector line */}
+                    {index !== STEPS.length - 1 && (
+                        <div className="relative mx-1 hidden h-0.5 flex-1 overflow-hidden rounded-full bg-border sm:block md:mx-2">
+                            <div
+                                className={`absolute inset-y-0 start-0 rounded-full bg-(--primary-color) transition-all duration-500
+                                    ${isCompleted ? "w-full" : "w-0"}`}
+                            />
+                        </div>
+                    )}
+                </div>
+            );
+        })}
+    </header>
+);
 }

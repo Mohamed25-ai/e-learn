@@ -88,7 +88,6 @@ export const nextAuthConfig: NextAuthOptions = {
 
             try {
                 const refreshedToken = await refreshTokenAction(token.userRefreshToken as string);
-
                 token.email = refreshedToken.data.email;
                 token.id = refreshedToken.data.id;
                 token.message = refreshedToken.message;

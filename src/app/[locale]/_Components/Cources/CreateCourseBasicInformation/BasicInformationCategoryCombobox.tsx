@@ -18,6 +18,7 @@ import {
     CommandList,
 } from "@/components/ui/command";
 import { CategoryComboboxProps } from "./createcoursecbasicinformation.types";
+import { useLocale } from "next-intl";
 
 type Category = {
     value: string;
@@ -41,7 +42,7 @@ export function CategoryCombobox({
     data
 }: CategoryComboboxProps) {
     const [open, setOpen] = useState(false);
-
+    const locale=useLocale();
     return (
         <div className="space-y-2">
             <Popover open={open} onOpenChange={setOpen}>
@@ -54,7 +55,7 @@ export function CategoryCombobox({
                         className="INPUT_STYLE w-full justify-between shadow-none"
                     >
                         <span className="truncate">
-                            {selectedLabel || "Select category"}
+                            {selectedLabel || `${locale=='en'?"Select category":"اختر الفئة"}`}
                         </span>
                         <ChevronsUpDown className="opacity-50" />
                     </Button>
@@ -93,7 +94,6 @@ export function CategoryCombobox({
                 </PopoverContent>
             </Popover>
 
-            {error && <p className="text-sm text-red-500">{error}</p>}
         </div>
     );
 }

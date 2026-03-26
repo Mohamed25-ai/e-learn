@@ -126,7 +126,7 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
-  --color-input: var(--input);
+  --color-input: var(--input-background);
   --color-input-background: var(--input-background);
   --color-switch-background: var(--switch-background);
   --color-ring: var(--ring);
@@ -221,6 +221,11 @@
     color: var(--text-muted);
   }
 
+  .INPUT_STYLE::selection {
+    background-color: var(--primary-color);
+    color: #ffffff;
+  }
+
   .INPUT_STYLE:focus-visible {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px var(--primary-light);
@@ -237,6 +242,11 @@
     border-color: transparent;
   }
 
+  .BUTTON_STYLE::selection {
+    background-color: #ffffff;
+    color: var(--primary-color);
+  }
+
   .BUTTON_STYLE:hover {
     background-color: var(--primary-hover);
     border-color: var(--primary-color);
@@ -246,6 +256,11 @@
     @apply rounded-xl transition-colors cursor-pointer;
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
+  }
+
+  .MAIN_BUTTON::selection {
+    background-color: var(--primary-color);
+    color: #ffffff;
   }
 
   .MAIN_BUTTON:hover {
@@ -263,6 +278,7 @@
   .INPUT_STYLE[type="number"] {
     -moz-appearance: textfield;
   }
+
   .INPUT_STYLE.input-error {
     border-color: var(--error) !important;
   }
@@ -272,3 +288,72 @@
     box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15) !important;
   }
 }
+/* globals.css */
+/* globals.css — outside any @layer */
+
+/* Shadcn Select / Combobox / Popover — global theming */
+
+[data-radix-select-item][data-highlighted],
+[cmdk-item][data-selected="true"] {
+  background-color: var(--primary-light) !important;
+  color: var(--primary-color) !important;
+}
+
+[data-radix-select-item][data-state="checked"],
+[cmdk-item][aria-selected="true"] {
+  color: var(--primary-color) !important;
+  font-weight: 600;
+}
+/* ------------------------------------- */
+/* [data-sonner-toast] {
+  font-family: inherit !important;
+  border-radius: var(--radius) !important;
+  border: 1px solid var(--border) !important;
+  background: var(--card) !important;
+  color: var(--foreground) !important;
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--foreground) 8%, transparent) !important;
+}
+
+[data-sonner-toast][data-type="success"] {
+  background: color-mix(in srgb, var(--primary-color) 8%, var(--card)) !important;
+  border-color: color-mix(in srgb, var(--primary-color) 30%, transparent) !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-icon] svg {
+  color: var(--primary-color) !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-title] {
+  color: var(--primary-color) !important;
+  font-weight: 700 !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-description] {
+  color: color-mix(in srgb, var(--primary-color) 70%, var(--foreground)) !important;
+}
+
+[data-sonner-toast][data-type="error"] {
+  background: color-mix(in srgb, var(--error) 8%, var(--card)) !important;
+  border-color: color-mix(in srgb, var(--error) 30%, transparent) !important;
+}
+
+[data-sonner-toast][data-type="error"] [data-icon] svg {
+  color: var(--error) !important;
+}
+
+[data-sonner-toast][data-type="error"] [data-title] {
+  color: var(--error) !important;
+  font-weight: 700 !important;
+}
+
+[data-sonner-toast][data-type="error"] [data-description] {
+  color: color-mix(in srgb, var(--error) 70%, var(--foreground)) !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-sonner-toast-bar] {
+  background: var(--primary-color) !important;
+}
+
+[data-sonner-toast][data-type="error"] [data-sonner-toast-bar] {
+  background: var(--error) !important;
+} */

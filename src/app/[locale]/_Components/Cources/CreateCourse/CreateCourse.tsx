@@ -17,7 +17,7 @@ export default function CreateCourse() {
     return (
         <>
         <CreateCourseSteps currentStep={createSteps} />
-        <CreateCourseBasicInformation setstep={handleSetSteps} data={data?.data} />
+        {createSteps===0&&<CreateCourseBasicInformation setstep={handleSetSteps} data={data?.data} />}
         </>
     )
 }

@@ -3,6 +3,10 @@ import { getUserToken } from "@/utils/getAuthenticatedUserToken/getAuthenticated
 
 export async function privateServerApi() {
     const token = await getUserToken();
+    console.log('token trere',token)
+    if(!token){
+        throw new Error("SESSION_EXPIRED");
+    }
     return axios.create({
         baseURL: process.env.BASE_URL,
         headers: {

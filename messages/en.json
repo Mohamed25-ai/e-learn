@@ -18,7 +18,6 @@
             "subtitle": "Log in to your account to continue",
             "forgotPassword": "Forgot Password?",
             "submitButton": "Login"
-            
         },
         "registerPage": {
             "title": "Create Account",
@@ -41,7 +40,24 @@
             "digitsEntered": "{count} / 6 digits entered",
             "submitButton": "Verify Code",
             "didNotReceiveCode": "Didn't receive the code?",
-            "resendCode": "Resend Code"
+            "resendCode": "Resend Code",
+            "resendIn": "Resend in {time}",
+            "verifying": "Verifying…"
+        },
+        "confirmEmailPage": {
+            "title": "Confirm Your Email",
+            "subtitle": "We've sent a 6-digit code to",
+            "codeLabel": "Verification Code",
+            "didNotReceiveCode": "Didn't receive it?",
+            "resendCode": "Resend",
+            "resendIn": "Resend in {time}",
+            "verifying": "Verifying…",
+            "submitButton": "Confirm Email",
+            "successMessage": "Email confirmed! Redirecting…",
+            "backToLogin": {
+                "prefix": "Remember your password?",
+                "link": "Back to Login"
+            }
         },
         "resetPasswordPage": {
             "title": "Create New Password",
@@ -49,7 +65,7 @@
             "newPasswordLabel": "New Password",
             "newPasswordPlaceholder": "Enter New Password",
             "confirmNewPasswordLabel": "Confirm New Password",
-            "confirmNewPasswordPlaceholder": "Enter New Password",
+            "confirmNewPasswordPlaceholder": "Confirm New Password",
             "submitButton": "Reset Password"
         },
         "fields": {
@@ -67,6 +83,101 @@
             "password": "Enter Your Password",
             "confirmPassword": "Enter Your Password",
             "profilePicture": "Choose Picture"
+        },
+        "errors": {
+            "email": {
+                "required": "Email is required",
+                "invalid": "Please enter a valid email address"
+            },
+            "password": {
+                "required": "Password is required",
+                "minLength": "Password must be at least {min} characters",
+                "uppercase": "Password must contain at least one uppercase letter",
+                "lowercase": "Password must contain at least one lowercase letter",
+                "digit": "Password must contain at least one number",
+                "special": "Password must contain at least one special character (!@#$%…)",
+                "strength": {
+                    "weak": "Weak",
+                    "fair": "Fair",
+                    "good": "Good",
+                    "strong": "Strong"
+                }
+            },
+            "confirmPassword": {
+                "required": "Please confirm your password",
+                "mismatch": "Passwords do not match"
+            },
+            "fullName": {
+                "required": "Full name is required",
+                "tooShort": "Full name must be at least 2 characters"
+            },
+            "userName": {
+                "required": "Username is required",
+                "tooShort": "Username must be at least 3 characters",
+                "invalid": "Username can only contain letters, numbers, and underscores"
+            }
+        }
+    },
+    "Course": {
+        "createcourse": {
+            "basicInformation": {
+                "heading": "Basic Information",
+                "subheading": "Fill in the essential details about your course"
+            },
+            "thumbnail": {
+                "label": "Course Image",
+                "cta": "Click to upload course image",
+                "hint": "Recommended size: 1280x720px (16:9 ratio)",
+                "required": "Thumbnail is required"
+            },
+            "title": {
+                "label": "Title",
+                "placeholder": "Enter course title",
+                "required": "Title is required",
+                "minLength": "Title must be at least 3 characters",
+                "maxLength": "Title must be less than 100 characters"
+            },
+            "description": {
+                "label": "Description",
+                "placeholder": "Write a short description for your course",
+                "required": "Description is required",
+                "minLength": "Description must be at least 10 characters"
+            },
+            "price": {
+                "label": "Price",
+                "currency": "EGP",
+                "required": "Price is required",
+                "min": "Price must be greater than 0"
+            },
+            "discount": {
+                "label": "Discount Percentage (Optional)"
+            },
+            "category": {
+                "label": "Category",
+                "required": "Category is required"
+            },
+            "actions": {
+                "cancel": "Cancel",
+                "submit": "Save & Continue"
+            },
+            "steps": {
+                "basicInformation": {
+                    "title": "Basic Information",
+                    "description": "Step 1"
+                },
+                "courseContent": {
+                    "title": "Course Content",
+                    "description": "Step 2"
+                },
+                "pricing": {
+                    "title": "Pricing",
+                    "description": "Step 3"
+                },
+                "publish": {
+                    "title": "Publish",
+                    "description": "Step 4"
+                }
+            }
         }
     }
 }

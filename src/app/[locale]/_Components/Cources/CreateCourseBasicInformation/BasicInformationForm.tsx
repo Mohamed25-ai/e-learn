@@ -1,4 +1,4 @@
-import { Check, ChevronsUpDown, Image as ImageIcon } from "lucide-react";
+import { ArrowRight, Check, ChevronsUpDown, Image as ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,13 +14,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { BasicInformationFormType, BasicInformationProps } from "./createcoursecbasicinformation.types";
 import { createCourseBasicInformationAction } from "@/actions/courses/courses.actions";
+import { useTranslations } from "next-intl";
+import toast from "react-hot-toast";
 
 
 export default function BasicInformationForm({ data, setstep }: BasicInformationProps) {
+    const t = useTranslations("Course");
     const [thumbnail, setThumbnail] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const imageInput = useRef<HTMLInputElement>(null);
-    const { control, handleSubmit, setValue,setError, formState } = useForm<BasicInformationFormType>({
+    const { control, handleSubmit, setValue, setError, formState } = useForm<BasicInformationFormType>({
         defaultValues: {
             Thumbnail: undefined,
             Title: '',
@@ -34,10 +37,10 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
     const { errors } = formState;
     function handleImagePreview(file: File) {
         if (file.size > 5 * 1024 * 1024) { // 5MB
-        // show error to user before even submitting
-        setError("Thumbnail", { message: "Image must be less than 5MB" });
-        return;
-    }
+            // show error to user before even submitting
+            setError("Thumbnail", { message: "Image must be less than 5MB" });
+            return;
+        }
         const imageUrl = URL.createObjectURL(file!);
         setPreview(imageUrl);
         setThumbnail(file ?? null);
@@ -57,12 +60,19 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
         formdata.append("Description", data.Description);
         formdata.append("Thumbnail", data.Thumbnail!);
         formdata.append("Price", data.Price);
-        data.DiscountPercentage?formdata.append("DiscountPercentage", data.DiscountPercentage):
-        formdata.append("DiscountPercentage", "0");
-        
+        data.DiscountPercentage ? formdata.append("DiscountPercentage", data.DiscountPercentage) :formdata.append("DiscountPercentage", "0");
         formdata.append("CategoryId", data.CategoryId);
         const res = await createCourseBasicInformationAction(formdata);
-        console.log("creation Course  ReSault", res);
+        if(res.succeeded){
+            console.log("creation Course  ReSault", res);
+            toast.success(res.message, {
+            });
+            setstep(1);
+            return
+        }
+            console.log("creation Course  ReSault", res);
+
+        toast.error(res?.Message);
     }
     return (
         <form onSubmit={handleSubmit(handleBasicInformationStep)}>
@@ -72,22 +82,20 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                         <span
                             onClick={handleClearImagePreview}
                             className="z-20 absolute right-10 top-10 flex items-center justify-center w-7 h-7 rounded-full cursor-pointer transition-colors"
-                            style={{
-                                backgroundColor: "var(--error)",
-                                color: "var(--primary-foreground)",
-                            }}
+                            style={{ backgroundColor: "var(--error)", color: "var(--primary-foreground)" }}
                         >
                             <FontAwesomeIcon icon={faXmark} size="sm" />
                         </span>
                     )}
+
                     <Label className="LABEL_STYLE flex flex-col relative items-start gap-y-3">
-                        <span> Course Image</span>
+                        <span>{t("createcourse.thumbnail.label")}</span>
                         <Label
                             htmlFor="thumbnail"
                             className={`w-full flex flex-col justify-center rounded-2xl border gap-y-1 cursor-pointer border-dashed items-center py-6 px-4 transition-colors
-                        ${errors.Thumbnail
-                                    ? "border-[--error] hover:border-[--error]"
-                                    : "hover:border-[--primary-color]"
+            ${errors.Thumbnail
+                                    ? "border-(--error) hover:border-(--error)"
+                                    : "hover:border-(--primary-color)"
                                 }`}
                         >
                             <div className={`${thumbnail && "h-40"} text-(--primary-color) w-full flex justify-center`}>
@@ -96,21 +104,16 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                                     : <span><ImageIcon size={60} /></span>
                                 }
                             </div>
-                            <p className="text-[#252641] font-semibold mb-1 text-center">
-                                {!thumbnail && "Click to upload course image"}
+                            <p className="text-foreground font-semibold mb-1 text-center">
+                                {!thumbnail && t("createcourse.thumbnail.cta")}
                             </p>
                             <p className="text-sm text-[#9AA0B4] text-center">
-                                {!thumbnail && "Recommended size: 1280x720px (16:9 ratio)"}
+                                {!thumbnail && t("createcourse.thumbnail.hint")}
                             </p>
                             <Controller
                                 name="Thumbnail"
                                 control={control}
-                                rules={{
-                                    validate: (value) => {
-                                        if (!value || value === null) return "Thumbnail is required";
-                                        return true;
-                                    }
-                                }}
+                                rules={{ validate: (value) => (!value || value === null ? t("createcourse.thumbnail.required") : true) }}
                                 render={({ field }) => {
                                     const mergeRefs = (node: HTMLInputElement | null) => {
                                         field.ref(node);
@@ -124,12 +127,8 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                                             className="hidden bg-transparent"
                                             onChange={(e) => {
                                                 const file = e.target.files?.[0] ?? null;
-                                                if (file) {
-                                                    handleImagePreview(file);
-                                                } else {
-                                                    setPreview(null);
-                                                    setThumbnail(null);
-                                                }
+                                                if (file) { handleImagePreview(file); }
+                                                else { setPreview(null); setThumbnail(null); }
                                                 field.onChange(file);
                                             }}
                                         />
@@ -151,20 +150,20 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                         {/* Title */}
                         <div className="space-y-2 md:col-span-2">
                             <Label htmlFor="title" className="LABEL_STYLE">
-                                Title
+                                {t("createcourse.title.label")}
                             </Label>
                             <Controller
                                 name="Title"
                                 control={control}
                                 rules={{
-                                    required: { value: true, message: "Title is required" },
-                                    minLength: { value: 3, message: "Title must be at least 3 characters" },
-                                    maxLength: { value: 100, message: "Title must be less than 100 characters" },
+                                    required: { value: true, message: t("createcourse.title.required") },
+                                    minLength: { value: 3, message: t("createcourse.title.minLength") },
+                                    maxLength: { value: 100, message: t("createcourse.title.maxLength") },
                                 }}
                                 render={({ field }) => (
                                     <Input
                                         id="title"
-                                        placeholder="Enter course title"
+                                        placeholder={t("createcourse.title.placeholder")}
                                         className={`INPUT_STYLE ${errors.Title ? "input-error" : ""}`}
                                         {...field}
                                     />
@@ -180,19 +179,19 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                         {/* Description */}
                         <div className="space-y-2 md:col-span-2">
                             <Label htmlFor="description" className="LABEL_STYLE">
-                                Description
+                                {t("createcourse.description.label")}
                             </Label>
                             <Controller
                                 name="Description"
                                 control={control}
                                 rules={{
-                                    required: { value: true, message: "Description is required" },
-                                    minLength: { value: 10, message: "Description must be at least 10 characters" },
+                                    required: { value: true, message: t("createcourse.description.required") },
+                                    minLength: { value: 10, message: t("createcourse.description.minLength") },
                                 }}
                                 render={({ field }) => (
                                     <Textarea
                                         id="description"
-                                        placeholder="Write a short description for your course"
+                                        placeholder={t("createcourse.description.placeholder")}
                                         className={`INPUT_STYLE min-h-32 resize-none ${errors.Description ? "input-error" : ""}`}
                                         {...field}
                                     />
@@ -208,21 +207,20 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                         {/* Price */}
                         <div className="space-y-2">
                             <Label htmlFor="price" className="LABEL_STYLE">
-                                Price
+                                {t("createcourse.price.label")}
                             </Label>
                             <Controller
                                 name="Price"
                                 control={control}
                                 rules={{
-                                    required: { value: true, message: "Price is required" },
-                                    min: { value: 0, message: "Price must be greater than 0" },
+                                    required: { value: true, message: t("createcourse.price.required") },
+                                    min: { value: 0, message: t("createcourse.price.min") },
                                 }}
                                 render={({ field }) => (
                                     <div className="relative">
-                                        <span className={`absolute left-3 top-1/2 -translate-y-1/2 text-sm
-                                    ${errors.Price ? "text-[--error]" : "text-muted-foreground"}`}
-                                        >
-                                            EGP
+                                        <span className={`absolute start-3 top-1/2 -translate-y-1/2 text-sm
+                  ${errors.Price ? "text-(--error)" : "text-muted-foreground"}`}>
+                                            {t("createcourse.price.currency")}
                                         </span>
                                         <Input
                                             id="price"
@@ -230,7 +228,7 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                                             min={0}
                                             step="0.01"
                                             placeholder="0"
-                                            className={`INPUT_STYLE pl-12 ${errors.Price ? "input-error" : ""}`}
+                                            className={`INPUT_STYLE ps-12 ${errors.Price ? "input-error" : ""}`}
                                             {...field}
                                         />
                                     </div>
@@ -246,7 +244,7 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                         {/* Discount Percentage */}
                         <div className="space-y-2">
                             <Label htmlFor="discountPercentage" className="LABEL_STYLE">
-                                Discount Percentage
+                                {t("createcourse.discount.label")}
                             </Label>
                             <Controller
                                 name="DiscountPercentage"
@@ -259,10 +257,10 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                                             min={0}
                                             max={100}
                                             placeholder="0"
-                                            className="INPUT_STYLE pr-8"
+                                            className="INPUT_STYLE pe-8"
                                             {...field}
                                         />
-                                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
+                                        <span className="absolute end-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
                                             %
                                         </span>
                                     </div>
@@ -272,17 +270,15 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
 
                         {/* Category */}
                         <div className="space-y-2 md:col-span-2">
-                            <Label className="LABEL_STYLE">Category</Label>
+                            <Label className="LABEL_STYLE">
+                                {t("createcourse.category.label")}
+                            </Label>
                             <Controller
                                 name="CategoryId"
                                 control={control}
-                                rules={{
-                                    required: { value: true, message: "Category is required" },
-                                }}
+                                rules={{ required: { value: true, message: t("createcourse.category.required") } }}
                                 render={({ field, fieldState }) => {
-                                    const selectedCategory = data?.find(
-                                        (category) => category.id === field.value
-                                    );
+                                    const selectedCategory = data?.find((category) => category.id === field.value);
                                     return (
                                         <CategoryCombobox
                                             value={field.value}
@@ -295,7 +291,7 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                                 }}
                             />
                             {errors.CategoryId && (
-                                <p className="text-sm" style={{ color: "var(--error)" }}>
+                                <p className="text-sm text-(--error)">
                                     {errors.CategoryId.message}
                                 </p>
                             )}
@@ -303,11 +299,20 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                     </div>
 
                     <div className="flex items-center justify-end gap-3 pt-2">
-                        <Button type="button" variant="outline" className="MAIN_BUTTON px-5 py-2.5">
-                            Cancel
+                        <Button
+                            type="button"
+                            variant="outline"
+                            className="MAIN_BUTTON px-5 py-2.5 hover:border-(--primary-color) hover:text-(--primary-color) transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
+                        >
+                            {t("createcourse.actions.cancel")}
                         </Button>
-                        <Button type="submit" variant="outline" className="MAIN_BUTTON my-0 py-2.5 px-6">
-                            Save & Continue
+                        <Button
+                            type="submit"
+                            variant="outline"
+                            className="MAIN_BUTTON my-0 py-2.5 px-6 text-(--primary-color) flex items-center gap-2 transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
+                        >
+                            {t("createcourse.actions.submit")}
+                            <ArrowRight className="h-4 w-4 rtl:rotate-180" />
                         </Button>
                     </div>
                 </CardContent>

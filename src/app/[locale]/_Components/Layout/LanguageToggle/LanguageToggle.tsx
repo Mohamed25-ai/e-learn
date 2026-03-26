@@ -17,23 +17,19 @@ const locales = [
 export default function LanguageToggle() {
     const locale = useLocale();
     const router = useRouter();
-    const rawPathname = usePathname(); // e.g. /ar/courses
+    const rawPathname = usePathname();
     const params = useParams();
     const [isPending, startTransition] = useTransition();
 
     function changeLanguage(newLocale: Locale) {
-        console.log(locale,newLocale)
         if (locale === newLocale) return;
 
-        // Strip the leading locale segment manually
         const segments = rawPathname.split('/').filter(Boolean);
         const firstSegment = segments[0];
         const isLocalePrefix = (routing.locales as readonly string[]).includes(firstSegment);
         const cleanPathname = isLocalePrefix
             ? '/' + segments.slice(1).join('/')
             : rawPathname;
-
-        console.log('cleanPathname:', cleanPathname);
 
         startTransition(() => {
             router.replace(
@@ -45,20 +41,28 @@ export default function LanguageToggle() {
     }
 
     return (
-        <div>
-            {locales.map((lang) => (
-                <Button
-                    key={lang.code}
-                    onClick={() => changeLanguage(lang.code)}
-                    disabled={isPending || locale === lang.code}
-                    style={{
-                        fontWeight: locale === lang.code ? 'bold' : 'normal',
-                        opacity: locale === lang.code ? 0.5 : 1,
-                    }}
-                >
-                    {lang.code}
-                </Button>
-            ))}
+        <div className="flex items-center gap-1 rounded-lg border border-border p-0.5" style={{ background: "var(--input-background)" }}>
+            {locales.map((lang) => {
+                const isActive = locale === lang.code;
+                return (
+                    <Button
+                        key={lang.code}
+                        onClick={() => changeLanguage(lang.code)}
+                        disabled={isPending || isActive}
+                        className={`relative px-2.5 py-1 rounded-md text-xs font-semibold uppercase tracking-wider transition-all duration-200 disabled:cursor-not-allowed
+                            ${isActive
+                                ? "text-white shadow-sm bg-(--primary-color)"
+                                : "text-(--text-secondary) hover:text-(--primary-color)"
+                            }`}
+                        
+                    >
+                        {isPending && isActive
+                            ? <span className="inline-block w-3 h-3 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                            : lang.code.toUpperCase()
+                        }
+                    </Button>
+                );
+            })}
         </div>
     );
 }

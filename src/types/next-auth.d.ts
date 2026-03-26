@@ -6,7 +6,7 @@ declare module "next-auth" {
         email: string,
         id: string
         userName: string
-        roles: string[]
+        roles: string[]|string
         token: string
         expiresAt: string
         refreshToken: string
@@ -35,7 +35,7 @@ declare module "next-auth/jwt" {
         message?: string;
         isSucceeded?: boolean;
         userName?: string;
-        role?: string[];
+        role?: string[]|string;
 
         userToken?: string;                 
         userTokenExpiration?: string;       

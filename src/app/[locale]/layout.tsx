@@ -26,7 +26,6 @@ export default async function RootLayout({children, params }: {
 }) {
   const messages = await getMessages();
   const{locale }=await params;
-
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} >
       <body
@@ -35,7 +34,7 @@ export default async function RootLayout({children, params }: {
         <NextIntlClientProvider messages={messages} >
           <SessionProviderWrapper>
             <main className=" bg-background mb-12">
-              <Toaster />
+              <Toaster position="top-right"  />
               {children}
             </main>
           </SessionProviderWrapper>

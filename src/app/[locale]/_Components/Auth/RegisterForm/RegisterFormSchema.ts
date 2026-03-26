@@ -4,42 +4,66 @@ import * as z from 'zod'
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+type TFunction = (key: string, values?: Record<string, any>) => string;
 
-export const registerSchema = z
-    .object({
-        FullName: z
-            .string().nonempty("Full Name Is Required")
-            .min(3, "Full name must be at least 3 characters")
-            .max(80, "Full name is too long"),
-
-        UserName: z
-            .string().nonempty("User Name Is Required")
-            .min(3, "Username must be at least 3 characters")
-            .max(30, "Username is too long")
-            .regex(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscore"),
-
+export const loginSchema = (t: TFunction) =>
+    z.object({
         Email: z
-            .email("Invalid email address").nonempty("Email  Is Required"),
+            .email(t("errors.email.invalid"))
+            .nonempty(t("errors.email.required")),
 
         Password: z
-            .string().nonempty("Password  Is Required")
-            .min(8, "Password must be at least 8 characters")
+            .string()
+            .nonempty(t("errors.password.required"))
+            .min(8, t("errors.password.minLength", { min: 8 }))
             .max(64, "Password is too long")
-            .regex(/[A-Z]/, "Password must contain at least 1 uppercase letter")
-            .regex(/[a-z]/, "Password must contain at least 1 lowercase letter")
-            .regex(/[0-9]/, "Password must contain at least 1 number"),
+            .regex(/[A-Z]/, t("errors.password.uppercase"))
+            .regex(/[a-z]/, t("errors.password.lowercase"))
+            .regex(/[0-9]/, t("errors.password.digit")),
+    });
 
-        ConfirmPassword: z.string().nonempty("Confirm Password  Is Required"),
-        ProfilePicture: z.instanceof(File).nullable().optional(),
-    })
-    .refine(
-        (zoddata) => {
-            return zoddata.Password === zoddata.ConfirmPassword;
-        },
-        {
-            message: "Passwords do not match",
-            path: ["ConfirmPassword"],
-        }
-    );
+export const registerSchema = (t: TFunction) =>
+    z
+        .object({
+            FullName: z
+                .string()
+                .nonempty(t("errors.fullName.required"))
+                .min(3, t("errors.fullName.tooShort"))
+                .max(80, "Full name is too long"),
 
-export type RegisterFormValues = z.infer<typeof registerSchema>;
+            UserName: z
+                .string()
+                .nonempty(t("errors.userName.required"))
+                .min(3, t("errors.userName.tooShort"))
+                .max(30, "Username is too long")
+                .regex(/^[a-zA-Z0-9_]+$/, t("errors.userName.invalid")),
+
+            Email: z
+                .email(t("errors.email.invalid"))
+                .nonempty(t("errors.email.required")),
+
+            Password: z
+                .string()
+                .nonempty(t("errors.password.required"))
+                .min(8, t("errors.password.minLength", { min: 8 }))
+                .max(64, "Password is too long")
+                .regex(/[A-Z]/, t("errors.password.uppercase"))
+                .regex(/[a-z]/, t("errors.password.lowercase"))
+                .regex(/[0-9]/, t("errors.password.digit")),
+
+            ConfirmPassword: z
+                .string()
+                .nonempty(t("errors.confirmPassword.required")),
+
+            ProfilePicture: z.instanceof(File).nullable().optional(),
+        })
+        .refine(
+            (zoddata) => {
+                return zoddata.Password === zoddata.ConfirmPassword;
+            },
+            {
+                message: t("errors.confirmPassword.mismatch"),
+                path: ["ConfirmPassword"],
+            }
+        );
+export type RegisterFormValues = z.infer<ReturnType<typeof registerSchema>>;
