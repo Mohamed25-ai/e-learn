@@ -208,7 +208,7 @@ export default function Navbar() {
                             <li key={href}>
                                 <Link
                                     href={href}
-                                    onClick={() =>{ setisOpen(isOpen)}}
+                                    onClick={() =>{sidebarToggle(); setisOpen(isOpen)}}
                                     className={`flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200
                                         ${path === href
                                             ? "text-(--primary-color) bg-(--primary-light)"
