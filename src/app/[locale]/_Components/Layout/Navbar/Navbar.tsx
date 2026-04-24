@@ -49,7 +49,9 @@ export default function Navbar() {
 
     const isAuth = userSession.status === "authenticated";
     const user = userSession.data?.user;
-
+    const userRole = Array.isArray(userSession?.data?.userRole)
+        ? userSession.data.userRole
+        : [userSession?.data?.userRole || ""];
     return (
         <nav className="relative mt-12 border-0">
             <div className="fixed top-0 left-0 z-40 w-full h-12 bg-(--primary-light)  border-b border-border shadow-sm">
@@ -156,7 +158,7 @@ export default function Navbar() {
                                         </p>
                                         {/* Roles */}
                                         <div className="flex flex-wrap gap-1 pt-1">
-                                            {userSession?.data?.userRole?.map((role: string) => (
+                                            {userRole?.map((role: string) => (
                                                 <span
                                                     key={role}
                                                     className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold"
@@ -208,7 +210,7 @@ export default function Navbar() {
                             <li key={href}>
                                 <Link
                                     href={href}
-                                    onClick={() =>{sidebarToggle(); setisOpen(isOpen)}}
+                                    onClick={() => { sidebarToggle(); setisOpen(isOpen) }}
                                     className={`flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200
                                         ${path === href
                                             ? "text-(--primary-color) bg-(--primary-light)"
