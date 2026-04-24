@@ -1,4 +1,4 @@
-import { ArrowRight, Check, ChevronsUpDown, Image as ImageIcon } from "lucide-react";
+import { ArrowRight, Check, ChevronsUpDown, Image as ImageIcon, Images } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,13 +16,18 @@ import { BasicInformationFormType, BasicInformationProps } from "./createcoursec
 import { createCourseBasicInformationAction } from "@/actions/courses/courses.actions";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { setCreateStep } from "@/store/redux/createcourse/createcourseslice";
+import MainLoader from "../../../Loaders/MainLoader/MainLoader";
 
 
-export default function BasicInformationForm({ data, setstep }: BasicInformationProps) {
+export default function BasicInformationForm({ data, setSectionId }: BasicInformationProps) {
+    const dispatch = useDispatch();
     const t = useTranslations("Course");
     const [thumbnail, setThumbnail] = useState<File | null>(null);
+    const [isLoading, setisLoading] = useState(false);
     const [preview, setPreview] = useState<string | null>(null);
-    const imageInput = useRef<HTMLInputElement>(null);
+    const imageInput = useRef<HTMLInputElement>(null)
     const { control, handleSubmit, setValue, setError, formState } = useForm<BasicInformationFormType>({
         defaultValues: {
             Thumbnail: undefined,
@@ -37,46 +42,52 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
     const { errors } = formState;
     function handleImagePreview(file: File) {
         if (file.size > 5 * 1024 * 1024) { // 5MB
-            // show error to user before even submitting
             setError("Thumbnail", { message: "Image must be less than 5MB" });
-            return;
+            return false;
         }
-        const imageUrl = URL.createObjectURL(file!);
+        const imageUrl = URL.createObjectURL(file);
         setPreview(imageUrl);
-        setThumbnail(file ?? null);
+        setThumbnail(file);
+        return true;
     }
     function handleClearImagePreview() {
-        setPreview(null);
-        setThumbnail(null);
-        setValue("Thumbnail", null);    //→ RHF value reset
         if (imageInput.current) {
             imageInput.current.value = "";
-            console.log(imageInput.current.value)
         }
+        setPreview(null);
+        setThumbnail(null);
+        setValue("Thumbnail", null);
+        setError("Thumbnail", { message: t("createcourse.thumbnail.required") });
     }
     async function handleBasicInformationStep(data: BasicInformationFormType) {
+        setisLoading(true);
         const formdata = new FormData();
+        if (thumbnail) { 
+            formdata.append("Thumbnail", thumbnail);
+        }
         formdata.append("Title", data.Title);
         formdata.append("Description", data.Description);
-        formdata.append("Thumbnail", data.Thumbnail!);
         formdata.append("Price", data.Price);
-        data.DiscountPercentage ? formdata.append("DiscountPercentage", data.DiscountPercentage) :formdata.append("DiscountPercentage", "0");
+        data.DiscountPercentage ? formdata.append("DiscountPercentage", data.DiscountPercentage) : formdata.append("DiscountPercentage", "0");
         formdata.append("CategoryId", data.CategoryId);
         const res = await createCourseBasicInformationAction(formdata);
-        if(res.succeeded){
+        if(res.status===200){
             console.log("creation Course  ReSault", res);
-            toast.success(res.message, {
-            });
-            setstep(1);
+            toast.success("Success go to next step");
+            dispatch(setCreateStep(1));
+            setSectionId(res?.data);
+            setisLoading(false);
             return
         }
             console.log("creation Course  ReSault", res);
-
-        toast.error(res?.Message);
+        toast.error(res?.Error?.Description);
     }
-    return (
+    return (<>
+    {isLoading&&<>
+        <MainLoader />
+    </>}
         <form onSubmit={handleSubmit(handleBasicInformationStep)}>
-            <Card className="w-full lg:w-3/4 mx-auto rounded-(--radius) border-border bg-card shadow-sm">
+            <Card className="w-full lg:w-3/4 mx-auto rounded-lg border-border bg-card shadow-sm">
                 <CardHeader className="space-y-3 relative">
                     {thumbnail && (
                         <span
@@ -93,14 +104,14 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                         <Label
                             htmlFor="thumbnail"
                             className={`w-full flex flex-col justify-center rounded-2xl border gap-y-1 cursor-pointer border-dashed items-center py-6 px-4 transition-colors
-            ${errors.Thumbnail
+                            ${errors.Thumbnail
                                     ? "border-(--error) hover:border-(--error)"
                                     : "hover:border-(--primary-color)"
                                 }`}
                         >
                             <div className={`${thumbnail && "h-40"} text-(--primary-color) w-full flex justify-center`}>
                                 {thumbnail != null
-                                    ? <div className="bg-amber-600"><img className="w-full h-full" src={preview ?? ""} alt="" /></div>
+                                    ? <div ><img className="w-full h-full" src={preview ?? ""} alt="" /></div>
                                     : <span><ImageIcon size={60} /></span>
                                 }
                             </div>
@@ -115,21 +126,27 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                                 control={control}
                                 rules={{ validate: (value) => (!value || value === null ? t("createcourse.thumbnail.required") : true) }}
                                 render={({ field }) => {
-                                    const mergeRefs = (node: HTMLInputElement | null) => {
-                                        field.ref(node);
-                                        imageInput.current = node;
-                                    };
+
                                     return (
                                         <Input
                                             id="thumbnail"
-                                            ref={mergeRefs}
                                             type="file"
                                             className="hidden bg-transparent"
+                                            ref={(element) => {
+                                                field.ref(element);
+                                                imageInput.current = element 
+                                            }}
                                             onChange={(e) => {
                                                 const file = e.target.files?.[0] ?? null;
-                                                if (file) { handleImagePreview(file); }
-                                                else { setPreview(null); setThumbnail(null); }
-                                                field.onChange(file);
+                                                if (file) {
+                                                    const isValid = handleImagePreview(file);
+                                                    if (isValid) {
+                                                        field.onChange(file);
+                                                    }
+                                                    // Don't reset the input - user can try another file
+                                                } else {
+                                                    field.onChange(null);
+                                                }
                                             }}
                                         />
                                     );
@@ -149,7 +166,7 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
 
                         {/* Title */}
                         <div className="space-y-2 md:col-span-2">
-                            <Label htmlFor="title" className="LABEL_STYLE">
+                            <Label htmlFor="title" className="LABEL_STYLE ">
                                 {t("createcourse.title.label")}
                             </Label>
                             <Controller
@@ -164,7 +181,7 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                                     <Input
                                         id="title"
                                         placeholder={t("createcourse.title.placeholder")}
-                                        className={`INPUT_STYLE ${errors.Title ? "input-error" : ""}`}
+                                        className={`$INPUT_STYLE ${errors.Title && "input-error"}`}
                                         {...field}
                                     />
                                 )}
@@ -206,7 +223,7 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
 
                         {/* Price */}
                         <div className="space-y-2">
-                            <Label htmlFor="price" className="LABEL_STYLE">
+                            <Label htmlFor="price" className={"LABEL_STYLE"}>
                                 {t("createcourse.price.label")}
                             </Label>
                             <Controller
@@ -219,7 +236,7 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                                 render={({ field }) => (
                                     <div className="relative">
                                         <span className={`absolute start-3 top-1/2 -translate-y-1/2 text-sm
-                  ${errors.Price ? "text-(--error)" : "text-muted-foreground"}`}>
+                    ${errors.Price ? "text-(--error)" : "text-muted-foreground"}`}>
                                             {t("createcourse.price.currency")}
                                         </span>
                                         <Input
@@ -302,12 +319,14 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                         <Button
                             type="button"
                             variant="outline"
+
                             className="MAIN_BUTTON px-5 py-2.5 hover:border-(--primary-color) hover:text-(--primary-color) transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
                         >
                             {t("createcourse.actions.cancel")}
                         </Button>
                         <Button
                             type="submit"
+                            disabled={isLoading|| !formState.isValid}
                             variant="outline"
                             className="MAIN_BUTTON my-0 py-2.5 px-6 text-(--primary-color) flex items-center gap-2 transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
                         >
@@ -317,6 +336,7 @@ export default function BasicInformationForm({ data, setstep }: BasicInformation
                     </div>
                 </CardContent>
             </Card>
-        </form>
+        </form> 
+        </>
     )
 }

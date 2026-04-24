@@ -128,7 +128,7 @@
                 "label": "Course Image",
                 "cta": "Click to upload course image",
                 "hint": "Recommended size: 1280x720px (16:9 ratio)",
-                "required": "Thumbnail is required"
+                "required": "Course image is required"
             },
             "title": {
                 "label": "Title",
@@ -166,7 +166,7 @@
                     "description": "Step 1"
                 },
                 "courseContent": {
-                    "title": "Course Content",
+                    "title": "Section Content",
                     "description": "Step 2"
                 },
                 "pricing": {

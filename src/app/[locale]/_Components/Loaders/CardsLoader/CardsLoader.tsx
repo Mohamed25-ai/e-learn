@@ -7,7 +7,7 @@ export default function CardsLoader({ length }: CardsLoadetProps) {
             {Array.from({ length }).map((_, i) => (
                 <div
                     key={i}
-                    className="min-w-60 rounded-(--radius) border border-border bg--(--primary-color) p-3"
+                    className="min-w-60 rounded-lg border border-border bg--(--primary-color) p-3"
                 >
                     <div className="mb-3 h-35 animate-pulse rounded-[calc(var(--radius)-4px)] bg-(--primary-light)" />
                     <div className="mb-2 h-4 w-3/4 animate-pulse rounded bg-muted" />

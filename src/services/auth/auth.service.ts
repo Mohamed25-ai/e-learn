@@ -9,7 +9,10 @@ export async function confirmEmail(email:string,code:string) {
     try {
         const res=await api.get(`/Authentication/ConfirmEmail?Email=${email}&Code=${code}`);
         console.log('dataaaa',res.data)
-        return res.data;
+        return {
+            data:res.data,
+            status:res.status
+        };
     } catch (error) {
         if(axios.isAxiosError(error)){
             const status = error.response?.status;
@@ -28,7 +31,10 @@ export async function confirmResetPassword(email: string, code: string) {
     try {
         const res = await api.get(`/Authentication/ConfirmResetPassword?Email=${email}&Code=${code}`);
         console.log('dataaaa', res.data)
-        return res.data;
+        return {
+            data:res.data,
+            status:res.status,
+        }
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const status = error.response?.status;
@@ -64,11 +70,14 @@ export async function refreshToken(reftoken:string) {
 };
 
 export async function register(formData: FormData) {
-    const api=await publicApi;
     try {
-        const res = await api.post(`/User/Create`, formData);
-        return res.data;
-    } catch (err: unknown) {
+        const res = await publicApi.post(`/User/Create`, formData);
+        console.log("ResRegister",res)
+        return {
+            data:res.data,
+            status:res.status
+        };
+    } catch (err) {
         if (axios.isAxiosError(err)) {
             const status = err.response?.status;
             const data = err.response?.data ;
@@ -86,7 +95,10 @@ export async function resetPassword(formdata:FormData) {
     const api=await publicApi;
     try {
         const res = await api.post(`/Authentication/ResetPassword`, formdata);
-        return res.data;
+        return {
+            data:res.data,
+            status:res.status
+        };
     } catch (err) {
         if (axios.isAxiosError(err)) {
             const status = err.response?.status;
@@ -104,7 +116,10 @@ export async function sendResetPassword(email:string) {
     const api=await publicApi;
     try {
         const res=await api.post(`/Authentication/SendResetPassword?Email=${email}`);
-        return res.data;
+        return {
+            data:res.data,
+            status:res.status
+        };
     } catch (error) {
         if(axios.isAxiosError(error)){
             const status = error.response?.status;

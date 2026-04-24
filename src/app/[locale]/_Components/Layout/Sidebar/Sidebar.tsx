@@ -1,5 +1,5 @@
 'use client'
-import { useSidebar } from '@/store/SidebarStore/sidebarstore'
+import { useSidebar } from '@/store/Zustand/SidebarStore/sidebarstore'
 import { Link, usePathname } from '@/i18n/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faLayerGroup, faPlus } from '@fortawesome/free-solid-svg-icons';

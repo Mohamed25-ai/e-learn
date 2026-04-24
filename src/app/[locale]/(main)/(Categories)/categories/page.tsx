@@ -4,7 +4,6 @@ import { CategoriesType } from "./categories.type";
 
 export default async function page() {
     const categories:CategoriesType = await listAllCategories();
-    console.log(categories);
     return (
         <>
             <CategoriesList categories={categories}  />

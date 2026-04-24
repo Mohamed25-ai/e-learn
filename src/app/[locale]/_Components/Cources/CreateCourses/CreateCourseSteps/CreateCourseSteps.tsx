@@ -1,3 +1,4 @@
+import { setCreateStep } from "@/store/redux/createcourse/createcourseslice";
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -16,6 +17,7 @@ const STEPS: Step[] = [
 export default function CreateCourseSteps({ currentStep = 0 }: { currentStep?: number }) {
     const t = useTranslations("Course.createcourse.steps");
 
+
     return (
     <header className="w-full lg:w-3/4 mx-auto flex items-center justify-between px-2 py-4 sm:px-4 md:px-6 md:py-5">
         {STEPS.map((step, index) => {
@@ -23,7 +25,7 @@ export default function CreateCourseSteps({ currentStep = 0 }: { currentStep?: n
             const isCompleted = index < currentStep;
 
             return (
-                <div key={index} className="flex flex-1 items-center gap-x-1.5 sm:gap-x-2 md:gap-x-3">
+                <div key={index} className="flex px-5 md:px-0 items-center gap-x-1.5 sm:gap-x-2 md:gap-x-3">
 
                     {/* Circle */}
                     <div

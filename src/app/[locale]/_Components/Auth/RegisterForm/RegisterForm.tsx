@@ -46,15 +46,14 @@ export default function RegisterForm() {
         if (data.ProfilePicture) {
             formData.append("ProfilePicture", data.ProfilePicture);
         }
-        const res = await registerAction(formData);
-        if (res.succeeded) {
-            toast.success(res.message);
+        const res =await registerAction(formData);
+        if (res?.status===200) {
+            toast.success("Success,Please Confirm Your account");
             router.replace(`/confirmemail/${encodeURIComponent(data.Email)}`)
             console.log('resres', res)
         }
         else {
-            toast.error(res.data.message)
-            console.log('reserr', res)
+            toast.error(res.data.error.description);
         }
     }
 

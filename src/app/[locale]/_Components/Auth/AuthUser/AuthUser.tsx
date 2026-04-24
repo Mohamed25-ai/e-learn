@@ -15,7 +15,7 @@ export default function AuthUser() {
     <div className="flex min-h-screen">
 
         {/* Left — Forms */}
-        <div className="w-full md:w-1/2 flex flex-col px-6 md:px-12 py-10 overflow-y-auto">
+        <div className="w-full md:w-1/2 flex gab-0 flex-col px-6 md:px-12 py-10 overflow-y-auto">
 
             {/* Header */}
             <header className="w-full md:w-3/4 mx-auto mb-8">
@@ -48,13 +48,13 @@ export default function AuthUser() {
             </div>
 
             {/* Form */}
-            <div className="w-full md:w-3/4 mx-auto flex-1">
+            <div className="w-full md:w-3/4 mx-auto  md:flex-1 ">
                 {toggleAuth === 'login'    && <LoginForm />}
                 {toggleAuth === 'register' && <RegisterForm />}
             </div>
 
             {/* Switch link */}
-            <div className="w-full md:w-3/4 mx-auto mt-6 text-center">
+            <div className="w-full md:w-3/4 mx-auto  text-center">
                 <span
                     onClick={() => settoggleAuth(toggleAuth === 'login' ? 'register' : 'login')}
                     className="text-sm cursor-pointer select-none text-(--text-secondary) hover:text-(--primary-color) transition-colors"

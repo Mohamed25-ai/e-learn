@@ -22,13 +22,13 @@ export default function ConfirmResetPassword({ email }: { email: string }) {
     async function handleResendCode() {
         if (email) {
             const res = await forgotPasswordAction(email);
-            console.log("email", res.data);
-            if (res.succeeded) {
-                toast.success(res.message);
+            console.log("email", res?.data);
+            if (res?.status === 200) {
+                toast.success("Success Please,Enter a new code");
                 setOtp(Array(LENGTH).fill(''));
                 return;
             }
-            toast.error(res.data.message);
+            toast.error(res?.data.error.description);
             return;
         }
         toast.error(t("errors.email.required"))
@@ -38,15 +38,16 @@ export default function ConfirmResetPassword({ email }: { email: string }) {
         const copyCode = [...otp];
         const payload = copyCode.toString().split(",").join('').trim();
         const res = await confirmResetPasswordAction(email, payload);
-        if (res.succeeded) {
-            toast.success(res.message);
+        if (res?.status === 200) {
+            toast.success("Code resent successifuly");
             router.replace({
                 pathname: '/forgot-password',
                 query: { email: email, reset: true },
             });
             return;
         }
-        toast.error(res.data.message)
+        toast.error(res?.data.error.description);
+
     }
 
     return (

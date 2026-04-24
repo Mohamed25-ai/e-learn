@@ -27,12 +27,7 @@ type Category = {
 
 
 
-const categories: Category[] = [
-    { value: "3fa85f64-5717-4562-b3fc-2c963f66afa6", label: "Web Development" },
-    { value: "8e12c144-9b11-4ad3-9c25-99fe1a203f01", label: "Mobile Development" },
-    { value: "f6c2c5d2-3b18-49a6-8d7e-34bb1ffab124", label: "UI / UX Design" },
-    { value: "b5e1d4aa-7d8b-48d7-98c1-a5dbcc81a221", label: "Data Science" },
-];
+
 
 export function CategoryCombobox({
     value,

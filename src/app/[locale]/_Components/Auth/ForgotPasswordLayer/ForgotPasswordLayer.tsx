@@ -28,7 +28,7 @@ export default function ForgotPasswordLayer() {
     const step = deriveStep(pathQuery, resetPath);
 
     return (
-        <div className="flex gap-10 justify-between min-h-screen">
+        <div className="flex gap-10 justify-between my-10 py-10 md:my-0 md:py-0  md:min-h-screen">
 
             {/* Left — form area */}
             <div className="w-full md:w-1/2 flex items-center md:my-10 md:py-10">

@@ -8,7 +8,11 @@ export async function addInstructorRule() {
     try {
         const res = await api.post(`/User/Add-Instructor-Role`, {
         })
-        console.log("000000000", res.data)
+        console.log("addistrule", res.data)
+        return {
+            status: res.status,
+            data: res.data
+        }
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("Rule error", error?.response?.data)
@@ -27,7 +31,10 @@ export async function getCoursesByCategorieId(categoryid: string, pageSize?: num
                 Search: search
             }
         });
-        return res.data;
+        return {
+            status: res.status,
+            data: res.data
+        }
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("Rule error", error?.response?.data)
@@ -37,14 +44,16 @@ export async function getCoursesByCategorieId(categoryid: string, pageSize?: num
 }
 export async function createCourseBasicInformation(data: FormData) {
     const api = await privateServerApi();
-
     try {
         const res = await api.post(`/Course/Create`, data, {
             headers: {
                 "Content-Type": "multipart/form-data",
             }
         });
-        return res.data;
+        return {
+            status: res.status,
+            data: res.data
+        }
     } catch (error) {
         if (error instanceof Error && error.message === "SESSION_EXPIRED") {
             return { Succeeded: false, SessionExpired: true }

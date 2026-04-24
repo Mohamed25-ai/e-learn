@@ -6,7 +6,10 @@ export async function listAllCategories() {
     try {
         const res=await api.get(`/Category/List`);
         console.log('AllCategories',res.data);
-        return res.data;
+        return {
+            data:res.data,
+            status:res.status
+        }
     } catch (error) {
         if(axios.isAxiosError(error)){
             const data=error.response?.data;

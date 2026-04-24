@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faChevronDown, faMagnifyingGlass, faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
-import { useSidebar } from '@/store/SidebarStore/sidebarstore';
+import { useSidebar } from '@/store/Zustand/SidebarStore/sidebarstore';
 import { signOut, useSession } from 'next-auth/react';
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import LanguageToggle from '../LanguageToggle/LanguageToggle';

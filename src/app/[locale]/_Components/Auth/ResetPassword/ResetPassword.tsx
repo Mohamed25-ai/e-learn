@@ -78,13 +78,12 @@ export function ResetPassword({ email }: ResetPasswordProps) {
         formdata.append("ConfirmPassword", confirm.trim());
         const res = await resetPasswordAction(formdata);
         console.log(res)
-        if (res.succeeded) {
-            toast.success(res.message);
+        if (res?.status === 200) {
+            toast.success("Password changed successifuly");
             router.replace('/login');
             return;
         }
-        toast.error(res.data.message);
-
+        toast.error(res?.data.error.description);
     };
 
     // ── Helpers ───────────────────────────────────────────────────────────────

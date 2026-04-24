@@ -3,6 +3,7 @@ import { CategorieCardsProps } from "./categorycards.type";
 import CoursesByCategoryId from "../../Cources/CoursesByCategoryId/CoursesByCategoryId";
 
 export default function CategoriesCards({ categorie }: CategorieCardsProps) {
+    console.log("Catttttttttttttt",categorie)
     return (
         <section className="w-full ">
             <header>

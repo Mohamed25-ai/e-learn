@@ -20,13 +20,13 @@ export default function ConfirmEmail({ email }: { email: string }) {
     async function handleResendCode() {
         if (email) {
             const res = await forgotPasswordAction(email.trim());
-            console.log("email", res.data);
-            if (res.succeeded) {
-                toast.success(res.message);
+            console.log("email", res?.data);
+            if (res?.status===200) {
+                toast.success("Code resed successifuly");
                 setOtp(Array(LENGTH).fill(''));
                 return;
             }
-            toast.error(res.data.message);
+            toast.error(res?.data.error.description);
             return;
         }
         toast.error(t("errors.email.required"))
@@ -37,12 +37,13 @@ export default function ConfirmEmail({ email }: { email: string }) {
         const payload = copyCode.toString().split(",").join('').trim();
         if (payload) {
             const res = await confirmEmailAction(email, payload);
-            if (res.succeeded) {
-                toast.success(res.message);
+            console.log(res?.status)
+            if (res?.status===200) {
+                toast.success("Success Please,Login");
                 router.replace('/login');
                 return;
             }
-            toast.error(res.data.message)
+            toast.error(res?.data?.error?.description)
         } else {
             toast.error(t("confirmEmailPage.codeLabel"))
         }

@@ -8,14 +8,18 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 
+import { Provider } from 'react-redux'
+import { store } from "@/store/redux/reduxstore";
 export default function SessionProviderWrapper({ children }: { children: React.ReactNode }) {
   const queryClient = new QueryClient();
   return (
 
     <SessionProvider>
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </Provider>
     </SessionProvider>
   )
 }

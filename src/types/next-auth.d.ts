@@ -3,47 +3,59 @@ import NEXTAUTH from "next-auth"
 declare module "next-auth" {
 
     interface Data {
-        email: string,
         id: string
+        email: string,
         userName: string
-        roles: string[]|string
+        roles: string[] | string
         token: string
         expiresAt: string
         refreshToken: string
         refreshTokenExpiration: string
-        error: string
+        error: string | boolean
         tokenErrorMessage: string
-
+        profilePictureUrl?: string
     }
     interface User {
-        succeeded: boolean
+
         message: string
-        data: Data
+        id: string
+        email: string,
+        userName: string
+        roles: string[] | string
+        token: string
+        expiresAt: string
+        refreshToken: string
+        refreshTokenExpiration: string
+        error: string | boolean
+        tokenErrorMessage: string
+        profilePictureUrl?: string
     }
     interface Session {
-        id: User.Data.id
-        tokenError: User.Data.error
-        tokenErrorMessage: User.Data.tokenErrorMessage
-        userRole: User.Data.roles
+        id?: string;
+        userRole?: string[]|string;
+        tokenError?: boolean;
+        tokenErrorMessage?: string | undefined;
     }
+
 
 }
 declare module "next-auth/jwt" {
     interface JWT {
-        email?: string;
         id?: string;
+        email?: string;
         message?: string;
         isSucceeded?: boolean;
         userName?: string;
-        role?: string[]|string;
+        role?: string[] | string;
 
-        userToken?: string;                 
-        userTokenExpiration?: string;       
+        userToken?: string;
+        userTokenExpiration?: string;
 
         userRefreshToken?: string;
-        userRefreshExpirationDate?: string;  
+        userRefreshExpirationDate?: string;
 
-        error?: boolean;
+        error?: boolean | boolean;
         tokenErrorMessage?: string;
+        profilePictureUrl?: string
     }
 }

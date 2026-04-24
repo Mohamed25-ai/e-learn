@@ -37,11 +37,13 @@ export default function LoginForm() {
             redirect: false,
         })
         console.log('my login res', res);
-        if (res?.ok) {
-            window.location.href = `/${locale}/`;
-            setTimeout(() => toast.success('Welcome'), 1000)
+        if (res?.error) {
+            toast.error(res.error); // ✅ message from throw new Error(...)
             return;
         }
+        setTimeout(() => toast.success('Welcome'), 1000)
+        window.location.href = `/${locale}/`;
+        return;
     }
 
 
@@ -84,8 +86,8 @@ export default function LoginForm() {
                                         type={isPasswordShown ? "text" : "password"}
                                         placeholder={t("placeholders.password")}
                                         className={`${INPUT_STYLE} w-full pe-12 ${formState.errors.Password
-                                                ? "border-(--error) focus-visible:border-(--error) focus-visible:ring-[color-mix(in_srgb,var(--error)_20%,transparent)]"
-                                                : ""
+                                            ? "border-(--error) focus-visible:border-(--error) focus-visible:ring-[color-mix(in_srgb,var(--error)_20%,transparent)]"
+                                            : ""
                                             }`}
                                         {...field}
                                     />

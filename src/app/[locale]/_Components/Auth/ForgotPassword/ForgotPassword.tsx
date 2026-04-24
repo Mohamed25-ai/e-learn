@@ -7,7 +7,7 @@ import { useRouter } from "@/i18n/navigation";
 import { BUTTON_STYLE, INPUT_STYLE, LABEL_STYLE } from "@/utils/utils";
 import axios from "axios";
 import { useTranslations } from "next-intl";
-import { HtmlHTMLAttributes, useRef } from "react";
+import { useRef } from "react";
 import toast from "react-hot-toast";
 
 
@@ -22,15 +22,15 @@ export default function ForgotPassword() {
         const emailValue = emailInput.current?.value.trim();
         if (emailValue) {
             const res = await forgotPasswordAction(emailValue);
-            if (res.succeeded) {
-                toast.success(res.message);
+            if (res?.status===200) {
+                toast.success("Success Please,Confirm your Password");
                 router.replace({
                     pathname: '/forgot-password',
                     query: { email: emailValue }
-                })
+                });
                 return;
             }
-            toast.error(res.data.message)
+            toast.error(res?.data.error.description)
             return;
         }
         toast.error(t("errors.email.required"))

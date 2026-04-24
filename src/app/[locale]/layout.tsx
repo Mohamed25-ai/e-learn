@@ -28,9 +28,7 @@ export default async function RootLayout({children, params }: {
   const{locale }=await params;
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} >
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
         <NextIntlClientProvider messages={messages} >
           <SessionProviderWrapper>
             <main className=" bg-background mb-12">

@@ -5,7 +5,7 @@ import BasicInformationForm from "./BasicInformationForm";
 import { BasicInformationProps } from "./createcoursecbasicinformation.types";
 
 
-export default function CreateCourseBasicInformation({ setstep, data }: BasicInformationProps) {
+export default function CreateCourseBasicInformation({ data,setSectionId }: BasicInformationProps) {
     const t=useTranslations("Course");
 
     return (
@@ -18,7 +18,7 @@ export default function CreateCourseBasicInformation({ setstep, data }: BasicInf
                     {t("createcourse.basicInformation.subheading")}
                 </p>
             </header>
-            <BasicInformationForm setstep={setstep} data={data} />
+            <BasicInformationForm setSectionId={setSectionId} data={data} />
 
         </section>
     );
