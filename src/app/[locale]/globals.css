@@ -18,7 +18,7 @@
   --primary-foreground: #FFFFFF;
 
   /* Backgrounds */
-  --background: #FFFFFF;
+  --background: #FAFBFC;
   --card: #FFFFFF;
   --navbar: #FFFEFE;
   --sidebar: #FFFFFF;
@@ -210,36 +210,126 @@
 
 
 @layer components {
+
+  /* ─── INPUT ─────────────────────────────────────────────── */
   .INPUT_STYLE {
-    @apply transition-all border-2 outline-none shadow-xl rounded-xl p-6 rtl:text-[13px];
+    @apply w-full transition-all duration-200 ease-in-out border-2 outline-none rounded-xl p-4 rtl:text-[13px] text-sm;
     background-color: var(--input-background);
-    border-color: var(--primary-light);
+    border-color: var(--border);
     color: var(--foreground);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.04),
+      0 2px 8px rgba(73, 187, 189, 0.04);
+    caret-color: var(--primary-color);
   }
 
   .INPUT_STYLE::placeholder {
     color: var(--text-muted);
+    transition: opacity 0.2s ease;
   }
 
-  .INPUT_STYLE::selection {
-    background-color: var(--primary-color);
-    color: #ffffff;
+  .INPUT_STYLE:hover:not(:focus-visible):not(:disabled) {
+    border-color: var(--primary-color);
+    background-color: color-mix(in srgb, var(--input-background) 95%, var(--primary-color) 5%);
   }
 
   .INPUT_STYLE:focus-visible {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px var(--primary-light);
+    background-color: var(--background);
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--primary-color) 15%, transparent),
+      0 2px 8px rgba(73, 187, 189, 0.12);
   }
 
+  .INPUT_STYLE:focus-visible::placeholder {
+    opacity: 0.5;
+  }
+
+  .INPUT_STYLE:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(0.3);
+  }
+
+  .INPUT_STYLE::selection {
+    background-color: var(--primary-color);
+    color: var(--primary-foreground);
+  }
+
+  /* Remove number spinners */
+  .INPUT_STYLE[type="number"]::-webkit-outer-spin-button,
+  .INPUT_STYLE[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .INPUT_STYLE[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  /* Error state */
+  .INPUT_STYLE.input-error {
+    border-color: var(--error) !important;
+    background-color: color-mix(in srgb, var(--input-background) 97%, var(--error) 3%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .INPUT_STYLE.input-error:focus-visible {
+    border-color: var(--error) !important;
+    box-shadow:
+      0 0 0 3px rgba(239, 68, 68, 0.12),
+      0 2px 8px rgba(239, 68, 68, 0.08) !important;
+  }
+
+
+  /* ─── LABEL ─────────────────────────────────────────────── */
   .LABEL_STYLE {
-    @apply text-xl;
+    @apply text-sm font-medium mb-1.5 block select-none;
     color: var(--foreground);
+    letter-spacing: 0.01em;
   }
 
+
+  /* ─── PRIMARY BUTTON (filled) ────────────────────────────── */
   .BUTTON_STYLE {
-    @apply my-5 py-6 px-7 rounded-xl text-xl text-white transition-colors cursor-pointer border;
+    @apply inline-flex items-center justify-center gap-2
+           py-3 px-6 rounded-xl text-base font-semibold
+           text-white transition-all duration-200 ease-in-out
+           cursor-pointer border select-none;
     background-color: var(--primary-color);
     border-color: transparent;
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.06),
+      0 4px 12px color-mix(in srgb, var(--primary-color) 30%, transparent);
+    letter-spacing: 0.02em;
+  }
+
+  .BUTTON_STYLE:hover:not(:disabled) {
+    background-color: var(--primary-hover);
+    border-color: transparent;
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.08),
+      0 6px 16px color-mix(in srgb, var(--primary-color) 35%, transparent);
+    transform: translateY(-1px);
+  }
+
+  .BUTTON_STYLE:active:not(:disabled) {
+    background-color: var(--primary-active);
+    transform: translateY(0px) scale(0.99);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.06),
+      0 2px 6px color-mix(in srgb, var(--primary-color) 20%, transparent);
+  }
+
+  .BUTTON_STYLE:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 3px;
+  }
+
+  .BUTTON_STYLE:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 
   .BUTTON_STYLE::selection {
@@ -247,45 +337,46 @@
     color: var(--primary-color);
   }
 
-  .BUTTON_STYLE:hover {
-    background-color: var(--primary-hover);
-    border-color: var(--primary-color);
+
+  /* ─── OUTLINE BUTTON ─────────────────────────────────────── */
+  .MAIN_BUTTON {
+    @apply inline-flex items-center justify-center gap-2
+           rounded-xl transition-all duration-200 ease-in-out
+           cursor-pointer select-none font-medium text-sm py-2 px-4;
+    color: var(--primary-color);
+    border: 1.5px solid var(--primary-color);
+    background-color: transparent;
+    letter-spacing: 0.01em;
   }
 
-  .MAIN_BUTTON {
-    @apply rounded-xl transition-colors cursor-pointer;
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
+  .MAIN_BUTTON:hover:not(:disabled) {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--primary-color) 25%, transparent);
+    transform: translateY(-1px);
+  }
+
+  .MAIN_BUTTON:active:not(:disabled) {
+    background-color: var(--primary-hover);
+    transform: translateY(0px) scale(0.99);
+    box-shadow: none;
+  }
+
+  .MAIN_BUTTON:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 3px;
+  }
+
+  .MAIN_BUTTON:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
   }
 
   .MAIN_BUTTON::selection {
     background-color: var(--primary-color);
     color: #ffffff;
-  }
-
-  .MAIN_BUTTON:hover {
-    background-color: var(--primary-hover);
-    color: white;
-    border-color: var(--primary-color);
-  }
-
-  .INPUT_STYLE[type="number"]::-webkit-outer-spin-button,
-  .INPUT_STYLE[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  .INPUT_STYLE[type="number"] {
-    -moz-appearance: textfield;
-  }
-
-  .INPUT_STYLE.input-error {
-    border-color: var(--error) !important;
-  }
-
-  .INPUT_STYLE.input-error:focus-visible {
-    border-color: var(--error) !important;
-    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15) !important;
   }
 }
 /* globals.css */
@@ -303,6 +394,10 @@
 [cmdk-item][aria-selected="true"] {
   color: var(--primary-color) !important;
   font-weight: 600;
+}
+::selection {
+  background-color: #b3d4fc;
+  color: #000;
 }
 /* ------------------------------------- */
 /* [data-sonner-toast] {

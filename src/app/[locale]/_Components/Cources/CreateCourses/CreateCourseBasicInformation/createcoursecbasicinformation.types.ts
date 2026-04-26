@@ -2,7 +2,6 @@ import { CategoriesDataType } from "@/app/[locale]/(main)/(Categories)/categorie
 
 export interface BasicInformationProps {
     data: CategoriesDataType[],
-    setSectionId:(id:string)=>void
 }
 export type CategoryComboboxProps = {
     value?: string;

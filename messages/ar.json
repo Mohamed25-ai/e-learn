@@ -165,17 +165,13 @@
                     "title": "المعلومات الأساسية",
                     "description": "الخطوة 1"
                 },
-                "courseContent": {
-                    "title": "محتوى الجزء",
+                "sectionContent": {
+                    "title": "محتوي الجزء",
                     "description": "الخطوة 2"
                 },
-                "pricing": {
-                    "title": "التسعير",
+                "courseContent": {
+                    "title": "محتوي الكورس",
                     "description": "الخطوة 3"
-                },
-                "publish": {
-                    "title": "النشر",
-                    "description": "الخطوة 4"
                 }
             }
         }

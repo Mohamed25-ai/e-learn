@@ -17,11 +17,11 @@ import { createCourseBasicInformationAction } from "@/actions/courses/courses.ac
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { setCreateStep } from "@/store/redux/createcourse/createcourseslice";
+import { setCourseID, setCreateStep } from "@/store/redux/createcourse/createcourseslice";
 import MainLoader from "../../../Loaders/MainLoader/MainLoader";
 
 
-export default function BasicInformationForm({ data, setSectionId }: BasicInformationProps) {
+export default function BasicInformationForm({ data }: BasicInformationProps) {
     const dispatch = useDispatch();
     const t = useTranslations("Course");
     const [thumbnail, setThumbnail] = useState<File | null>(null);
@@ -75,7 +75,7 @@ export default function BasicInformationForm({ data, setSectionId }: BasicInform
             console.log("creation Course  ReSault", res);
             toast.success("Success go to next step");
             dispatch(setCreateStep(1));
-            setSectionId(res?.data);
+            dispatch(setCourseID(res?.data));
             setisLoading(false);
             return
         }

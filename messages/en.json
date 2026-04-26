@@ -165,17 +165,13 @@
                     "title": "Basic Information",
                     "description": "Step 1"
                 },
-                "courseContent": {
+                "sectionContent": {
                     "title": "Section Content",
                     "description": "Step 2"
                 },
-                "pricing": {
-                    "title": "Pricing",
+                "courseContent": {
+                    "title": "Course Content",
                     "description": "Step 3"
-                },
-                "publish": {
-                    "title": "Publish",
-                    "description": "Step 4"
                 }
             }
         }

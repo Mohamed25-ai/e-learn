@@ -8,8 +8,8 @@ function transformDate(dateStr: string) {
 }
 
 export const nextAuthConfig: NextAuthOptions = {
-    session:{
-        strategy:"jwt"
+    session: {
+        strategy: "jwt"
     },
     providers: [
         Credentials({
@@ -28,7 +28,6 @@ export const nextAuthConfig: NextAuthOptions = {
                             "Content-Type": "multipart/form-data",
                         },
                     });
-                    
                     if (!res.data) return null;
                     return res.data;
                 } catch (error) {
@@ -66,8 +65,6 @@ export const nextAuthConfig: NextAuthOptions = {
                 console.log("First Login User", token);
                 return token;
             }
-
-
             if (!token.userRefreshExpirationDate || !token.userTokenExpiration) {
                 token.error = true;
                 token.tokenErrorMessage = "MissingTokenData";
@@ -81,7 +78,6 @@ export const nextAuthConfig: NextAuthOptions = {
             }
             const buffer = 60_000; // 1 minute early refresh
 
-
             if (timeNow < transformDate(token.userTokenExpiration) - buffer) {
                 console.log("Token still valid before 1 min", token)
                 return token; // still valid
@@ -94,14 +90,18 @@ export const nextAuthConfig: NextAuthOptions = {
                 token.id = refreshedToken.id;
                 token.message = refreshedToken.message;
                 token.userName = refreshedToken.userName;
+                // ✅ same corrected names
                 token.role = refreshedToken.roles;
                 token.profilePictureUrl = refreshedToken.profilePictureUrl;
+
                 token.userToken = refreshedToken.token;
                 token.userTokenExpiration = refreshedToken.expiresAt;
+
                 token.userRefreshToken = refreshedToken.refreshToken;
-                token.userRefreshExpirationDate = refreshedToken.refreshTokenExpiration;
+                token.userRefreshExpirationDate =
+                    refreshedToken.refreshTokenExpiration;
                 token.error = false;
-                token.tokenErrorMessage = undefined; // ✅ clear previous error
+                token.tokenErrorMessage = undefined;
                 console.log("Token refreshed successifuly")
                 return token;
             } catch (error) {
@@ -109,13 +109,12 @@ export const nextAuthConfig: NextAuthOptions = {
                 token.tokenErrorMessage = "RefreshAccessTokenError";
                 return token;
             }
-
         },
         session({ session, token }) {
             if (token) {
-                console.log("Token in Session",token)
+                console.log("Token in Session", token)
                 session.id = token.id;
-                session.tokenError = token.error ;
+                session.tokenError = token.error;
                 session.userRole = token.role;
                 session.tokenErrorMessage = token.tokenErrorMessage;
             }

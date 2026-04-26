@@ -17,18 +17,11 @@ export default function CreateCourse() {
         queryKey: ['catedories'],
         queryFn: listAllCategoriesAction,
     });
-    function handleSectionId(id: string) {
-        setsectionId(id);
-    }
-    function handlecourseId(id: string) {
-        setcourseId(id);
-    }
-    
     return (
         <>
             <CreateCourseSteps currentStep={createCousreStore?.step} />
-            {createCousreStore.step === 0 && <CreateCourseBasicInformation setSectionId={handleSectionId} data={data?.data} />}
-            {createCousreStore.step === 1 && <CreateSection sectionID={sectionId} setCourseId={handlecourseId} />}
+            {createCousreStore.step === 0 && <CreateCourseBasicInformation  data={data?.data} />}
+            {createCousreStore.step === 1 && <CreateSection  />}
         </>
     )
 }

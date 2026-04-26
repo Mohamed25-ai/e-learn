@@ -9,9 +9,8 @@ type Step = {
 
 const STEPS: Step[] = [
     { titleKey: "basicInformation.title", descriptionKey: "basicInformation.description" },
+    { titleKey: "sectionContent.title", descriptionKey: "sectionContent.description" },
     { titleKey: "courseContent.title", descriptionKey: "courseContent.description" },
-    { titleKey: "pricing.title", descriptionKey: "pricing.description" },
-    { titleKey: "publish.title", descriptionKey: "publish.description" },
 ];
 
 export default function CreateCourseSteps({ currentStep = 0 }: { currentStep?: number }) {

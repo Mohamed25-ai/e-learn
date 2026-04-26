@@ -8,8 +8,7 @@ export async function requireSession(requiredRole?: string) {
 
     if (!session) redirect("/login");
     if (session.tokenError) redirect(`/login?error=${session.tokenErrorMessage}`);
-    
-    // role check
+
     if (requiredRole && !session.userRole?.includes(requiredRole)) {
         redirect("/unauthorized"); // ✅ wrong role
     }

@@ -38,7 +38,7 @@ export default function LoginForm() {
         })
         console.log('my login res', res);
         if (res?.error) {
-            toast.error(res.error); // ✅ message from throw new Error(...)
+            toast.error(res.error); 
             return;
         }
         setTimeout(() => toast.success('Welcome'), 1000)
@@ -50,7 +50,6 @@ export default function LoginForm() {
     return (
         <Form {...loginForm}>
             <form onSubmit={handleSubmit(handleLoginForm)} className="w-full mx-auto space-y-6">
-
                 {/* Email */}
                 <FormField
                     control={control}

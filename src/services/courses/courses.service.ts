@@ -1,6 +1,7 @@
 import axios from "axios";
 import { publicApi } from "../public-api";
 import { privateServerApi } from "../private-server-api";
+import { CreateSectionType } from "./coursesapi.types";
 
 const BASE_URL = process.env.BASE_URL;
 export async function addInstructorRule() {
@@ -60,6 +61,27 @@ export async function createCourseBasicInformation(data: FormData) {
         }
         if (axios.isAxiosError(error)) {
             console.log("Rule error", error?.response?.data)
+            return error?.response?.data;
+        }
+    }
+}
+export async function addCourseSection(data: CreateSectionType) {
+    const api = await privateServerApi();
+    try {
+        const res = await api.post(`/Section/Create`, data,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+        console.log("sectionResult", res.data)
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("sectionerror", error?.response?.data)
             return error?.response?.data;
         }
     }

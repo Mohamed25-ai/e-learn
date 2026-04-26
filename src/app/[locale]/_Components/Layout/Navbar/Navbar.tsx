@@ -41,10 +41,10 @@ export default function Navbar() {
         if (userSession.status === "unauthenticated") { setisOpen(true); return; }
         if (path === '/') { setisOpen(true); return; }
     }
-
     async function handleLogout() {
         await signOut({ redirect: false });
         router.replace(`/login`);
+        router.refresh();;
     }
 
     const isAuth = userSession.status === "authenticated";
@@ -52,6 +52,8 @@ export default function Navbar() {
     const userRole = Array.isArray(userSession?.data?.userRole)
         ? userSession.data.userRole
         : [userSession?.data?.userRole || ""];
+
+
     return (
         <nav className="relative mt-12 border-0">
             <div className="fixed top-0 left-0 z-40 w-full h-12 bg-(--primary-light)  border-b border-border shadow-sm">

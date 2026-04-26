@@ -1,6 +1,9 @@
 'use server'
-import { addInstructorRule, createCourseBasicInformation, getCoursesByCategorieId } from "@/services/courses/courses.service";
 import { getUserToken } from "@/utils/getAuthenticatedUserToken/getAuthenticatedUserToken";
+import { addCourseSection, addInstructorRule, createCourseBasicInformation, getCoursesByCategorieId
+
+} from "@/services/courses/courses.service";
+import { CreateSectionType } from "@/services/courses/coursesapi.types";
 
 export async function addInstrucorRuleAction() {
     const tok = await getUserToken()??"";
@@ -11,4 +14,8 @@ export async function getCoursesByCategorieIdAction(id:string,pageSize?:number,p
 };
 export async function createCourseBasicInformationAction(data:FormData) {
     return await createCourseBasicInformation(data);
+}
+
+export async function addCourseSectionAction(data:CreateSectionType) {
+    return await addCourseSection(data);
 }
