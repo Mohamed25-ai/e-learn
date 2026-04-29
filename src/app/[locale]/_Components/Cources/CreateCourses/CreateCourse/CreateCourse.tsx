@@ -8,7 +8,9 @@ import CreateSection from "../CourseSection/CreateSection/CreateSection";
 import { useDispatch, useSelector } from "react-redux";
 import { useAppSelector } from "@/hooks/hooks";
 import { setCreateStep } from "@/store/redux/createcourse/createcourseslice";
+import CreateCourseContent from "../CreateCourseContent/CreateCourseContent";
 export default function CreateCourse() {
+
     const createCousreStore = useAppSelector((state) => state?.createCourse);
     const dispatch = useDispatch();
     const [sectionId, setsectionId] = useState("");
@@ -22,6 +24,7 @@ export default function CreateCourse() {
             <CreateCourseSteps currentStep={createCousreStore?.step} />
             {createCousreStore.step === 0 && <CreateCourseBasicInformation  data={data?.data} />}
             {createCousreStore.step === 1 && <CreateSection  />}
+            {createCousreStore.step === 2 && <CreateCourseContent  />}
         </>
     )
 }

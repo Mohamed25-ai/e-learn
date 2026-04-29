@@ -1,7 +1,8 @@
 import storage from "redux-persist/lib/storage";
-import {persistReducer,persistStore,FLUSH,REHYDRATE,PAUSE,PERSIST,PURGE,REGISTER,
+import {
+    persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER,
 } from "redux-persist";
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, createAsyncThunk } from "@reduxjs/toolkit";
 import { createCourseReducer } from "./createcourse/createcourseslice";
 
 
@@ -30,12 +31,13 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-// Get the type of our store variable
 export type AppStore = typeof store
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<AppStore['getState']>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = AppStore['dispatch']
 
+
+// Get the type of our store variable
+// Infer the `RootState` and `AppDispatch` types from the store itself
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 // export type RootState = ReturnType<typeof store.getState>;
 // export type AppDispatch = typeof store.dispatch;

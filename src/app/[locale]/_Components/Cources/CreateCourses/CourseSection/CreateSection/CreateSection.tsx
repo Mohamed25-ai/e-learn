@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { setCreateStep } from "@/store/redux/createcourse/createcourseslice";
 
 
-export default function CreateSection() {
+export default  function CreateSection() {
     return (
         <>
             <SectionCard  />

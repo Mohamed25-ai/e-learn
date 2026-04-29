@@ -16,13 +16,14 @@ import { BasicInformationFormType, BasicInformationProps } from "./createcoursec
 import { createCourseBasicInformationAction } from "@/actions/courses/courses.actions";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
 import { setCourseID, setCreateStep } from "@/store/redux/createcourse/createcourseslice";
 import MainLoader from "../../../Loaders/MainLoader/MainLoader";
+import { useAppDispatch } from "@/hooks/hooks";
+import { Link } from "@/i18n/navigation";
 
 
 export default function BasicInformationForm({ data }: BasicInformationProps) {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const t = useTranslations("Course");
     const [thumbnail, setThumbnail] = useState<File | null>(null);
     const [isLoading, setisLoading] = useState(false);
@@ -62,7 +63,7 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
     async function handleBasicInformationStep(data: BasicInformationFormType) {
         setisLoading(true);
         const formdata = new FormData();
-        if (thumbnail) { 
+        if (thumbnail) {
             formdata.append("Thumbnail", thumbnail);
         }
         formdata.append("Title", data.Title);
@@ -71,21 +72,20 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
         data.DiscountPercentage ? formdata.append("DiscountPercentage", data.DiscountPercentage) : formdata.append("DiscountPercentage", "0");
         formdata.append("CategoryId", data.CategoryId);
         const res = await createCourseBasicInformationAction(formdata);
-        if(res.status===200){
+        if (res.status === 200) {
             console.log("creation Course  ReSault", res);
-            toast.success("Success go to next step");
             dispatch(setCreateStep(1));
             dispatch(setCourseID(res?.data));
             setisLoading(false);
             return
         }
-            console.log("creation Course  ReSault", res);
+        console.log("creation Course  ReSault", res);
         toast.error(res?.Error?.Description);
     }
     return (<>
-    {isLoading&&<>
-        <MainLoader />
-    </>}
+        {isLoading && <>
+            <MainLoader />
+        </>}
         <form onSubmit={handleSubmit(handleBasicInformationStep)}>
             <Card className="w-full lg:w-3/4 mx-auto rounded-lg border-border bg-card shadow-sm">
                 <CardHeader className="space-y-3 relative">
@@ -134,7 +134,7 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                                             className="hidden bg-transparent"
                                             ref={(element) => {
                                                 field.ref(element);
-                                                imageInput.current = element 
+                                                imageInput.current = element
                                             }}
                                             onChange={(e) => {
                                                 const file = e.target.files?.[0] ?? null;
@@ -316,17 +316,15 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                     </div>
 
                     <div className="flex items-center justify-end gap-3 pt-2">
-                        <Button
-                            type="button"
-                            variant="outline"
-
-                            className="MAIN_BUTTON px-5 py-2.5 hover:border-(--primary-color) hover:text-(--primary-color) transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
+                        <Link
+                            href="/"
+                            className="MAIN_BUTTON inline-flex items-center gap-2 py-1.5 px-6 text-(--primary-color) border rounded-md transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
                         >
                             {t("createcourse.actions.cancel")}
-                        </Button>
+                        </Link>
                         <Button
                             type="submit"
-                            disabled={isLoading|| !formState.isValid}
+                            disabled={isLoading || !formState.isValid}
                             variant="outline"
                             className="MAIN_BUTTON my-0 py-2.5 px-6 text-(--primary-color) flex items-center gap-2 transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
                         >
@@ -336,7 +334,7 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                     </div>
                 </CardContent>
             </Card>
-        </form> 
-        </>
+        </form>
+    </>
     )
 }
