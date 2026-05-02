@@ -1,5 +1,6 @@
 'use client'
-import { addCourseSectionAction } from "@/actions/courses/courses.actions"
+import { addCourseSectionAction, editCourseSectionAction } from "@/actions/courses/courses.actions"
+import { ButtonLoader } from "@/app/[locale]/_Components/Loaders/ButtonLoader/ButtonLoader"
 import { Button } from "@/components/ui/button"
 import {
     Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
@@ -10,9 +11,10 @@ import { useAppDispatch, useAppSelector } from "@/hooks/hooks"
 import { CreateSectionType } from "@/services/courses/coursesapi.types"
 import { setAddedOrder, setAddedSection, setCreateStep } from "@/store/redux/createcourse/createcourseslice"
 import { BUTTON_STYLE, INPUT_STYLE } from "@/utils/utils"
-import { faArrowRight, faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons"
+import { faArrowRight, faCheck, faPenToSquare, faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useEffect, useRef, useState } from "react"
+import { Pencil } from "lucide-react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import toast from "react-hot-toast"
 
 
@@ -21,6 +23,17 @@ export function SectionCard() {
     const dispatch = useAppDispatch();
     const [sectionLength, setsectionLength] = useState(createCorseStore?.sectionCreatedSuccessifuly?.length + 1);
     const NUMOFSECTIONS = Array.from({ length: sectionLength }, (_, i) => i + 1);
+    const [isLoading, setisLoading] = useState<boolean[]>(Array(sectionLength).fill(false));
+    const sectionCreated = createCorseStore.sectionCreatedSuccessifuly.length;
+    const addedSections = useMemo(() => {
+        return Array.from(
+            { length: sectionCreated + 1 },
+            (_, i) =>
+                createCorseStore.sectionCreatedSuccessifuly.includes(i)
+        );
+    }, [createCorseStore.sectionCreatedSuccessifuly, sectionCreated]);
+    const [addedSectionState, setaddedSectionState] = useState<boolean[]>([]);
+    const [isCurrentEdit, setisCurrentEdit] = useState(Array(sectionLength).fill(false))
     const sectionData = useRef<(HTMLInputElement | null)[]>(Array(sectionLength).fill(null));
     async function handleRemoveSection(value: number, idx: number) {
         if (sectionLength > 1) {
@@ -34,6 +47,27 @@ export function SectionCard() {
     function nvaigationToLastStep() {
         dispatch(setCreateStep(2));
     }
+    function handleAddedSectionState(index: number, value: boolean) {
+        setaddedSectionState(prev => {
+            const copy = [...prev];
+            copy[index] = value;
+            return copy;
+        });
+    }
+    function setLoading(index: number, value: boolean) {
+        setisLoading(prev => {
+            const copy = [...prev];
+            copy[index] = value;
+            return copy;
+        });
+    }
+    function handleCurrentEditing(index: number, value: boolean) {
+        setisCurrentEdit((prev) => {
+            const copy = [...prev];
+            copy[index] = value;
+            return copy;
+        })
+    }
     async function handleSubmitSection(value: number, idx: number) {
         const payload = sectionData.current[idx]?.value ?? "";
         const data: CreateSectionType = {
@@ -41,10 +75,9 @@ export function SectionCard() {
             order: String(value),
             courseId: createCorseStore.createdCourseId,
         }
-
+        setLoading(idx, true)
         const res = await addCourseSectionAction(data)
         if (res?.status === 200) {
-            console.log("Create section res", res?.data)
             dispatch(setAddedOrder(value));
             if (res?.data) {
                 dispatch(
@@ -56,19 +89,50 @@ export function SectionCard() {
             }
             setsectionLength(prev => prev + 1);
             toast.success("Section Added Successifuly");
+            setLoading(idx, false);
             return;
         }
         if (!res.IsSuccess) {
             toast.error(res?.Error?.Description)
-            console.log("Create section error", res)
         }
+        setLoading(idx, false);
+    }
+    async function handleSubmitEditSection(value: number, idx: number) {
+        const payload = sectionData.current[idx]?.value ?? "";
+        const data: CreateSectionType = {
+            title: payload,
+            order: String(value),
+            id: createCorseStore.section[value],
+        }
+        console.log(data)
+        setLoading(idx, true)
+        const res = await editCourseSectionAction(data)
+        if (res?.status === 200) {
+            handleAddedSectionState(value, true);
+            handleCurrentEditing(idx, false);
+            toast.success("Section Edited Successifuly");
+            setLoading(idx, false);
+            return;
 
-        console.log(payload)
-        console.log(value, idx)
+        }
+        if (!res.IsSuccess) {
+            toast.error(res?.Error?.Description)
+            console.log("Edit section error", res)
+            handleAddedSectionState(value, true);
+            handleCurrentEditing(idx, false);
+            setLoading(idx, false);
+            return
+        }
+        setLoading(idx, false);
+        handleAddedSectionState(value, true);
+        handleCurrentEditing(idx, false);
     }
     async function handleAddSection() {
         setsectionLength((prev) => prev + 1);
     }
+    useEffect(() => {
+        setaddedSectionState(addedSections);
+    }, [addedSections]);
     return (
         <section className="px-5 md:px-0">
             <header className="md:w-3/4 mx-auto space-y-1 mb-4">
@@ -79,7 +143,6 @@ export function SectionCard() {
             </header>
             <div className="space-y-4 md:w-3/4 mx-auto ">
                 {NUMOFSECTIONS.map((value, idx) => {
-                    const isAddedBefore = createCorseStore?.sectionCreatedSuccessifuly.includes(value);
                     return <Card key={value} className="  gap-0 px-3">
                         <div className="flex w-full gap-4">
                             <div className="flex items-center gap-x-2">
@@ -93,18 +156,26 @@ export function SectionCard() {
                             <div className="flex-1">
                                 <CardHeader className="flex justify-between space-y-3 px-0">
                                     <Label htmlFor={String(idx)} className="text-foreground font-semibold ">Section Title</Label>
-                                    <FontAwesomeIcon onClick={() => !isAddedBefore && handleRemoveSection(value, idx)} className={` select-none  text-(--text-muted) ${isAddedBefore ? " cursor-no-drop " : " hover:text-red-500 cursor-pointer"}`} icon={faTrashCan} />
-
+                                    <div className="space-x-2">
+                                        {addedSectionState[value] && !isCurrentEdit[idx] && <FontAwesomeIcon className="text-foreground cursor-pointer hover:text-(--primary-hover)" onClick={() => {
+                                            handleCurrentEditing(idx, true)
+                                            handleAddedSectionState(value, false)
+                                        }} icon={faPenToSquare} />}
+                                        <FontAwesomeIcon onClick={() =>{ !isCurrentEdit[idx]&&!addedSectionState[value] && handleRemoveSection(value, idx)}} className={` select-none  text-(--text-muted) ${addedSectionState[value] || isCurrentEdit[idx] ? " cursor-no-drop " : " hover:text-red-500 cursor-pointer"}`} icon={faTrashCan} />
+                                    </div>
                                 </CardHeader>
                                 <CardContent className="px-0">
-                                    <Input id={String(idx)} disabled={isAddedBefore} key={value} ref={(element) => { sectionData.current[idx] = element }} className="INPUT_STYLE py-5" placeholder={isAddedBefore ? "This section is added before" : "Enter Section Title"} />
+                                    <Input id={String(idx)} disabled={addedSectionState[value] || isLoading[idx]} key={value} ref={(element) => { sectionData.current[idx] = element }} className="shadow-none bg-transparent focus-visible:ring-0 border-0 border-b-2 border-border  rounded-none   py-5" placeholder={addedSectionState[value] ? "This section is added before" : "Enter Section Title"} />
                                 </CardContent>
                             </div>
                         </div>
-                        <CardFooter className="flex justify-end px-0">
-                            <Button disabled={isAddedBefore} onClick={() => handleSubmitSection(value, idx)} className={BUTTON_STYLE + " cursor-pointer  py-1/4 rounded-sm "} >
-                                Add
-                            </Button>
+                        <CardFooter className={addedSectionState[value] ? "justify-end px-0 " : "justify-end  px-0"}>
+                            {isCurrentEdit[idx] && <Button disabled={addedSectionState[value] || isLoading[idx]} onClick={() => handleSubmitEditSection(value, idx)} className={BUTTON_STYLE + " cursor-pointer  py-1/4 rounded-sm "} >
+                                {isLoading[idx] ? <ButtonLoader /> : "Edit"}
+                            </Button>}
+                            {!isCurrentEdit[idx] && <Button disabled={addedSectionState[value] || isLoading[idx]} onClick={() => handleSubmitSection(value, idx)} className={BUTTON_STYLE + " cursor-pointer  py-1/4 rounded-sm "} >
+                                {isLoading[idx] ? <ButtonLoader /> : "Add"}
+                            </Button>}
                         </CardFooter>
                     </Card>
                 }
@@ -117,7 +188,7 @@ export function SectionCard() {
                         Add New Section
                     </Button>
                 </div>
-                <Button
+                {createCorseStore?.sectionCreatedSuccessifuly?.length > 0 && <Button
                     onClick={nvaigationToLastStep}
                     className="w-full flex justify-center py-5 bg-white border-dashed border-2 border-(--primary-color) cursor-pointer text-(--primary-color) hover:bg-(--primary-light)"
                 >
@@ -128,7 +199,7 @@ export function SectionCard() {
                         />
                     </span>
                     {"Go to Next Step"}
-                </Button>
+                </Button>}
             </div>
         </section>
     )

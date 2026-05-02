@@ -1,10 +1,11 @@
-"use client";
-import { PuffLoader } from "react-spinners";
+import React from 'react'
+import { PuffLoader } from 'react-spinners';
 
-export default function MainLoader() {
+export default function FormLoader() {
+
     return (
         <div
-            className="fixed inset-0 z-50 flex flex-col bg-background items-center justify-center gap-4"
+            className="w-3/4 h-100  mx-auto z-50 flex flex-col bg-background items-center justify-center gap-4"
         >
             {/* Logo mark */}
             <div

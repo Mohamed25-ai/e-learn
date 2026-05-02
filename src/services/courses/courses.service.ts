@@ -86,6 +86,27 @@ export async function addCourseSection(data: CreateSectionType) {
         }
     }
 };
+export async function editCourseSection(data: CreateSectionType) {
+    const api = await privateServerApi();
+    try {
+        const res = await api.put(`/Section/Edit`, data,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+        console.log("editSectionResult", res.data)
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("editSectionerror", error?.response?.data)
+            return error?.response?.data;
+        }
+    }
+};
 export async function getCreatedSectionByCourseId(courseId:string) {
     const api= await privateServerApi();
     try {
@@ -102,4 +123,4 @@ export async function getCreatedSectionByCourseId(courseId:string) {
         }
     }
 }
-getCreatedSectionByCourseId('3d2e86e3-5cca-4d70-ece5-08dea575aad7')
+

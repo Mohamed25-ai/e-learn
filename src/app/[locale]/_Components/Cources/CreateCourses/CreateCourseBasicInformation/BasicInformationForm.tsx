@@ -20,6 +20,7 @@ import { setCourseID, setCreateStep } from "@/store/redux/createcourse/createcou
 import MainLoader from "../../../Loaders/MainLoader/MainLoader";
 import { useAppDispatch } from "@/hooks/hooks";
 import { Link } from "@/i18n/navigation";
+import FormLoader from "../../../Loaders/FormLoader/FormLoader";
 
 
 export default function BasicInformationForm({ data }: BasicInformationProps) {
@@ -83,10 +84,10 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
         toast.error(res?.Error?.Description);
     }
     return (<>
-        {isLoading && <>
-            <MainLoader />
-        </>}
-        <form onSubmit={handleSubmit(handleBasicInformationStep)}>
+        {isLoading && <div className="w-full lg:w-3/4 mx-auto ">
+            <FormLoader />
+        </div>}
+        {!isLoading &&<form onSubmit={handleSubmit(handleBasicInformationStep)}>
             <Card className="w-full lg:w-3/4 mx-auto rounded-lg border-border bg-card shadow-sm">
                 <CardHeader className="space-y-3 relative">
                     {thumbnail && (
@@ -318,7 +319,7 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                     <div className="flex items-center justify-end gap-3 pt-2">
                         <Link
                             href="/"
-                            className="MAIN_BUTTON inline-flex items-center gap-2 py-1.5 px-6 text-(--primary-color) border rounded-md transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
+                            className="MAIN_BUTTON hover:bg-transparent inline-flex items-center gap-2 py-1.5 px-6 text-(--primary-color) border rounded-md transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
                         >
                             {t("createcourse.actions.cancel")}
                         </Link>
@@ -334,7 +335,7 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                     </div>
                 </CardContent>
             </Card>
-        </form>
+        </form>}
     </>
     )
 }
