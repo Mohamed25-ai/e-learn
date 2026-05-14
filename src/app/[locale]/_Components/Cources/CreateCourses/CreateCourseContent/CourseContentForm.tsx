@@ -28,7 +28,7 @@ export default function CourseContentForm({ fromOrder, removeCard, editCurrentCa
     const [SelectedFileType, setSelectedFileType] = useState<ContentType>("Video");
     const [isFileExist, setisFileExist] = useState(false);
     const isCardAddedBrefore = addedContent[fromOrder] === true;
-    console.log("isCardAddedBrefore", isCardAddedBrefore)
+    // console.log("isCardAddedBrefore", isCardAddedBrefore)
     const submitContentForm = useForm<SubmitContentFormType>({
         defaultValues: {
             Title: "",
@@ -43,9 +43,9 @@ export default function CourseContentForm({ fromOrder, removeCard, editCurrentCa
         setisFileExist(value)
     }
     function handleEditCardContent(value: boolean) {
-        handleSetEditCard(fromOrder, value)
+        handleSetEditCard(fromOrder,value)
     }
-    function handleCancelLastStep() {
+    function handleCancelEditStep() {
         if (editCurrentCard[fromOrder]) {
             handleSetEditCard(fromOrder, false)
             return
@@ -55,23 +55,23 @@ export default function CourseContentForm({ fromOrder, removeCard, editCurrentCa
         }
     }
     async function handleSubmitCourseContent(data: SubmitContentFormType, isEdit: boolean) {
-        const formData = new FormData();
-        formData.append("Title", data.Title);
-        formData.append("SectionId", data.SectionId);
-        formData.append("ContentType", data.ContentType);
-        formData.append("File", data.File!);
+        // const formData = new FormData();
+        // formData.append("Title", data.Title);
+        // formData.append("SectionId", data.SectionId);
+        // formData.append("ContentType", data.ContentType);
+        // formData.append("File", data.File!);
         const isAddedBefore = createCourseSote.createdContentuccessifuly.includes(fromOrder)
-        if (isAddedBefore && editCurrentCard[fromOrder]) {
+        
+        if (isAddedBefore&&isEdit&&editCurrentCard[fromOrder]) {
             console.log("Edited success")
-            handleAddedSuccessContent(fromOrder, true)
+            handleEditCardContent(false)
             return
         }
-        if (fromOrder && !isAddedBefore) {
+        if (!isAddedBefore) {
             // const res = await createCourseContentAction(formData);
             // console.log("Created res", res)
-            console.log("Added content", fromOrder)
-            handleAddedSuccessContent(fromOrder, true)
             dispath(setAddedContent(fromOrder))
+            handleAddedSuccessContent(fromOrder,true)
             return
         }
     }
@@ -277,18 +277,17 @@ export default function CourseContentForm({ fromOrder, removeCard, editCurrentCa
                     {/* Footer */}
                     <CardFooter className="flex flex-col-reverse gap-3 border-t border-border px-0 pt-6 sm:flex-row sm:items-center sm:justify-end">
                         <Button
-                            onClick={handleCancelLastStep}
-                            disabled={isCardAddedBrefore && !editCurrentCard[fromOrder]}
+                            onClick={handleCancelEditStep}
+                            disabled={isCardAddedBrefore&&!editCurrentCard[fromOrder]}
                             type="button"
                             className="MAIN_BUTTON my-0 py-2.5 px-6 text-(--primary-color) flex items-center gap-2 transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
                         >
                             Cancel
                         </Button>
                         <Button
-                            disabled={isCardAddedBrefore && !editCurrentCard[fromOrder]}
+                            disabled={isCardAddedBrefore&&!editCurrentCard[fromOrder]}
                             type="submit"
                             className="MAIN_BUTTON my-0 py-2.5 px-6 text-(--primary-color) flex items-center gap-2 transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
-
                         >
                             {editCurrentCard[fromOrder] ? "Save Changes" : "Save Lesson"}
                         </Button>

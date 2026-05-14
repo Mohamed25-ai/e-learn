@@ -11,8 +11,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 export default function CreateCourseContentForm({ contentData }: CreateCourseContentFormPropsType) {
     const createCourseSote = useAppSelector((state) => state.createCourse);
     const [contentCards, setcontentCards] = useState<number[]>(createCourseSote.createdContentuccessifuly);
-    const createdContentSorted=[...contentCards].sort((a, b) => a - b)
-    const [editCurrentCard, seteditCurrentCard] = useState(Array(createCourseSote.createdContentuccessifuly.length).fill(false))
+    const maxNumInStore=Math.max(...contentCards)
+    const createdContentSorted=[...contentCards].sort((a, b) => a - b);
     const [addedContent, setaddedContent] = useState<boolean[]>(() => {
         const arr: boolean[] = [];
         contentCards.forEach((num) => {
@@ -20,6 +20,7 @@ export default function CreateCourseContentForm({ contentData }: CreateCourseCon
         });
         return arr;
     });
+    const [editCurrentCard, seteditCurrentCard] = useState(Array(maxNumInStore).fill(false));
     function getCardsDifference() {
         const createdContentSorted=[...contentCards].sort((a, b) => a - b)
         const copy=[...createdContentSorted]
@@ -34,12 +35,7 @@ export default function CreateCourseContentForm({ contentData }: CreateCourseCon
         })
         return copy.sort((a, b) => a - b)
     }
-    function handleAddNewContent() {
-        const currentCards=getCardsDifference()
-        const maxVal=Math.max(...currentCards)||1
-        const max = currentCards.length ? Math.max(...currentCards) : 0;
-        setcontentCards(()=>[...currentCards,max+1]);
-    }
+    
     function handleSetEditCard(cardNumber:number,value:boolean){
         seteditCurrentCard((prev)=>{
             const copy=[...prev]
@@ -50,9 +46,18 @@ export default function CreateCourseContentForm({ contentData }: CreateCourseCon
     function handleAddedSuccessContent(num:number,value:boolean) {
         setaddedContent((prev) => {
             const copy=[...prev]
-            prev[num]=true
+            prev[num]=value
             return copy
         });
+    }
+    function handleAddNewContent() {
+        const currentCards=getCardsDifference()
+        const maxVal=Math.max(...currentCards)||1
+        const max = currentCards.length ? Math.max(...currentCards) : 0;
+        setcontentCards(()=>[...currentCards,max+1]);
+        handleAddedSuccessContent(maxNumInStore+1,false)
+        handleSetEditCard(maxNumInStore+1,false)
+
     }
     function handleRemoveContentCard(idx: number) {
         setcontentCards((prev) =>
