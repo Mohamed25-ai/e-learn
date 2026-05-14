@@ -63,16 +63,16 @@ export default function CourseContentForm({ fromOrder, removeCard, editCurrentCa
         const isAddedBefore = createCourseSote.createdContentuccessifuly.includes(fromOrder)
         if (isAddedBefore && editCurrentCard[fromOrder]) {
             console.log("Edited success")
+            handleAddedSuccessContent(fromOrder, true)
             return
         }
         if (fromOrder && !isAddedBefore) {
             // const res = await createCourseContentAction(formData);
             // console.log("Created res", res)
             console.log("Added content", fromOrder)
-            dispath(setAddedContent(fromOrder))
             handleAddedSuccessContent(fromOrder, true)
-        } else {
-            console.log("AddedBefore")
+            dispath(setAddedContent(fromOrder))
+            return
         }
     }
     return (
