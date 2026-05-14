@@ -24,11 +24,6 @@ import { toast } from "react-hot-toast";
 export default function CourseContentForm({ fromOrder, removeCard, editCurrentCard, handleSetEditCard,
     cardIndex, secionsData, addedContent, handleAddedSuccessContent }: CourseContentFormPropsType) {
     const createCourseSote = useAppSelector((state) => state.createCourse);
-    const safeContentCards = Array.isArray(createCourseSote.createdContentuccessifuly)
-        ? createCourseSote.createdContentuccessifuly.filter(
-            (num): num is number => Number.isFinite(num)
-        )
-        : [];
     const dispath = useAppDispatch();
     const [SelectedFileType, setSelectedFileType] = useState<ContentType>("Video");
     const [isFileExist, setisFileExist] = useState(false);
@@ -55,9 +50,9 @@ export default function CourseContentForm({ fromOrder, removeCard, editCurrentCa
             handleSetEditCard(fromOrder, false)
             return
         }
-        if (addedContent.length == 0) {
-            window.alert("You must add at least one Lesson")
-        }
+        // if (addedContent.length == 0) {
+        //     window.alert("You must add at least one Lesson")
+        // }
     }
     async function handleSubmitCourseContent(data: SubmitContentFormType, isEdit: boolean) {
         // const formData = new FormData();
@@ -65,7 +60,7 @@ export default function CourseContentForm({ fromOrder, removeCard, editCurrentCa
         // formData.append("SectionId", data.SectionId);
         // formData.append("ContentType", data.ContentType);
         // formData.append("File", data.File!);
-        const isAddedBefore = safeContentCards.includes(fromOrder)
+        const isAddedBefore = createCourseSote.createdContentuccessifuly.includes(fromOrder)
         console.log("isAddedBefore",isAddedBefore)
         if (isAddedBefore&&isEdit&&editCurrentCard[fromOrder]) {
             console.log("Edited success")

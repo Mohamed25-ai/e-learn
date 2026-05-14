@@ -21,8 +21,8 @@ export interface CourseContentFormPropsType {
     removeCard:(value:number)=>void,
     cardIndex:number,
     handleAddedSuccessContent:(num:number,value:boolean)=>void,
-    addedContent:boolean[]
-    editCurrentCard:boolean[],
+    addedContent:Record<number,boolean>
+    editCurrentCard:Record<number,boolean>,
     handleSetEditCard:(num:number,value:boolean)=>void
 }
 export type ContentType = "Video" | "Image" | "Document" | "Quiz";

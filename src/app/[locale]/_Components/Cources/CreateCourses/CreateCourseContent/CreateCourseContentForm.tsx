@@ -7,26 +7,33 @@ import { useAppSelector } from "@/hooks/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
+// const safeContentCards = Array.isArray(createCourseSote.createdContentuccessifuly)
+//     ? createCourseSote.createdContentuccessifuly.filter(
+//         (num): num is number => Number.isFinite(num)
+//     )
+//     : [];
 
 export default function CreateCourseContentForm({ contentData }: CreateCourseContentFormPropsType) {
     const createCourseSote = useAppSelector((state) => state.createCourse);
-    const safeContentCards = Array.isArray(createCourseSote.createdContentuccessifuly)
-        ? createCourseSote.createdContentuccessifuly.filter(
-            (num): num is number => Number.isFinite(num)
-        )
-        : [];
-    const [contentCards, setcontentCards] = useState<number[]>(safeContentCards);
+    const [contentCards, setcontentCards] = useState<number[]>(createCourseSote.createdContentuccessifuly);
     const maxNumInStore = contentCards.length ? Math.max(...contentCards) : 0;
     const createdContentSorted = [...contentCards].sort((a, b) => a - b);
-    const [addedContent, setaddedContent] = useState<boolean[]>(() => {
-        const arr: boolean[] = [];
-        contentCards.forEach((num) => {
-            arr[num] = true;
-        });
-        return arr;
+    // const [addedContent, setaddedContent] = useState<boolean[]>(() => {
+    //     const arr: boolean[] = [];
+    //     contentCards.forEach((num) => {
+    //         arr[num] = true;
+    //     });
+    //     return arr;
+    // });
+    const [addedContent, setaddedContent] = useState<Record<number, boolean>>(() => {
+    const map: Record<number, boolean> = {};
+    contentCards.forEach((num) => {
+        map[num] = true;
     });
-    const [editCurrentCard, seteditCurrentCard] = useState(Array(maxNumInStore).fill(false));
-    console.log("safeContentCards",safeContentCards)
+    return map;
+});
+    // const [editCurrentCard, seteditCurrentCard] = useState(Array(maxNumInStore).fill(false));
+    const [editCurrentCard, seteditCurrentCard] = useState<Record<number, boolean>>({});
     console.log("contentCards",contentCards)
     console.log("addedContent",addedContent)
     console.log("editCurrentCard",editCurrentCard)
@@ -47,22 +54,19 @@ export default function CreateCourseContentForm({ contentData }: CreateCourseCon
     }
 
     function handleSetEditCard(cardNumber: number, value: boolean) {
-        seteditCurrentCard((prev) => {
-            const copy = [...prev]
-            copy[cardNumber] = value
-            return copy;
-        })
+        seteditCurrentCard((prev) => ({
+        ...prev,
+        [cardNumber]: value,
+    }));
     }
     function handleAddedSuccessContent(num: number, value: boolean) {
-        setaddedContent((prev) => {
-            const copy = [...prev]
-            prev[num] = value
-            return copy
-        });
+        setaddedContent((prev) => ({
+        ...prev,
+        [num]: value,
+    }));
     }
     function handleAddNewContent() {
         const currentCards = getCardsDifference()
-        const maxVal = Math.max(...currentCards) || 1
         const max = currentCards.length ? Math.max(...currentCards) : 0;
         setcontentCards(() => [...currentCards, max + 1]);
         handleAddedSuccessContent(maxNumInStore + 1, false)
