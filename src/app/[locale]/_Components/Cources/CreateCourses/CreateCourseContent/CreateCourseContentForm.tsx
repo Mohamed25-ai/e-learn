@@ -34,10 +34,10 @@ export default function CreateCourseContentForm({ contentData }: CreateCourseCon
 });
     // const [editCurrentCard, seteditCurrentCard] = useState(Array(maxNumInStore).fill(false));
     const [editCurrentCard, seteditCurrentCard] = useState<Record<number, boolean>>({});
-    console.log("contentCards",contentCards)
-    console.log("addedContent",addedContent)
-    console.log("editCurrentCard",editCurrentCard)
-    console.log("maxNumInStore",maxNumInStore)
+    // console.log("contentCards",contentCards)
+    // console.log("addedContent",addedContent)
+    // console.log("editCurrentCard",editCurrentCard)
+    // console.log("maxNumInStore",maxNumInStore)
     function getCardsDifference() {
         const createdContentSorted = [...contentCards].sort((a, b) => a - b)
         const copy = [...createdContentSorted]

@@ -61,7 +61,7 @@ export default function CourseContentForm({ fromOrder, removeCard, editCurrentCa
         // formData.append("ContentType", data.ContentType);
         // formData.append("File", data.File!);
         const isAddedBefore = createCourseSote.createdContentuccessifuly.includes(fromOrder)
-        console.log("isAddedBefore",isAddedBefore)
+        // console.log("isAddedBefore",isAddedBefore)
         if (isAddedBefore&&isEdit&&editCurrentCard[fromOrder]) {
             console.log("Edited success")
             handleEditCardContent(false)
