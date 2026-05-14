@@ -24,6 +24,11 @@ import { toast } from "react-hot-toast";
 export default function CourseContentForm({ fromOrder, removeCard, editCurrentCard, handleSetEditCard,
     cardIndex, secionsData, addedContent, handleAddedSuccessContent }: CourseContentFormPropsType) {
     const createCourseSote = useAppSelector((state) => state.createCourse);
+    const safeContentCards = Array.isArray(createCourseSote.createdContentuccessifuly)
+        ? createCourseSote.createdContentuccessifuly.filter(
+            (num): num is number => Number.isFinite(num)
+        )
+        : [];
     const dispath = useAppDispatch();
     const [SelectedFileType, setSelectedFileType] = useState<ContentType>("Video");
     const [isFileExist, setisFileExist] = useState(false);
@@ -60,8 +65,8 @@ export default function CourseContentForm({ fromOrder, removeCard, editCurrentCa
         // formData.append("SectionId", data.SectionId);
         // formData.append("ContentType", data.ContentType);
         // formData.append("File", data.File!);
-        const isAddedBefore = createCourseSote.createdContentuccessifuly.includes(fromOrder)
-        
+        const isAddedBefore = safeContentCards.includes(fromOrder)
+        console.log("isAddedBefore",isAddedBefore)
         if (isAddedBefore&&isEdit&&editCurrentCard[fromOrder]) {
             console.log("Edited success")
             handleEditCardContent(false)
