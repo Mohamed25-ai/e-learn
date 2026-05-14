@@ -1,4 +1,4 @@
-import { CreateSectionProps } from "../createsection.type";
+// import { CreateSectionProps } from "./createsection.type";
 import { useAppSelector } from "@/hooks/hooks";
 import { useDispatch } from "react-redux";
 import { SectionCard } from "../SectionCard/SectionCard";

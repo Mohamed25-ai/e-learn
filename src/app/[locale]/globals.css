@@ -228,10 +228,6 @@
     transition: opacity 0.2s ease;
   }
 
-  .INPUT_STYLE:hover:not(:focus-visible):not(:disabled) {
-    border-color: var(--primary-color);
-    background-color: color-mix(in srgb, var(--input-background) 95%, var(--primary-color) 5%);
-  }
 
   .INPUT_STYLE:focus-visible {
     border-color: var(--primary-color);

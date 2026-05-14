@@ -1,9 +1,10 @@
 'use server'
 import { getUserToken } from "@/utils/getAuthenticatedUserToken/getAuthenticatedUserToken";
-import { addCourseSection, addInstructorRule, createCourseBasicInformation, editCourseSection, getCoursesByCategorieId, getCreatedSectionByCourseId
+import { addCourseSection, addInstructorRule, createCourseBasicInformation, createCourseContent, editCourseSection, getCoursesByCategorieId, getCreatedSectionByCourseId
 
 } from "@/services/courses/courses.service";
 import { CreateSectionType } from "@/services/courses/coursesapi.types";
+import { SubmitContentFormType } from "@/app/[locale]/_Components/Cources/CreateCourses/CreateCourseContent/createcoursecontent.types";
 
 export async function addInstrucorRuleAction() {
     const tok = await getUserToken()??"";
@@ -14,6 +15,9 @@ export async function getCoursesByCategorieIdAction(id:string,pageSize?:number,p
 };
 export async function createCourseBasicInformationAction(data:FormData) {
     return await createCourseBasicInformation(data);
+}
+export async function createCourseContentAction(data:FormData) {
+    return await createCourseContent(data);
 }
 
 export async function addCourseSectionAction(data:CreateSectionType) {

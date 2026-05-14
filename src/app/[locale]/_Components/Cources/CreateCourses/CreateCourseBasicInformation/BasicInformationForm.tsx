@@ -93,8 +93,8 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                     {thumbnail && (
                         <span
                             onClick={handleClearImagePreview}
-                            className="z-20 absolute right-10 top-10 flex items-center justify-center w-7 h-7 rounded-full cursor-pointer transition-colors"
-                            style={{ backgroundColor: "var(--error)", color: "var(--primary-foreground)" }}
+                            className="z-20 absolute text-foreground bg-(--error) right-10 top-10 flex items-center justify-center w-7 h-7 rounded-full cursor-pointer transition-colors"
+                            // style={{ backgroundColor: "", color: "var(--primary-foreground)" }}
                         >
                             <FontAwesomeIcon icon={faXmark} size="sm" />
                         </span>
@@ -127,7 +127,6 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                                 control={control}
                                 rules={{ validate: (value) => (!value || value === null ? t("createcourse.thumbnail.required") : true) }}
                                 render={({ field }) => {
-
                                     return (
                                         <Input
                                             id="thumbnail"
@@ -144,7 +143,6 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                                                     if (isValid) {
                                                         field.onChange(file);
                                                     }
-                                                    // Don't reset the input - user can try another file
                                                 } else {
                                                     field.onChange(null);
                                                 }
@@ -299,11 +297,11 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                                     const selectedCategory = data?.find((category) => category.id === field.value);
                                     return (
                                         <CategoryCombobox
+                                            isStepone
                                             value={field.value}
                                             onChange={field.onChange}
-                                            error={fieldState.error?.message}
                                             selectedLabel={selectedCategory?.name}
-                                            data={data}
+                                            categoriesData={data}
                                         />
                                     );
                                 }}

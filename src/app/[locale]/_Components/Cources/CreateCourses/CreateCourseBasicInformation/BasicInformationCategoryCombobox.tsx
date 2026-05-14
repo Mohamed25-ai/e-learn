@@ -20,75 +20,123 @@ import {
 import { CategoryComboboxProps } from "./createcoursecbasicinformation.types";
 import { useLocale } from "next-intl";
 
-type Category = {
-    value: string;
-    label: string;
-};
 
 
 
 
 
-export function CategoryCombobox({
-    value,
-    onChange,
-    error,
-    selectedLabel,
-    data
-}: CategoryComboboxProps) {
+export function CategoryCombobox({ value, onChange, selectedLabel,
+    categoriesData, sectionsData, isStepone, isStepThree, isContentAddedBefore }: CategoryComboboxProps) {
     const [open, setOpen] = useState(false);
-    const locale=useLocale();
+    const locale = useLocale();
     return (
         <div className="space-y-2">
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
-                    <Button
-                        type="button"
-                        variant="outline"
-                        role="combobox"
-                        aria-expanded={open}
-                        className="INPUT_STYLE w-full justify-between shadow-none"
-                    >
-                        <span className="truncate">
-                            {selectedLabel || `${locale=='en'?"Select category":"اختر الفئة"}`}
-                        </span>
-                        <ChevronsUpDown className="opacity-50" />
-                    </Button>
+                    {(isStepone || isStepThree) && (
+                        <Button
+                            type="button"
+                            variant="outline"
+                            role="combobox"
+                            disabled={isStepThree&&isContentAddedBefore}
+                            aria-expanded={open}
+                            className={cn(
+                                "INPUT_STYLE h-11 w-full justify-between bg-card shadow-none",
+                                "hover:bg-card hover:border-(--primary-color)",
+                                "focus-visible:ring-0 focus-visible:border-(--primary-color)"
+                            )}
+                        >
+                            <span className="truncate text-left">
+                                {selectedLabel ||
+                                    (locale == "en"
+                                        ? isStepone
+                                            ? "Select category"
+                                            : "Select Section"
+                                        : isStepone
+                                            ? "اختر الفئة"
+                                            : "اختر الجزء")}
+                            </span>
+
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                    )}
                 </PopoverTrigger>
 
-                <PopoverContent className="w-(--radix-popover-trigger-width) p-0">
-                    <Command>
-                        <CommandInput placeholder="Search category..." className="h-11" />
-                        <CommandList>
-                            <CommandEmpty>No category found.</CommandEmpty>
-                            <CommandGroup>
-                                {data?.map((category) => (
-                                    <CommandItem
-                                        key={category.id}
-                                        value={`${category.name} ${category.id}`}
-                                        onSelect={() => {
-                                            onChange(category.id);
-                                            setOpen(false);
-                                        }}
-                                        className="cursor-pointer"
-                                    >
-                                        <Check
+                <PopoverContent className="w-(--radix-popover-trigger-width) p-2 rounded-xl border border-border bg-card shadow-lg">
+                    <Command className="bg-card">
+                        {isStepone && (
+                            <CommandInput
+                                placeholder="Search category..."
+                                className="h-10 border border-border rounded-lg mb-2"
+                            />
+                        )}
+
+                        {isStepThree && (
+                            <CommandInput
+                                placeholder="Search section..."
+                                className="h-10 border border-border rounded-lg mb-2"
+                            />
+                        )}
+
+                        <CommandList className="max-h-60 overflow-y-auto">
+                            {isStepone && <CommandEmpty>No category found.</CommandEmpty>}
+                            {isStepThree && <CommandEmpty>No Sections found.</CommandEmpty>}
+
+                            <CommandGroup className="space-y-2 p-0">
+                                {isStepone &&
+                                    categoriesData?.map((category) => (
+                                        <CommandItem
+                                            key={category.id}
+                                            value={`${category.name} ${category.id}`}
+                                            onSelect={() => {
+                                                onChange(category.id);
+                                                setOpen(false);
+                                            }}
                                             className={cn(
-                                                "mr-2 h-4 w-4",
-                                                value === category.id ? "opacity-100" : "opacity-0"
+                                                "cursor-pointer rounded-lg px-3 py-3 transition-colors",
+                                                "data-[selected=true]:bg-(--primary-light) data-[selected=true]:text-(--primary-color)",
+                                                value === category.id && "bg-(--primary-light) text-(--primary-color)"
                                             )}
-                                        />
-                                        <div className="flex flex-col">
-                                            <span>{category.name}</span>
-                                        </div>
-                                    </CommandItem>
-                                ))}
+                                        >
+                                            <Check
+                                                className={cn(
+                                                    "mr-2 h-4 w-4",
+                                                    value === category.id ? "opacity-100" : "opacity-0"
+                                                )}
+                                            />
+                                            <span className="truncate">{category.name}</span>
+                                        </CommandItem>
+                                    ))}
+
+                                {isStepThree &&
+                                    sectionsData?.map((section) => (
+                                        <CommandItem
+                                            key={section.id}
+                                            value={`${section.title} ${section.id}`}
+                                            onSelect={() => {
+                                                onChange(section.id);
+                                                setOpen(false);
+                                            }}
+                                            className={cn(
+                                                "cursor-pointer rounded-lg px-3 py-3 transition-colors",
+                                                "data-[selected=true]:bg-(--primary-light) data-[selected=true]:text-(--primary-color)",
+                                                value === section.id && "bg-(--primary-light) text-(--primary-color)"
+                                            )}
+                                        >
+                                            <Check
+                                                className={cn(
+                                                    "mr-2 h-4 w-4",
+                                                    value === section.id ? "opacity-100" : "opacity-0"
+                                                )}
+                                            />
+                                            <span className="truncate">{section.title}</span>
+                                        </CommandItem>
+                                    ))}
                             </CommandGroup>
                         </CommandList>
                     </Command>
                 </PopoverContent>
             </Popover>
-
         </div>
     );
 }

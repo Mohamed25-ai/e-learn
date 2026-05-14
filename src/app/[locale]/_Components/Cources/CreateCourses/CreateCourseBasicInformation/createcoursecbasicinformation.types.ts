@@ -1,4 +1,5 @@
 import { CategoriesDataType } from "@/app/[locale]/(main)/(Categories)/categories/categories.type";
+import { SectionByCourseData } from "@/store/redux/createcourse/createcourseslice.types";
 
 export interface BasicInformationProps {
     data: CategoriesDataType[],
@@ -8,7 +9,11 @@ export type CategoryComboboxProps = {
     onChange: (value: string) => void;
     error?: string;
     selectedLabel?: string;
-    data: CategoriesDataType[]
+    categoriesData?: CategoriesDataType[],
+    sectionsData?:SectionByCourseData[],
+    isStepone?:boolean,
+    isStepThree?:boolean,
+    isContentAddedBefore?:boolean
 };
 export interface BasicInformationFormType {
     Thumbnail: File|null,

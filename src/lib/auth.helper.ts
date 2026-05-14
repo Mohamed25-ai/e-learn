@@ -10,7 +10,7 @@ export async function requireSession(requiredRole?: string) {
     if (session.tokenError) redirect(`/login?error=${session.tokenErrorMessage}`);
 
     if (requiredRole && !session.userRole?.includes(requiredRole)) {
-        redirect("/unauthorized"); // ✅ wrong role
+        redirect("/unauthorized");
     }
 
     return session;

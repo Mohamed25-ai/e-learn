@@ -11,38 +11,35 @@ import { useAppDispatch, useAppSelector } from "@/hooks/hooks"
 import { CreateSectionType } from "@/services/courses/coursesapi.types"
 import { setAddedOrder, setAddedSection, setCreateStep } from "@/store/redux/createcourse/createcourseslice"
 import { BUTTON_STYLE, INPUT_STYLE } from "@/utils/utils"
-import { faArrowRight, faCheck, faPenToSquare, faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons"
+import { faArrowRight, faCheck, faPenToSquare, faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Pencil } from "lucide-react"
 import { useEffect, useMemo, useRef, useState } from "react"
 import toast from "react-hot-toast"
+import fa from "zod/v4/locales/fa.cjs";
 
 
 export function SectionCard() {
     const createCorseStore = useAppSelector((state) => state.createCourse);
     const dispatch = useAppDispatch();
-    const [sectionLength, setsectionLength] = useState(createCorseStore?.sectionCreatedSuccessifuly?.length + 1);
-    const NUMOFSECTIONS = Array.from({ length: sectionLength }, (_, i) => i + 1);
-    const [isLoading, setisLoading] = useState<boolean[]>(Array(sectionLength).fill(false));
-    const sectionCreated = createCorseStore.sectionCreatedSuccessifuly.length;
-    const addedSections = useMemo(() => {
-        return Array.from(
-            { length: sectionCreated + 1 },
-            (_, i) =>
-                createCorseStore.sectionCreatedSuccessifuly.includes(i)
-        );
-    }, [createCorseStore.sectionCreatedSuccessifuly, sectionCreated]);
-    const [addedSectionState, setaddedSectionState] = useState<boolean[]>([]);
-    const [isCurrentEdit, setisCurrentEdit] = useState(Array(sectionLength).fill(false))
-    const sectionData = useRef<(HTMLInputElement | null)[]>(Array(sectionLength).fill(null));
+    const [Sections, setSections] = useState(createCorseStore?.sectionCreatedSuccessifuly);
+    const sortedSections=[...Sections].sort((a, b) => a - b);
+    const [isLoading, setisLoading] = useState<boolean[]>(Array(Sections.length + 1).fill(false));
+    const [addedSectionState, setaddedSectionState] = useState<boolean[]>(() => {
+        const arr: boolean[] = [];
+        Sections.forEach((num) => {
+            arr[num] = true;
+        });
+        return arr;
+    }
+    );
+    const [isCurrentEdit, setisCurrentEdit] = useState(Array(Sections.length + 1).fill(false))
+    const sectionData = useRef<(HTMLInputElement | null)[]>(Array(Sections.length + 1).fill(null));
     async function handleRemoveSection(value: number, idx: number) {
-        if (sectionLength > 1) {
-            const copy = [...NUMOFSECTIONS]
-            const newarr = copy.filter((val) => {
-                return val != value
-            })
-            setsectionLength(newarr.length)
-        }
+        setSections((prev) =>
+            prev.filter((_, currentIdx) => currentIdx !== idx)
+        )
+
     }
     function nvaigationToLastStep() {
         dispatch(setCreateStep(2));
@@ -54,6 +51,24 @@ export function SectionCard() {
             return copy;
         });
     }
+    function getSectionCardsDifference() {
+        const createdSectionsSorted = [...Sections].sort((a, b) => a - b);
+        const copy = [...createdSectionsSorted]
+        createdSectionsSorted.forEach((val, idx) => {
+            const next = createdSectionsSorted[idx + 1]
+            if (next !== undefined) {
+                for (let i = val + 1; i < next; i++) {
+                    copy.push(i)
+                }
+            }
+        })
+        return copy.sort((a, b) => a - b);
+    }
+    async function handleAddSection() {
+        const result = getSectionCardsDifference()
+        const max = result.length ? Math.max(...result) : 0;
+        setSections(() => [...result, max + 1]);
+    }
     function setLoading(index: number, value: boolean) {
         setisLoading(prev => {
             const copy = [...prev];
@@ -62,6 +77,13 @@ export function SectionCard() {
         });
     }
     function handleCurrentEditing(index: number, value: boolean) {
+        setisCurrentEdit((prev) => {
+            const copy = [...prev];
+            copy[index] = value;
+            return copy;
+        })
+    }
+    function handleCancelEdit(index: number, value: boolean) {
         setisCurrentEdit((prev) => {
             const copy = [...prev];
             copy[index] = value;
@@ -86,8 +108,8 @@ export function SectionCard() {
                         id: res.data,
                     })
                 );
+                handleAddedSectionState(value, true)
             }
-            setsectionLength(prev => prev + 1);
             toast.success("Section Added Successifuly");
             setLoading(idx, false);
             return;
@@ -113,7 +135,6 @@ export function SectionCard() {
             toast.success("Section Edited Successifuly");
             setLoading(idx, false);
             return;
-
         }
         if (!res.IsSuccess) {
             toast.error(res?.Error?.Description)
@@ -127,12 +148,7 @@ export function SectionCard() {
         handleAddedSectionState(value, true);
         handleCurrentEditing(idx, false);
     }
-    async function handleAddSection() {
-        setsectionLength((prev) => prev + 1);
-    }
-    useEffect(() => {
-        setaddedSectionState(addedSections);
-    }, [addedSections]);
+
     return (
         <section className="px-5 md:px-0">
             <header className="md:w-3/4 mx-auto space-y-1 mb-4">
@@ -142,7 +158,7 @@ export function SectionCard() {
                 <p className="text-(--text-secondry) ">Organize your course into sections</p>
             </header>
             <div className="space-y-4 md:w-3/4 mx-auto ">
-                {NUMOFSECTIONS.map((value, idx) => {
+                {sortedSections.map((value, idx) => {
                     return <Card key={value} className="  gap-0 px-3">
                         <div className="flex w-full gap-4">
                             <div className="flex items-center gap-x-2">
@@ -154,14 +170,30 @@ export function SectionCard() {
                                 </span>
                             </div>
                             <div className="flex-1">
-                                <CardHeader className="flex justify-between space-y-3 px-0">
+                                <CardHeader className="flex justify-between space-y-5 px-0">
                                     <Label htmlFor={String(idx)} className="text-foreground font-semibold ">Section Title</Label>
                                     <div className="space-x-2">
-                                        {addedSectionState[value] && !isCurrentEdit[idx] && <FontAwesomeIcon className="text-foreground cursor-pointer hover:text-(--primary-hover)" onClick={() => {
-                                            handleCurrentEditing(idx, true)
-                                            handleAddedSectionState(value, false)
-                                        }} icon={faPenToSquare} />}
-                                        <FontAwesomeIcon onClick={() =>{ !isCurrentEdit[idx]&&!addedSectionState[value] && handleRemoveSection(value, idx)}} className={` select-none  text-(--text-muted) ${addedSectionState[value] || isCurrentEdit[idx] ? " cursor-no-drop " : " hover:text-red-500 cursor-pointer"}`} icon={faTrashCan} />
+                                        {addedSectionState[value] && !isCurrentEdit[idx] &&
+                                            <FontAwesomeIcon className="text-foreground cursor-pointer hover:text-(--primary-hover)"
+                                                onClick={() => {
+                                                    handleCurrentEditing(idx, true)
+                                                    handleAddedSectionState(value, false)
+                                                }} icon={faPenToSquare} />}
+                                        {!addedSectionState[value] && isCurrentEdit[idx] && <span
+                                            className="flex h-10 w-10 items-center cursor-pointer justify-center rounded-xl text-(--text-muted) transition-all duration-200 hover:bg-red-50 hover:text-red-500"
+                                            onClick={() => {
+                                                handleCancelEdit(idx, false)
+                                                handleAddedSectionState(value, true)
+                                            }}
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={faXmark} />
+                                        </span>}
+                                        {!addedSectionState[value] && !isCurrentEdit[idx] && <FontAwesomeIcon onClick={() => {
+                                            handleRemoveSection(value, idx)
+                                        }}
+                                            className={` select-none  text-(--text-muted) ${addedSectionState[value] || isCurrentEdit[idx] ? " cursor-no-drop " : " hover:text-red-500 cursor-pointer"}`}
+                                            icon={faTrashCan} />}
                                     </div>
                                 </CardHeader>
                                 <CardContent className="px-0">

@@ -6,6 +6,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import "./globals.css";
 import SessionProviderWrapper from "./_Components/SessionProviderWrapper/SessionProviderWrapper";
 import { getMessages } from "next-intl/server";
+import CheckSession from "./_Components/Auth/CheckSession/CheckSession";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default async function RootLayout({children, params }: {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
         <NextIntlClientProvider messages={messages} >
           <SessionProviderWrapper>
+            {/* <CheckSession locale={locale} /> */}
             <main className=" bg-background mb-12">
               <Toaster position="top-right"  />
               {children}

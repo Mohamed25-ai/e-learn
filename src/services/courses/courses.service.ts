@@ -2,6 +2,7 @@ import axios from "axios";
 import { publicApi } from "../public-api";
 import { privateServerApi } from "../private-server-api";
 import { CreateSectionType } from "./coursesapi.types";
+import { SubmitContentFormType } from "@/app/[locale]/_Components/Cources/CreateCourses/CreateCourseContent/createcoursecontent.types";
 
 const BASE_URL = process.env.BASE_URL;
 export async function addInstructorRule() {
@@ -111,14 +112,28 @@ export async function getCreatedSectionByCourseId(courseId:string) {
     const api= await privateServerApi();
     try {
         const res=await api.get(`/Section/Paginated?CourseId=${courseId}`);
-        console.log("DDDDDDDddfadf",res.data)
         return {
             status: res.status,
             data: res.data
         }
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            console.log("getCreatedSectionByCourseIdError", error?.response?.data)
+            return error?.response?.data;
+        }
+    }
+}
+export async function createCourseContent(data:FormData) {
+    const api= await privateServerApi();
+    try {
+        const res=await api.post(`/Content/Create`,data,{
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
             return error?.response?.data;
         }
     }

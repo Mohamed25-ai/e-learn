@@ -26,13 +26,14 @@ export default async function proxy(req: NextRequest) {
     const locale = firstSegment;
     const isProtected = PROTECTED.some((p) => restPath === p || restPath.startsWith(p));
     const isAuthPage = AUTH_PAGES.some((p) => restPath === p || restPath.startsWith(p));
-    const isLoggedIn = !!token?.userToken;
-    if (token?.error) {
-        const response = NextResponse.redirect(new URL(`/${locale}/login?error=${token.error}`, req.url));
-        response.cookies.delete("next-auth.session-token");
-        response.cookies.delete("__Secure-next-auth.session-token"); 
-        return response;
-    }
+    const isLoggedIn = !!token?.userToken && !token?.error;
+    // if (token?.error) {
+    //     const response = NextResponse.redirect(
+    //         new URL(`/${locale}/login`, req.url)
+    //     );
+    //     response.cookies.delete("next-auth.session-token");
+    //     response.cookies.delete("__Secure-next-auth.session-token");
+    // }
 
     // protected + logged in
     if (isLoggedIn && isProtected) {

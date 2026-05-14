@@ -3,7 +3,6 @@ import { getUserToken } from "@/utils/getAuthenticatedUserToken/getAuthenticated
 
 export async function privateServerApi() {
     const token = await getUserToken();
-    console.log('token trere',token)
     if(!token){
         throw new Error("SESSION_EXPIRED");
     }

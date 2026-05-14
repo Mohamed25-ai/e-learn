@@ -11,11 +11,11 @@ const initialState: CreateCourseSliceType = {
     step: 0,
     sectionOrder: 1,
     sectionCreatedSuccessifuly: [],
+    createdContentuccessifuly:[],
     section: {},
-    isCompletlyCreated: false,
+    isCourseCompletlyCreated: false,
     isLoading: false,
     categoryForCreatedCourse: "",
-
     sectionByCourseIdData: {
         currentPage: 0,
         totalCount: 0,
@@ -27,15 +27,15 @@ const initialState: CreateCourseSliceType = {
         data: [],
     },
 }
-export const getCreatedSectionsByCourseId = createAppAsyncThunk(
-    'createCourse/getCreatedSectionsByCourseId',
-    async (_, thunkApi) => {
-        const state = thunkApi.getState();
-        const createdCourseId = state.createCourse.createdCourseId;
-        const res = await getCreatedSectionByCourseIdAction(createdCourseId);
-        return res.data;
-    }
-)
+// export const getCreatedSectionsByCourseId = createAppAsyncThunk(
+//     'createCourse/getCreatedSectionsByCourseId',
+//     async (_, thunkApi) => {
+//         const state = thunkApi.getState();
+//         const createdCourseId = state.createCourse.createdCourseId;
+//         const res = await getCreatedSectionByCourseIdAction(createdCourseId);
+//         return res.data;
+//     }
+// )
 const createCourseSteps = createSlice({
     name: "createCourse",
     initialState,
@@ -60,26 +60,29 @@ const createCourseSteps = createSlice({
         setAddedOrder: (state, action) => {
             state.sectionCreatedSuccessifuly.push(action.payload);
         },
+        setAddedContent: (state, action) => {
+            state.createdContentuccessifuly.push(action.payload);
+        },
         setCourseCompletlyCreated: (state, action) => {
-            state.isCompletlyCreated = action.payload;
+            state.isCourseCompletlyCreated = action.payload;
         },
         setCategoryForCreatedCourse: (state, action) => {
         }
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(getCreatedSectionsByCourseId.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(getCreatedSectionsByCourseId.fulfilled, (state, action) => {
-                state.sectionByCourseIdData = action.payload;
-            })
-            .addCase(getCreatedSectionsByCourseId.rejected, (state, action) => {
-                state.isLoading = false;
-                console.log("Error", action.error.message);
-            });
     }
+    // extraReducers: (builder) => {
+    //     builder
+    //         .addCase(getCreatedSectionsByCourseId.pending, (state) => {
+    //             state.isLoading = true;
+    //         })
+    //         .addCase(getCreatedSectionsByCourseId.fulfilled, (state, action) => {
+    //             state.sectionByCourseIdData = action.payload;
+    //         })
+    //         .addCase(getCreatedSectionsByCourseId.rejected, (state, action) => {
+    //             state.isLoading = false;
+    //             console.log("Error", action.error.message);
+    //         });
+    // }
 })
 
 export const createCourseReducer = createCourseSteps.reducer;
-export const { setCreateStep, setCourseID, setAddedOrder, setAddedSection } = createCourseSteps.actions;
+export const { setCreateStep, setCourseID, setAddedOrder, setAddedSection,setAddedContent } = createCourseSteps.actions;

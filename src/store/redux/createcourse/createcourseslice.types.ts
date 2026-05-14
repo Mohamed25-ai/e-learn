@@ -19,11 +19,12 @@ export interface SectionByCourseIdType {
 export interface CreateCourseSliceType {
     step: number
     sectionCreatedSuccessifuly: number[]
+    createdContentuccessifuly: number[]
     createdCourseId: string,
     section: SectionType,
     sectionOrder: number,
     isLoading:boolean
-    isCompletlyCreated: boolean,
+    isCourseCompletlyCreated: boolean,
     categoryForCreatedCourse: string
     sectionByCourseIdData:SectionByCourseIdType
 }

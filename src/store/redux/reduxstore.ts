@@ -4,10 +4,12 @@ import {
 } from "redux-persist";
 import { combineReducers, configureStore, createAsyncThunk } from "@reduxjs/toolkit";
 import { createCourseReducer } from "./createcourse/createcourseslice";
+import { createCourseApi } from "./api/createCourseApi";
 
 
 const rootReducer = combineReducers({
     createCourse: createCourseReducer,
+    [createCourseApi.reducerPath]: createCourseApi.reducer,
 });
 
 const persistConfig = {
@@ -26,7 +28,7 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
-        })// 
+        }).concat(createCourseApi.middleware)
 });
 
 export const persistor = persistStore(store);
