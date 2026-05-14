@@ -39,7 +39,6 @@ export function SectionCard() {
         setSections((prev) =>
             prev.filter((_, currentIdx) => currentIdx !== idx)
         )
-
     }
     function nvaigationToLastStep() {
         dispatch(setCreateStep(2));

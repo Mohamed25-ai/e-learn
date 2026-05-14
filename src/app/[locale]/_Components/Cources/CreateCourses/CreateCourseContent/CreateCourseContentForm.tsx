@@ -10,8 +10,13 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function CreateCourseContentForm({ contentData }: CreateCourseContentFormPropsType) {
     const createCourseSote = useAppSelector((state) => state.createCourse);
-    const [contentCards, setcontentCards] = useState<number[]>(createCourseSote.createdContentuccessifuly);
-    const maxNumInStore=Math.max(...contentCards)
+    const safeContentCards = Array.isArray(createCourseSote.createdContentuccessifuly)
+  ? createCourseSote.createdContentuccessifuly.filter(
+      (num): num is number => Number.isFinite(num)
+    )
+  : [];
+    const [contentCards, setcontentCards] = useState<number[]>(safeContentCards);
+    const maxNumInStore= contentCards.length ? Math.max(...contentCards) : 0;
     const createdContentSorted=[...contentCards].sort((a, b) => a - b);
     const [addedContent, setaddedContent] = useState<boolean[]>(() => {
         const arr: boolean[] = [];
