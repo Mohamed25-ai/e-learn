@@ -53,7 +53,7 @@ export default function RegisterForm() {
             console.log('resres', res)
         }
         else {
-            toast.error(res.data.error.description);
+            toast.error(res.data.error);
         }
     }
 

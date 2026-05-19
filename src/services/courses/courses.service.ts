@@ -128,12 +128,14 @@ export async function createCourseContent(data:FormData) {
         const res=await api.post(`/Content/Create`,data,{
             headers: { "Content-Type": "multipart/form-data" },
         });
+        console.log("ADFfffffffffff",res.data)
         return {
             status: res.status,
             data: res.data
         }
     } catch (error) {
         if (axios.isAxiosError(error)) {
+            console.log("Errorerer",error.response)
             return error?.response?.data;
         }
     }

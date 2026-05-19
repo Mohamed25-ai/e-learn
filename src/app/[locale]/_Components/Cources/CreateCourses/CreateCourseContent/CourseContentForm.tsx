@@ -55,11 +55,11 @@ export default function CourseContentForm({ fromOrder, removeCard, editCurrentCa
         // }
     }
     async function handleSubmitCourseContent(data: SubmitContentFormType, isEdit: boolean) {
-        // const formData = new FormData();
-        // formData.append("Title", data.Title);
-        // formData.append("SectionId", data.SectionId);
-        // formData.append("ContentType", data.ContentType);
-        // formData.append("File", data.File!);
+        const formData = new FormData();
+        formData.append("Title", data.Title);
+        formData.append("SectionId", data.SectionId);
+        formData.append("ContentType", data.ContentType);
+        formData.append("File", data.File!);
         const isAddedBefore = createCourseSote.createdContentuccessifuly.includes(fromOrder)
         // console.log("isAddedBefore",isAddedBefore)
         if (isAddedBefore&&isEdit&&editCurrentCard[fromOrder]) {
@@ -68,8 +68,8 @@ export default function CourseContentForm({ fromOrder, removeCard, editCurrentCa
             return
         }
         if (!isAddedBefore) {
-            // const res = await createCourseContentAction(formData);
-            // console.log("Created res", res)
+            const res = await createCourseContentAction(formData);
+            console.log("Created res", res)
             dispath(setAddedContent(fromOrder))
             handleAddedSuccessContent(fromOrder,true)
             return
