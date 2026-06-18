@@ -15,5 +15,6 @@ export async function listAllCategories() {
             const data=error.response?.data;
             return data;
         }
+        throw error;
     }
 }

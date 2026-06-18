@@ -1,7 +1,7 @@
 // import ConfirmEmail from '@/app/_Components/Auth/ConfirmEmail/ConfirmEmail'
-import { ConfirmEmailProps } from '../confirmemail.types'
 import { getServerSession } from 'next-auth';
 import { nextAuthConfig } from '@/next-auth/nextauth.config';
+import { ConfirmEmailProps } from '../confirmemail.types'
 import ConfirmEmail from '@/app/[locale]/_Components/Auth/ConfirmEmail/ConfirmEmail';
 
 

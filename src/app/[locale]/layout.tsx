@@ -29,12 +29,11 @@ export default async function RootLayout({children, params }: {
   const{locale }=await params;
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} >
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
+      <body  suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
         <NextIntlClientProvider messages={messages} >
           <SessionProviderWrapper>
-            {/* <CheckSession locale={locale} /> */}
+            {/* <CheckSession locale={locale} />   */}
             <main className=" bg-background mb-12">
-              <Toaster position="top-right"  />
               {children}
             </main>
           </SessionProviderWrapper>

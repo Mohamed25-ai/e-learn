@@ -19,6 +19,7 @@ export async function addInstructorRule() {
         if (axios.isAxiosError(error)) {
             console.log("Rule error", error?.response?.data)
         }
+        throw error;
     }
 };
 export async function getCoursesByCategorieId(categoryid: string, pageSize?: number, pageNumber?: number, orderBy?: string, search?: string) {
@@ -42,6 +43,7 @@ export async function getCoursesByCategorieId(categoryid: string, pageSize?: num
             console.log("Rule error", error?.response?.data)
             return error.request.data;
         };
+        throw error;
     }
 }
 export async function createCourseBasicInformation(data: FormData) {
@@ -64,6 +66,7 @@ export async function createCourseBasicInformation(data: FormData) {
             console.log("Rule error", error?.response?.data)
             return error?.response?.data;
         }
+        throw error;
     }
 }
 export async function addCourseSection(data: CreateSectionType) {
@@ -85,6 +88,7 @@ export async function addCourseSection(data: CreateSectionType) {
             console.log("sectionerror", error?.response?.data)
             return error?.response?.data;
         }
+        throw error;
     }
 };
 export async function editCourseSection(data: CreateSectionType) {
@@ -106,6 +110,7 @@ export async function editCourseSection(data: CreateSectionType) {
             console.log("editSectionerror", error?.response?.data)
             return error?.response?.data;
         }
+        throw error;
     }
 };
 export async function getCreatedSectionByCourseId(courseId:string) {
@@ -120,6 +125,7 @@ export async function getCreatedSectionByCourseId(courseId:string) {
         if (axios.isAxiosError(error)) {
             return error?.response?.data;
         }
+        throw error;
     }
 }
 export async function createCourseContent(data:FormData) {
@@ -138,6 +144,7 @@ export async function createCourseContent(data:FormData) {
             console.log("Errorerer",error.response)
             return error?.response?.data;
         }
+        throw error;
     }
 }
 
