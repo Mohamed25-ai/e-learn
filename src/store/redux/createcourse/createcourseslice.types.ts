@@ -1,4 +1,4 @@
-export type SectionType = Record<number, string>;
+export type SectionType = Partial<Record<number, string>>;
 
 export interface SectionByCourseData {
     id: string,
@@ -25,6 +25,7 @@ export interface CreateCourseSliceType {
     sectionOrder: number,
     isLoading:boolean
     isCourseCompletlyCreated: boolean,
-    categoryForCreatedCourse: string
+    categoryForCreatedCourse: string,
+    createdContentId:Partial<Record<number,string>>,
     sectionByCourseIdData:SectionByCourseIdType
 }

@@ -15,6 +15,7 @@ export default function CourseCard({ course }: CourseCardProps) {
     const progress = 65;
     const remainingTime = "4h 30m remaining";
     const hasImage = course.instructorImage;
+    console.log("aaaaaaaaaaaaa",course)
     return (
         <Card className="group/card overflow-hidden rounded-(--radius) border border-border bg-card p-0 shadow-sm transition-all duration-300 hover:shadow-lg">
             <CardHeader className="p-0">

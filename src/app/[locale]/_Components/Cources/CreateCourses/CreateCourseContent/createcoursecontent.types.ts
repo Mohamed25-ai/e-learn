@@ -25,7 +25,7 @@ export interface CourseContentFormPropsType {
     editCurrentCard:Record<number,boolean>,
     handleSetEditCard:(num:number,value:boolean)=>void
 }
-export type ContentType = "Video" | "Image" | "Document" | "Quiz";
+export type ContentType = "Video" | "Image" | "Pdf" ;
 
 export interface FormValues {
     Title: string;
@@ -34,7 +34,7 @@ export interface FormValues {
 export interface SubmitContentFormType {
     Title: string,
     File?: File,
-    ContentType: ContentType,
+    // ContentType: ContentType,
     SectionId: string
 }
 export interface Section {
@@ -51,13 +51,14 @@ export interface CourseContentFilesProps {
 }
 export interface FilesFieldPropsType {
     onChange: (value: File | undefined) => void,
-    selectedFileType: string,
+    selectedFileType?: string,
     isFileExist: boolean,
     setisFileExist: (value: boolean) => void
     setfieldValue: UseFormSetValue<SubmitContentFormType>;
     setFieldError: UseFormSetError<SubmitContentFormType>;
     isFieldHasError:boolean,
-    isContentAddedBefore?:boolean
+    isContentAddedBefore?:boolean,
+    isEditContent?:boolean
 }
 export interface FieldsErrorMessagePropsType{
     message:string|"Error Happend In Message",

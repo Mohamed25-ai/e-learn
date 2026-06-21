@@ -11,11 +11,13 @@ const initialState: CreateCourseSliceType = {
     step: 0,
     sectionOrder: 1,
     sectionCreatedSuccessifuly: [],
-    createdContentuccessifuly:[],
+    createdContentuccessifuly: [],
     section: {},
     isCourseCompletlyCreated: false,
     isLoading: false,
     categoryForCreatedCourse: "",
+    createdContentId: {},
+
     sectionByCourseIdData: {
         currentPage: 0,
         totalCount: 0,
@@ -63,10 +65,15 @@ const createCourseSteps = createSlice({
         setAddedContent: (state, action) => {
             state.createdContentuccessifuly.push(action.payload);
         },
+
         setCourseCompletlyCreated: (state, action) => {
             state.isCourseCompletlyCreated = action.payload;
         },
-        setCategoryForCreatedCourse: (state, action) => {
+        setCreatedContentId(state, action: PayloadAction<{ key: number, value: string }>) {
+            state.createdContentId[action.payload.key] = action.payload.value;
+        },
+        resetCreateCourseState: () => {
+            return structuredClone(initialState);
         }
     }
     // extraReducers: (builder) => {
@@ -85,4 +92,5 @@ const createCourseSteps = createSlice({
 })
 
 export const createCourseReducer = createCourseSteps.reducer;
-export const { setCreateStep, setCourseID, setAddedOrder, setAddedSection,setAddedContent } = createCourseSteps.actions;
+export const { setCreateStep, setCourseID, setAddedOrder, resetCreateCourseState,
+    setAddedSection, setAddedContent, setCreatedContentId, setSectionOrder } = createCourseSteps.actions;

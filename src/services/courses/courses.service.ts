@@ -147,4 +147,23 @@ export async function createCourseContent(data:FormData) {
         throw error;
     }
 }
+export async function editCourseContent(data:FormData) {
+    const api= await privateServerApi();
+    try {
+        const res=await api.put(`/Content/Edit`,data,{
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+        console.log("ADFfffffffffff",res)
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("Errossssssssssssrerer",error.response)
+            return error?.response?.data;
+        }
+        throw error;
+    }
+}
 

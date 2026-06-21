@@ -34,7 +34,7 @@ export default async function SwiperCourses({ id, name }: HomeCoursesProps) {
                 ) : (
                 )} */}
                     <div className="rounded-(--radius) bg-background">
-                        <HomeCoursesSwiper courseData={courseData} />
+                        {/* <HomeCoursesSwiper courseData={courseData} /> */}
                     </div>
             </section>
         </section>

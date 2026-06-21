@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { CreateCourseContentFormPropsType } from "./createcoursecontent.types";
 import CourseContentForm from "./CourseContentForm";
-import { useAppSelector } from "@/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { resetCreateCourseState} from "@/store/redux/createcourse/createcourseslice";
+import { useRouter } from "@/i18n/navigation";
 
 // const safeContentCards = Array.isArray(createCourseSote.createdContentuccessifuly)
 //     ? createCourseSote.createdContentuccessifuly.filter(
@@ -15,6 +17,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function CreateCourseContentForm({ contentData }: CreateCourseContentFormPropsType) {
     const createCourseSote = useAppSelector((state) => state.createCourse);
+    const dispatch=useAppDispatch();
+    const router=useRouter()
     const [contentCards, setcontentCards] = useState<number[]>(createCourseSote.createdContentuccessifuly);
     const maxNumInStore = contentCards.length ? Math.max(...contentCards) : 0;
     const createdContentSorted = [...contentCards].sort((a, b) => a - b);
@@ -48,11 +52,13 @@ export default function CreateCourseContentForm({ contentData }: CreateCourseCon
                     copy.push(i)
                 }
             }
-
         })
-        return copy.sort((a, b) => a - b)
+        return copy.sort((a, b) => a - b);
     }
-
+    function handleEndCreateCourse(){
+        dispatch(resetCreateCourseState())
+        router.replace('/courses');
+    }
     function handleSetEditCard(cardNumber: number, value: boolean) {
         seteditCurrentCard((prev) => ({
         ...prev,
@@ -98,6 +104,12 @@ export default function CreateCourseContentForm({ contentData }: CreateCourseCon
             >
                 <FontAwesomeIcon icon={faPlus} />
                 Add New Lesson
+            </Button>}
+            {createCourseSote.createdContentuccessifuly.length>0&&<Button
+                onClick={handleEndCreateCourse}
+                className="w-full flex justify-center py-5 bg-white border-dashed border-2 border-(--primary-color) cursor-pointer text-(--primary-color) hover:bg-(--primary-light)"
+            >
+                End Task
             </Button>}
         </div>
     )

@@ -93,7 +93,7 @@ export function CategoryCombobox({ value, onChange, selectedLabel,
                                                 setOpen(false);
                                             }}
                                             className={cn(
-                                                "cursor-pointer rounded-lg px-3 py-3 transition-colors",
+                                                "cursor-pointer  rounded-lg px-3 py-3 my-1.5 transition-colors",
                                                 "data-[selected=true]:bg-(--primary-light) data-[selected=true]:text-(--primary-color)",
                                                 value === category.id && "bg-(--primary-light) text-(--primary-color)"
                                             )}
@@ -118,7 +118,7 @@ export function CategoryCombobox({ value, onChange, selectedLabel,
                                                 setOpen(false);
                                             }}
                                             className={cn(
-                                                "cursor-pointer rounded-lg px-3 py-3 transition-colors",
+                                                "cursor-pointer rounded-lg px-3 py-3 my-1.5 transition-colors",
                                                 "data-[selected=true]:bg-(--primary-light) data-[selected=true]:text-(--primary-color)",
                                                 value === section.id && "bg-(--primary-light) text-(--primary-color)"
                                             )}

@@ -26,12 +26,13 @@ import {
   titleRules,
 } from "./createCourseContent.validation";
 import FieldsErrorMessage from "./FieldsErrorMessage";
-import { createCourseContentAction } from "@/actions/courses/courses.actions";
+import { createCourseContentAction, editCourseContentAction } from "@/actions/courses/courses.actions";
 import { createCourseContent } from "@/services/courses/courses.service";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-import { setAddedContent } from "@/store/redux/createcourse/createcourseslice";
+import { setAddedContent, setCreatedContentId } from "@/store/redux/createcourse/createcourseslice";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-hot-toast";
+import { ButtonLoader } from "../../../Loaders/ButtonLoader/ButtonLoader";
 
 export default function CourseContentForm({
   fromOrder,
@@ -45,16 +46,17 @@ export default function CourseContentForm({
 }: CourseContentFormPropsType) {
   const createCourseSote = useAppSelector((state) => state.createCourse);
   const dispath = useAppDispatch();
-  const [SelectedFileType, setSelectedFileType] =
-    useState<ContentType>("Video");
+  // const [SelectedFileType, setSelectedFileType] = useState<File | undefined>(undefined);
   const [isFileExist, setisFileExist] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
   const isCardAddedBrefore = addedContent[fromOrder] === true;
-  // console.log("isCardAddedBrefore", isCardAddedBrefore)
+  const isEditMode =
+    !isLoading &&
+    editCurrentCard?.[fromOrder] !== undefined;
   const submitContentForm = useForm<SubmitContentFormType>({
     defaultValues: {
       Title: "",
       SectionId: "",
-      ContentType: "Video",
       File: undefined,
     },
     mode: "onChange",
@@ -65,15 +67,17 @@ export default function CourseContentForm({
   }
   function handleEditCardContent(value: boolean) {
     handleSetEditCard(fromOrder, value);
+    // submitContentForm.clearErrors();
+    // submitContentForm.trigger();
+    submitContentForm.reset(submitContentForm.getValues());
+    // if (value) {
+    // }
   }
   function handleCancelEditStep() {
     if (editCurrentCard[fromOrder]) {
       handleSetEditCard(fromOrder, false);
       return;
     }
-    // if (addedContent.length == 0) {
-    //     window.alert("You must add at least one Lesson")
-    // }
   }
   async function handleSubmitCourseContent(
     data: SubmitContentFormType,
@@ -82,24 +86,29 @@ export default function CourseContentForm({
     const formData = new FormData();
     formData.append("Title", data.Title);
     formData.append("SectionId", data.SectionId);
-    formData.append("ContentType", data.ContentType);
     formData.append("File", data.File!);
-    const isAddedBefore =
-      createCourseSote.createdContentuccessifuly.includes(fromOrder);
-    // console.log("isAddedBefore",isAddedBefore)
+    setisLoading(true);
+    const isAddedBefore = createCourseSote.createdContentuccessifuly.includes(fromOrder);
     if (isAddedBefore && isEdit && editCurrentCard[fromOrder]) {
-      console.log("Edited success");
-      handleEditCardContent(false);
-      return;
+      formData.append("id", createCourseSote.createdContentId[fromOrder]!);
+      const res = await editCourseContentAction(formData)
+      if (res.status === 200) {
+        toast.success("Changes Saved Successifuly");
+        handleEditCardContent(false);
+        setisLoading(false);
+        return;
+      }
     }
     if (!isAddedBefore) {
       const res = await createCourseContentAction(formData);
-      console.log("Created res", res);
       dispath(setAddedContent(fromOrder));
       handleAddedSuccessContent(fromOrder, true);
+      dispath(setCreatedContentId({ key: fromOrder, value: res.data }));
       toast.success("Lesson Added successifuly");
+      setisLoading(false);
       return;
     }
+    setisLoading(false);
   }
   return (
     <form
@@ -216,54 +225,36 @@ export default function CourseContentForm({
 
               {/* Content Type */}
               <CardContent className="space-y-4 px-0 py-0">
-                <div className="space-y-2">
-                  <Label className="LABEL_STYLE">Content Type</Label>
-
-                  <Controller
-                    name="ContentType"
-                    control={control}
-                    render={({ field }) => (
-                      <CourseContentFiles
-                        onChange={field.onChange}
-                        selectedField={field.value}
-                        isContentAddedBefore={
-                          isCardAddedBrefore && !editCurrentCard[fromOrder]
-                        }
-                        isFileExist={isFileExist}
-                        setisFileExist={handleSetExistedFile}
-                        SetSelectedFieldType={setSelectedFileType}
-                      />
-                    )}
-                  />
-                </div>
 
                 {/* Upload */}
                 <div className="space-y-2 pt-2">
                   <Controller
                     name="File"
                     control={control}
-                    rules={getFileRules(SelectedFileType)}
+                    rules={getFileRules(editCurrentCard[fromOrder])}
                     render={({ field, fieldState }) => (
                       <>
                         <Label
                           className={[
                             "LABEL_STYLE",
-                            fieldState.error ? "text-(--error)" : "",
+                            fieldState.error && !editCurrentCard[fromOrder] ? "text-(--error)" : "",
                           ].join(" ")}
                         >
                           Upload File
                         </Label>
+                        <CourseContentFiles />
                         <FilesField
                           onChange={field.onChange}
                           setfieldValue={submitContentForm.setValue}
                           setisFileExist={handleSetExistedFile}
                           setFieldError={submitContentForm.setError}
                           isFileExist
+                          isEditContent={editCurrentCard[fromOrder]}
                           isContentAddedBefore={
                             isCardAddedBrefore && !editCurrentCard[fromOrder]
                           }
                           isFieldHasError={!!fieldState.error}
-                          selectedFileType={SelectedFileType}
+                        // selectedFileType={SelectedFileType?.type}
                         />
                         {fieldState.error && (
                           <FieldsErrorMessage
@@ -328,7 +319,13 @@ export default function CourseContentForm({
               type="submit"
               className="MAIN_BUTTON my-0 py-2.5 px-6 text-(--primary-color) flex items-center gap-2 transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
             >
-              {editCurrentCard[fromOrder] ? "Save Changes" : "Save Lesson"}
+              {isLoading ? (
+                <ButtonLoader size={16} />
+              ) : editCurrentCard[fromOrder] ? (
+                "Save Changes"
+              ) : (
+                "Save Lesson"
+              )}
             </Button>
           </CardFooter>
         </div>

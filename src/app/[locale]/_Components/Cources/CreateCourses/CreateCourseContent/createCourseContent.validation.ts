@@ -14,17 +14,33 @@ export const titleRules: RegisterOptions<SubmitContentFormType, "Title"> = {
         message: "Lesson title must be less than 100 characters",
     },
 };
-
+// export const getTitleRules = (
+//     isEdit: boolean
+// ): RegisterOptions<SubmitContentFormType, "Title"> => ({
+//     required: isEdit ? false : "Lesson title is required",
+//     minLength: {
+//         value: 3,
+//         message: "Lesson title must be at least 3 characters",
+//     },
+//     maxLength: {
+//         value: 100,
+//         message: "Lesson title must be less than 100 characters",
+//     },
+// });
 export const sectionRules: RegisterOptions<SubmitContentFormType, "SectionId"> = {
     required: "Section is required",
 };
-
-export const contentTypeRules: RegisterOptions<
-    SubmitContentFormType,
-    "ContentType"
-> = {
-    required: "Content type is required",
-};
+// export const getSectionRules = (
+//     isEdit: boolean
+// ): RegisterOptions<SubmitContentFormType, "SectionId"> => ({
+//     required: isEdit ? false : "Section is required",
+// });
+// export const contentTypeRules: RegisterOptions<
+//     SubmitContentFormType,
+//     "File"
+// > = {
+//     required: "Content type is required",
+// };
 // export function validateFileType(
 //     file: File,
 //     selectedFileType: SubmitContentFormType["ContentType"]
@@ -50,35 +66,56 @@ export const contentTypeRules: RegisterOptions<
 
 //     return false;
 // }
-export const getFileRules = (selectedFileType: SubmitContentFormType["ContentType"]):
-    RegisterOptions<SubmitContentFormType, "File"> => ({
-        required: selectedFileType === "Quiz" ? false : "File is required",
+// export const getFileRules = (): RegisterOptions<
+//     SubmitContentFormType,
+//     "File"
+// > => ({
+//     required: "File is required",
 
-        validate: (file) => {
-            if (selectedFileType === "Quiz") return true;
+//     validate: (file) => {
+//         if (!file) return "File is required";
 
-            if (!file) return "File is required";
+//         const type = file.type;
 
-            if (selectedFileType === "Video" && !file.type.startsWith("video/")) {
-                return "Please upload a valid video file";
-            }
+//         if (type.startsWith("image/")) {
+//             return true;
+//         }
 
-            if (selectedFileType === "Image" && !file.type.startsWith("image/")) {
-                return "Please upload a valid image file";
-            }
+//         if (type.startsWith("video/")) {
+//             return true;
+//         }
 
-            if (
-                selectedFileType === "Document" &&
-                ![
-                    "application/pdf",
-                    "application/msword",
-                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                    "text/plain",
-                ].includes(file.type)
-            ) {
-                return "Please upload a valid document file";
-            }
+//         if (type === "application/pdf") {
+//             return true;
+//         }
 
+//         return "Only PDF, image, or video files are allowed.";
+//     },
+// });
+export const getFileRules = (
+    isEdit: boolean
+): RegisterOptions<SubmitContentFormType, "File"> => ({
+    required: isEdit ? false : "File is required",
+
+    validate: (file) => {
+        if (!file) {
+            // No file selected during edit -> valid
+            if (isEdit) return true;
+
+            // No file selected during create -> invalid
+            return "File is required";
+        }
+
+        const type = file.type;
+
+        if (
+            type.startsWith("image/") ||
+            type.startsWith("video/") ||
+            type === "application/pdf"
+        ) {
             return true;
-        },
-    });
+        }
+
+        return "Only PDF, image, or video files are allowed.";
+    },
+});

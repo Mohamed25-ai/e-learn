@@ -1,15 +1,12 @@
 import { ArrowRight, Check, ChevronsUpDown, Image as ImageIcon, Images } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, } from "@/components/ui/command";
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import { CategoryCombobox } from "./BasicInformationCategoryCombobox";
-import { ChangeEvent, useRef, useState } from "react";
+import {  useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { BasicInformationFormType, BasicInformationProps } from "./createcoursecbasicinformation.types";
@@ -17,14 +14,14 @@ import { createCourseBasicInformationAction } from "@/actions/courses/courses.ac
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { setCourseID, setCreateStep } from "@/store/redux/createcourse/createcourseslice";
-import MainLoader from "../../../Loaders/MainLoader/MainLoader";
 import { useAppDispatch } from "@/hooks/hooks";
-import { Link } from "@/i18n/navigation";
-import FormLoader from "../../../Loaders/FormLoader/FormLoader";
+import { useRouter } from "@/i18n/navigation";
+import { ButtonLoader } from "../../../Loaders/ButtonLoader/ButtonLoader";
 
 
 export default function BasicInformationForm({ data }: BasicInformationProps) {
     const dispatch = useAppDispatch();
+    const router=useRouter();
     const t = useTranslations("Course");
     const [thumbnail, setThumbnail] = useState<File | null>(null);
     const [isLoading, setisLoading] = useState(false);
@@ -61,6 +58,9 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
         setValue("Thumbnail", null);
         setError("Thumbnail", { message: t("createcourse.thumbnail.required") });
     }
+    function cancelFirstStep(){
+        router.push('/');
+    }
     async function handleBasicInformationStep(data: BasicInformationFormType) {
         setisLoading(true);
         const formdata = new FormData();
@@ -74,20 +74,19 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
         formdata.append("CategoryId", data.CategoryId);
         const res = await createCourseBasicInformationAction(formdata);
         if (res.status === 200) {
-            console.log("creation Course  ReSault", res);
             dispatch(setCreateStep(1));
             dispatch(setCourseID(res?.data));
             setisLoading(false);
             return
         }
-        console.log("creation Course  ReSault", res);
-        toast.error(res?.Error?.Description);
+        toast.error(res?.data.Error?.Description);
+        setisLoading(false);
     }
     return (<>
-        {isLoading && <div className="w-full lg:w-3/4 mx-auto ">
+        {/* {isLoading && <div className="w-full lg:w-3/4 mx-auto ">
             <FormLoader />
-        </div>}
-        {!isLoading &&<form onSubmit={handleSubmit(handleBasicInformationStep)}>
+        </div>} */}
+        {<form onSubmit={handleSubmit(handleBasicInformationStep)}>
             <Card className="w-full lg:w-3/4 mx-auto rounded-lg border-border bg-card shadow-sm">
                 <CardHeader className="space-y-3 relative">
                     {thumbnail && (
@@ -315,20 +314,21 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                     </div>
 
                     <div className="flex items-center justify-end gap-3 pt-2">
-                        <Link
-                            href="/"
-                            className="MAIN_BUTTON hover:bg-transparent inline-flex items-center gap-2 py-1.5 px-6 text-(--primary-color) border rounded-md transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
+                        <Button
+                            onClick={cancelFirstStep}
+                            disabled={isLoading}
+                            className="MAIN_BUTTON my-0 py-2.5 px-6 text-(--primary-color) flex items-center gap-2 transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-xs"
                         >
                             {t("createcourse.actions.cancel")}
-                        </Link>
+                        </Button>
                         <Button
                             type="submit"
                             disabled={isLoading || !formState.isValid}
-                            variant="outline"
-                            className="MAIN_BUTTON my-0 py-2.5 px-6 text-(--primary-color) flex items-center gap-2 transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg"
+                            className="MAIN_BUTTON my-0 py-2.5 px-6 text-(--primary-color) flex items-center gap-2 transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-xs"
                         >
-                            {t("createcourse.actions.submit")}
-                            <ArrowRight className="h-4 w-4 rtl:rotate-180" />
+                            {isLoading&&<span className="py-2.5 px-6" ><ButtonLoader /></span>}
+                            {!isLoading&&t("createcourse.actions.submit")}
+                            {!isLoading&&<ArrowRight className="h-4 w-4 rtl:rotate-180" />}
                         </Button>
                     </div>
                 </CardContent>
