@@ -12,15 +12,18 @@ import {
 import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
 import { useState } from "react";
-export default function SessionProviderWrapper({ children }: { children: React.ReactNode }) {
+import CheckSession from "../Auth/CheckSession/CheckSession";
+export default function SessionProviderWrapper({ children,locale }: { children: React.ReactNode,locale?: string}) {
 const [queryClient] = useState(() => new QueryClient());
   return (
-    <SessionProvider>
+    <SessionProvider refetchInterval={4 * 60} >
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <QueryClientProvider client={queryClient}>
             <Toaster position="top-right" />
-            {children}
+            <CheckSession locale={locale}>       {/* ← lives here, layout stays clean */}
+              {children}
+            </CheckSession>
           </QueryClientProvider>
         </PersistGate>
       </Provider>

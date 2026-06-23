@@ -1,7 +1,9 @@
 import { refreshTokenAction } from "@/actions/auth/auth.actions";
+import { signInWithGoogle } from "@/services/auth/auth.service";
 import axios from "axios"
 import { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 
 function transformDate(dateStr: string) {
     return new Date(dateStr).getTime();
@@ -40,16 +42,47 @@ export const nextAuthConfig: NextAuthOptions = {
                 }
             }
         }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+        })
     ],
     pages: {
         signIn: '/login',
         signOut: '/login',
     },
     callbacks: {
-        async jwt({ token, user }) {
+        async jwt({ token, user, account }) {
             // 1) First login
             console.log("user1", user)
+            // if(token.){
+
+            // }
             if (user) {
+                if (account?.provider === "google") {
+                    try {
+                        const data = await signInWithGoogle(account.id_token || "");
+                        console.log("Back google data",data)
+                        console.log("Back googgle user",user)
+                        token.id = data.data.id;
+                        token.email = data.data.email;
+                        token.message = data.data.message;
+                        token.userName = data.data.userName;
+                        token.role = data.data.roles;
+                        token.profilePictureUrl = data.data.profilePictureUrl;
+                        token.userToken = data.data.token;
+                        token.userTokenExpiration = data.data.expiresAt;
+                        token.userRefreshToken = data.data.refreshToken;
+                        token.userRefreshExpirationDate = data.data.refreshTokenExpiration;
+                        token.error = false;
+                        token.tokenErrorMessage = undefined;
+                        return token; // ← early return, skip the user.* mapping below
+                    } catch {
+                        token.error = true;
+                        token.tokenErrorMessage = "GoogleSignInError";
+                        return token;
+                    }
+                }
                 token.id = user.id;
                 token.email = user.email;
                 token.message = user.message;

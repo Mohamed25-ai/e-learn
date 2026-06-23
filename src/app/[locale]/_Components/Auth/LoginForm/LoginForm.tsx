@@ -15,8 +15,12 @@ import { getUserToken } from "@/utils/getAuthenticatedUserToken/getAuthenticated
 import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { ClipLoader } from "react-spinners";
+import { ButtonLoader } from "../../Loaders/ButtonLoader/ButtonLoader";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+
 export default function LoginForm() {
     const [isPasswordShown, setisPasswordShown] = useState(false);
+    const [isLoading, setisLoading] = useState(false)
     const t = useTranslations("Auth");
     const locale = useLocale();
     const loginForm = useForm({
@@ -28,7 +32,17 @@ export default function LoginForm() {
         mode: "onChange"
     });
     const { control, formState, handleSubmit } = loginForm;
-
+    async function handleSubmitWithGoogle() {
+        setisLoading(true);
+        const res = await signIn("google")
+        if(res?.ok){
+            // console.log("google res", res)
+            toast.success("Welcome");
+            setisLoading(false);
+            return
+        }
+            setisLoading(false);
+    }
     async function handleLoginForm(data: LoginFormType) {
 
         const res = await signIn("credentials", {
@@ -38,7 +52,7 @@ export default function LoginForm() {
         })
         console.log('my login res', res);
         if (res?.error) {
-            toast.error(res.error); 
+            toast.error(res.error);
             return;
         }
         setTimeout(() => toast.success('Welcome'), 1000)
@@ -134,6 +148,34 @@ export default function LoginForm() {
                 </div>
 
             </form>
+            <div className="flex justify-center">
+                <Button
+                    type="button"
+                    onClick={handleSubmitWithGoogle}
+                    // disabled={isLoading}
+                    className={`
+      ${BUTTON_STYLE}
+      w-full md:w-3/4
+      flex items-center justify-center gap-3
+      transition-all duration-200
+      disabled:opacity-60
+      disabled:cursor-not-allowed
+      disabled:hover:bg-(--primary-color)
+    `}
+                >
+                    {isLoading ? (
+                        <>
+                            <ButtonLoader />
+                            <span>Signing in...</span>
+                        </>
+                    ) : (
+                        <>
+                            <FontAwesomeIcon icon={faGoogle} className="h-5 w-5" />
+                            <span>Continue with Google</span>
+                        </>
+                    )}
+                </Button>
+            </div>
         </Form>
     );
 }

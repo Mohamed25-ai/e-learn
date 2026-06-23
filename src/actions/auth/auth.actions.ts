@@ -1,6 +1,6 @@
 'use server'
 
-import { confirmEmail, confirmResetPassword, refreshToken, register, resetPassword, sendResetPassword } from "@/services/auth/auth.service"
+import { confirmEmail, confirmResetPassword, refreshToken, register, resetPassword, sendResetPassword, signInWithGoogle } from "@/services/auth/auth.service"
 
 export async function loginAction() {
 
@@ -29,4 +29,6 @@ export async function confirmEmailAction(email: string, code: string) {
 export async function refreshTokenAction(refToken: string) {
     return await refreshToken(refToken);
 };
-
+export async function signInWithGoogleAction(idToken: string) {
+    return await signInWithGoogle(idToken);
+};

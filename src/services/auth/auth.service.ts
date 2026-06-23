@@ -135,3 +135,30 @@ export async function sendResetPassword(email: string) {
         throw error;
     }
 };
+export async function signInWithGoogle(idToken: string) {
+    const api = await publicApi;
+    const payload={
+        idToken:idToken
+    }
+    try {
+        const res = await api.post(`/Authentication/SignInWithGoogleAsync`,payload,{
+            headers:{
+                "Content-Type":"application/json"
+            }
+        });
+        return {
+            data: res.data,
+            status: res.status
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const status = error.response?.status;
+            const data = error.response?.data;
+            return {
+                data,
+                status
+            };
+        }
+        throw error;
+    }
+};
