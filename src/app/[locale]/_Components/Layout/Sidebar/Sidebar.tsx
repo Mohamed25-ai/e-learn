@@ -8,7 +8,7 @@ import { faBook, faLayerGroup, faPlus } from '@fortawesome/free-solid-svg-icons'
 const SIDEBAR_LINKS = [
     { href: "/courses",       label: "Courses",       icon: faBook },
     { href: "/categories",    label: "Categories",    icon: faLayerGroup },
-    { href: "/create-course", label: "Create Course", icon: faPlus },
+    { href: "/createcourse", label: "Create Course", icon: faPlus },
 ];
 
 export default function Sidebar() {

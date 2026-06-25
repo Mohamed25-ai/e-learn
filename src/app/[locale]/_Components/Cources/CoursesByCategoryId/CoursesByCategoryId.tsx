@@ -57,7 +57,7 @@ export default function CoursesByCategoryId({ courseData, categoryid, handleNext
                     initial="hidden"
                     animate="visible"
                     exit={{ opacity: 0 }}
-                    className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full"
+                    className={`rtl:grid-rows-none grid grid-cols-1 mg:grid-cols-2 lg:grid-cols-4 gap-4 w-full `}
                 >
                     {isLoading ? (
                         <CardsLoader length={courseData?.data.length ?? 4} />
@@ -75,8 +75,8 @@ export default function CoursesByCategoryId({ courseData, categoryid, handleNext
                 </motion.div>
             </AnimatePresence>
 
-            {courseData?.hasPreviousPage && <Button 
-                className="absolute top-1/2 -translate-y-1/2 -left-6 z-30
+            {courseData?.hasPreviousPage && <Button
+                className="absolute top-1/2 -translate-y-1/2 -left-3 md:-left-6 z-30 rtl:-left-3
                 w-11 h-11 rounded-full flex items-center justify-center
                 bg-white border-2 border-border)
                 text-foreground) hover:bg-(--primary-light)

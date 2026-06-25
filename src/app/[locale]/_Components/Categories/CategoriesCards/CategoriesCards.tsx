@@ -6,16 +6,18 @@ import { faAngleLeft, faAngleRight, faArrowRight, faCode, faUserGroup } from "@f
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCoursesByCategorieId } from "@/services/courses/courses.service";
+import { getCoursesByCategorieIdAction } from "@/actions/courses/courses.actions";
 
 export default function CategoriesCards({ categorie }: CategorieCardsProps) {
     const [pageNum, setpageNum] = useState(1);
+    const [pageSize, setPageSize] = useState(4);
     const queryClient = useQueryClient();
     const { data: courses, isLoading } = useQuery({
-        queryKey: ['getCourseByCategoryId', categorie.id, pageNum],
-        queryFn: () => getCoursesByCategorieId(categorie.id, 4, pageNum)
+        queryKey: ['getCourseByCategoryId', categorie.id, pageNum, pageSize],
+        queryFn: () => getCoursesByCategorieIdAction(categorie.id, pageSize, pageNum)
     })
     console.log("object", courses)
 
@@ -29,6 +31,25 @@ export default function CategoriesCards({ categorie }: CategorieCardsProps) {
             setpageNum((prev) => prev + 1)
         }
     }
+    useEffect(() => {
+        const updatePageSize = () => {
+            if (window.innerWidth >= 1280) {
+                setPageSize(4);
+            } else if (window.innerWidth >= 768) {
+                setPageSize(2);
+            } else {
+                setPageSize(1);
+            }
+        };
+
+        updatePageSize();
+        window.addEventListener("resize", updatePageSize);
+
+        return () => window.removeEventListener("resize", updatePageSize);
+    }, []);
+    useEffect(() => {
+    setpageNum(1);
+}, [pageSize]);
     return (
         <section className="w-full px-5 my-2">
             <header>
@@ -42,7 +63,7 @@ export default function CategoriesCards({ categorie }: CategorieCardsProps) {
                                 alt={categorie.name}
                                 className="w-14 h-14 rounded-2xl object-cover"
                             />
-                            : <span className="w-14 h-14 rounded-2xl bg-(--primary-light) text-(--primary-color) flex items-center justify-center text-xl flex-shrink-0">
+                            : <span className="w-14 h-14 rounded-2xl bg-(--primary-light) text-(--primary-color) flex items-center justify-center text-xl shrink-0">
                                 <FontAwesomeIcon icon={faCode} />
                             </span>
                         }

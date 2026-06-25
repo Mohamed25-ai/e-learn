@@ -22,7 +22,7 @@ import { Input } from '@/components/ui/input';
 const LINKS = [
     { href: "/courses", label: "Courses" },
     { href: "/categories", label: "Categories" },
-    { href: "/create-course", label: "Create Course" },
+    { href: "/createcourse", label: "Create Course" },
 ];
 
 export default function Navbar() {

@@ -9,20 +9,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAppSelector } from "@/hooks/hooks";
 import { setCreateStep } from "@/store/redux/createcourse/createcourseslice";
 import CreateCourseContent from "../CreateCourseContent/CreateCourseContent";
+import { useLocale } from "next-intl";
 export default function CreateCourse() {
-
+    const locale=useLocale()
     const createCousreStore = useAppSelector((state) => state?.createCourse);
     const dispatch = useDispatch();
     const [sectionId, setsectionId] = useState("");
     const [courseId, setcourseId] = useState("");
     const { data } = useQuery({
         queryKey: ['catedories'],
-        queryFn: listAllCategoriesAction,
+        queryFn: ()=>listAllCategoriesAction(locale),
     });
     return (
         <>
             <CreateCourseSteps currentStep={createCousreStore?.step} />
-            {createCousreStore.step === 0 && <CreateCourseBasicInformation  data={data?.data} />}
+            {createCousreStore.step === 0 && <CreateCourseBasicInformation  data={data?.data.data} />}
             {createCousreStore.step === 1 && <CreateSection  />}
             {createCousreStore.step === 2 && <CreateCourseContent  />}
         </>
