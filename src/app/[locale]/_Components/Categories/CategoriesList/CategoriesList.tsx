@@ -1,12 +1,42 @@
+import { Link } from "@/i18n/navigation";
 import CategoriesCards from "../CategoriesCards/CategoriesCards";
 import { CategoriesListProps } from "./categorieslist.type";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CategoriesOverview from "../CategoriesOverview/CategoriesOverview";
+import ListAllCategories from "../ListAllCategories/ListAllCategories";
 
-export default async function CategoriesList({categories}:CategoriesListProps) {
-    const {data}=categories;
-
+export default async function CategoriesList({ categories }: CategoriesListProps) {
+    // const { data } = categories;
+    
     return (
         <>
-        {data?.map((categorie)=> <CategoriesCards key={categorie.id} categorie={categorie} />)}
+            <header className="p-5 flex justify-between items-center">
+                <div>
+                    <h2 className="text-4xl font-bold leading-tight text-foreground">
+                        Explore Categories
+                    </h2>
+                    <p className="mt-1.5 text-sm text-(--text-secondary)">
+                        Discover courses across every field of expertise
+                    </p>
+                </div>
+
+                <Link
+                    href="/courses"
+                    className="MAIN_BUTTON gap-2 whitespace-nowrap group"
+                >
+                    Browse All Courses
+                    <FontAwesomeIcon
+                        icon={faArrowRight}
+                        className="transition-transform duration-200 group-hover:translate-x-1"
+                    />
+                </Link>
+            </header>
+            <div className="px-5">
+                <CategoriesOverview />
+                <ListAllCategories categorie={categories?.data} />
+            </div>
+            {categories?.data?.map((categorie) => <CategoriesCards key={categorie?.id} categorie={categorie} />)}
         </>
     )
 }

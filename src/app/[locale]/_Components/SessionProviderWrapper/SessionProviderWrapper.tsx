@@ -13,11 +13,8 @@ import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
 import { useState } from "react";
 import CheckSession from "../Auth/CheckSession/CheckSession";
-type Props = {
-  children: React.ReactNode;
-  locale?: string;
-};
-export default function SessionProviderWrapper({ children,locale }:Props) {
+
+export default function SessionProviderWrapper({ children }:{children: React.ReactNode}) {
 const [queryClient] = useState(() => new QueryClient());
   return (
     <SessionProvider refetchInterval={4 * 60} >

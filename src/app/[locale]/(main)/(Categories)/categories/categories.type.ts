@@ -4,7 +4,14 @@ export interface CategoriesDataType {
     thumbnailUrl?:string
 };
 export interface CategoriesType {
-    data?: CategoriesDataType[],
-    succeeded?: boolean,
-    message?: string,
+    data: CategoriesDataType[],
+    currentPage:number,
+    totalPages:number
+    totalCount:number
+    meta?:string
+    pageSize:number
+    hasPreviousPage:boolean
+    hasNextPage:boolean
+    messages?:[]
+    succeeded:boolean
 };

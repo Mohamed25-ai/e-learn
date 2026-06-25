@@ -1,5 +1,4 @@
 import createMiddleware from "next-intl/middleware";
-import { nextAuthConfig } from "./next-auth/nextauth.config";
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { routing } from "./i18n/routing";
@@ -7,13 +6,13 @@ import { routing } from "./i18n/routing";
 const intlMiddleware = createMiddleware(routing);
 
 const PROTECTED = ["/cart", "/courses", "/settings", "/createcourse", "/categories",
-    "/create-course", "/profile", "/edit-password"];
+    "/create-course", "/profile", "/edit-password","/categorizedcourse"];
 const AUTH_PAGES = ["/login", "/confirmemail", "/forgot-password"];
 
 export default async function proxy(req: NextRequest) {
     const cookieName = process.env.NODE_ENV === "production" ? '__Secure-next-auth.session-token' : 'next-auth.session-token';
     const { pathname } = req.nextUrl;
-    const token = await getToken({ req, cookieName });
+    const token = await getToken({ req, cookieName, secret: process.env.NEXTAUTH_SECRET });
     const segments = pathname.split("/").filter(Boolean);
     const firstSegment = segments[0];
     const restPath = "/" + segments.slice(1).join("/");
@@ -24,16 +23,10 @@ export default async function proxy(req: NextRequest) {
         );
     }
     const locale = firstSegment;
-    const isProtected = PROTECTED.some((p) => restPath === p || restPath.startsWith(p));
-    const isAuthPage = AUTH_PAGES.some((p) => restPath === p || restPath.startsWith(p));
+    const isProtected = PROTECTED.some(
+    (p) => restPath === p || restPath.startsWith(`${p}/`));
+    const isAuthPage = AUTH_PAGES.some((p) => restPath === p || restPath.startsWith(`${p}/`));
     const isLoggedIn = !!token?.userToken && !token?.error;
-    // if (token?.error) {
-    //     const response = NextResponse.redirect(
-    //         new URL(`/${locale}/login`, req.url)
-    //     );
-    //     response.cookies.delete("next-auth.session-token");
-    //     response.cookies.delete("__Secure-next-auth.session-token");
-    // }
 
     // protected + logged in
     if (isLoggedIn && isProtected) {

@@ -1,17 +1,100 @@
-
+'use client'
 import { CourseByCategoryIdProps, CourseData, CoursesType } from "./coursebycategoryId.types"
 import { getCoursesByCategorieIdAction } from "@/actions/courses/courses.actions";
 import CourseCard from "../CourseCard/CourseCard";
 import { getCoursesByCategorieId } from "@/services/courses/courses.service";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "@/components/ui/button";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import CardsLoader from "../../Loaders/CardsLoader/CardsLoader";
+import { AnimatePresence, motion } from "framer-motion";
+type Direction = 'left' | 'right' | null;
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.08,
+        },
+    },
+};
 
-export default async function CoursesByCategoryId({ categoryid }: CourseByCategoryIdProps) {
-    const courses = await getCoursesByCategorieId(categoryid);
-    console.log("courses", courses);
+const itemVariants = {
+    hidden: {
+        opacity: 0,
+        y: 20,
+    },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.4,
+        },
+    },
+};
+export default function CoursesByCategoryId({ courseData, categoryid, handleNextPagination,
+    handlePreviousPagination, isLoading }: CourseByCategoryIdProps) {
+
+
+    const handleNext = () => {
+        handleNextPagination();
+    };
+
+    const handlePrev = () => {
+
+        handlePreviousPagination();
+    };
     return (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
-            {courses?.data?.data.map((course: CourseData) => (
-                <CourseCard key={course.id} course={course} />
-            ))}
+        <div className={`relative  `}>
+
+            {/* Cards grid with fade transition */}
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={`${categoryid}-${courseData?.currentPage}`}
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit={{ opacity: 0 }}
+                    className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full"
+                >
+                    {isLoading ? (
+                        <CardsLoader length={courseData?.data.length ?? 4} />
+                    ) : (
+                        courseData?.data.map((course: CourseData) => (
+                            <motion.div
+                                key={course.id}
+                                variants={itemVariants}
+                                layout
+                            >
+                                <CourseCard course={course} />
+                            </motion.div>
+                        ))
+                    )}
+                </motion.div>
+            </AnimatePresence>
+
+            {courseData?.hasPreviousPage && <Button 
+                className="absolute top-1/2 -translate-y-1/2 -left-6 z-30
+                w-11 h-11 rounded-full flex items-center justify-center
+                bg-white border-2 border-border)
+                text-foreground) hover:bg-(--primary-light)
+                hover:border-(--primary-color) hover:text-(--primary-color)
+                transition-all duration-200 shadow-sm cursor-pointer"
+                onClick={handlePrev}>
+                <FontAwesomeIcon icon={faAngleLeft} />
+            </Button>}
+            {courseData?.hasNextPage && <Button
+                className="absolute top-1/2 -translate-y-1/2 -right-4
+                w-11 h-11 rounded-full flex items-center justify-center
+                bg-white border-2 border-border)
+                text-foreground) hover:bg-(--primary-light)
+                hover:border-(--primary-color) hover:text-(--primary-color)
+                transition-all duration-200 shadow-sm cursor-pointer"
+                onClick={handleNext}>
+                <FontAwesomeIcon icon={faAngleRight} />
+            </Button>}
         </div>
     );
 }

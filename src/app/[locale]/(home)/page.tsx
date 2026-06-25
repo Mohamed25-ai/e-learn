@@ -8,7 +8,7 @@ export default async function page() {
   return (
     <>
       {/* <CategoriesList categories={categories} /> */}
-      {categories?.data?.map((categorie)=><SwiperCourses key={categorie?.id} name={categorie?.name} id={categorie?.id} />)}
+      {/* {categories?.data?.map((categorie)=><SwiperCourses key={categorie?.id} name={categorie?.name} id={categorie?.id} />)} */}
       {/* <MainSwiper /> */}
     </>
   )

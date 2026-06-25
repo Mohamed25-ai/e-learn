@@ -1,6 +1,4 @@
-export interface CourseByCategoryIdProps{
-    categoryid:string,
-};
+
 export interface CourseData{
     averageRating?:number,
     createdAt?:string,
@@ -15,8 +13,16 @@ export interface CourseData{
     title?:string,
     updatedAt?:string,
     instructorName:string,
-    instructorImage?:string,
+    instructorProfilePictureUrl?:string,
 }
+export interface CourseByCategoryIdProps{
+    categoryid:string,
+    pageNum:number,
+    handlePreviousPagination:()=>void
+    handleNextPagination:()=>void
+    courseData:CoursesType
+    isLoading:boolean
+};
 export interface CoursesType{
     data:CourseData[],
     currentPage:number,

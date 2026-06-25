@@ -31,7 +31,7 @@ export default async function RootLayout({children, params }: {
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} >
       <body  suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
         <NextIntlClientProvider messages={messages} >
-          <SessionProviderWrapper locale={locale}>
+          <SessionProviderWrapper >
             {/* <CheckSession locale={locale} />   */}
             <main className=" bg-background mb-12">
               {children}

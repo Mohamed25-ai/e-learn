@@ -153,7 +153,6 @@ export async function editCourseContent(data:FormData) {
         const res=await api.put(`/Content/Edit`,data,{
             headers: { "Content-Type": "multipart/form-data" },
         });
-        console.log("ADFfffffffffff",res)
         return {
             status: res.status,
             data: res.data
