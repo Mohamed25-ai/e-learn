@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
     images:{
         remotePatterns:[
             {
+                // https://res.cloudinary.com/dgcjvvlwf/raw/upload/v1782228712/Sad_Tom_danjl8.jpg
                 // "https://res.cloudinary.com/dgcjvvlwf/raw/upload/v1782047533/Screenshot_2026-06-18_175924_itvvpq.png"
                 protocol:'https',
                 hostname:'res.cloudinary.com',

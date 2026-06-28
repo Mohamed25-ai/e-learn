@@ -113,10 +113,10 @@ export async function editCourseSection(data: CreateSectionType) {
         throw error;
     }
 };
-export async function getCreatedSectionByCourseId(courseId:string) {
-    const api= await privateServerApi();
+export async function getCreatedSectionByCourseId(courseId: string) {
+    const api = await privateServerApi();
     try {
-        const res=await api.get(`/Section/Paginated?CourseId=${courseId}`);
+        const res = await api.get(`/Section/Paginated?CourseId=${courseId}`);
         return {
             status: res.status,
             data: res.data
@@ -128,29 +128,29 @@ export async function getCreatedSectionByCourseId(courseId:string) {
         throw error;
     }
 }
-export async function createCourseContent(data:FormData) {
-    const api= await privateServerApi();
+export async function createCourseContent(data: FormData) {
+    const api = await privateServerApi();
     try {
-        const res=await api.post(`/Content/Create`,data,{
+        const res = await api.post(`/Content/Create`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         });
-        console.log("ADFfffffffffff",res.data)
+        console.log("ADFfffffffffff", res.data)
         return {
             status: res.status,
             data: res.data
         }
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            console.log("Errorerer",error.response)
+            console.log("Errorerer", error.response)
             return error?.response?.data;
         }
         throw error;
     }
 }
-export async function editCourseContent(data:FormData) {
-    const api= await privateServerApi();
+export async function editCourseContent(data: FormData) {
+    const api = await privateServerApi();
     try {
-        const res=await api.put(`/Content/Edit`,data,{
+        const res = await api.put(`/Content/Edit`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         });
         return {
@@ -159,10 +159,24 @@ export async function editCourseContent(data:FormData) {
         }
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            console.log("Errossssssssssssrerer",error.response)
+            console.log("Errossssssssssssrerer", error.response)
             return error?.response?.data;
         }
         throw error;
     }
 }
-
+export async function getCreatedCourseByCourseId(courseId: string) {
+    const api = await publicApi;
+    try {
+        const res = await api.get(`/Course/GetById/${courseId}`);
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error?.response?.data;
+        }
+        throw error;
+    }
+}

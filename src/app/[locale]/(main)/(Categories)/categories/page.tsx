@@ -6,7 +6,6 @@ import { getLocale } from "next-intl/server";
 export default async function page() {
     const locale = await getLocale();
     const categories = await listAllCategories(locale);
-    console.log("object",categories)
     return (
         <>
             <CategoriesList categories={categories.data}  />

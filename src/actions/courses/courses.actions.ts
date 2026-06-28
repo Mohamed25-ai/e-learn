@@ -1,6 +1,6 @@
 'use server'
 import { getUserToken } from "@/utils/getAuthenticatedUserToken/getAuthenticatedUserToken";
-import { addCourseSection, addInstructorRule, createCourseBasicInformation, createCourseContent, editCourseContent, editCourseSection, getCoursesByCategorieId, getCreatedSectionByCourseId
+import { addCourseSection, addInstructorRule, createCourseBasicInformation, createCourseContent, editCourseContent, editCourseSection, getCoursesByCategorieId, getCreatedCourseByCourseId, getCreatedSectionByCourseId
 
 } from "@/services/courses/courses.service";
 import { CreateSectionType } from "@/services/courses/coursesapi.types";
@@ -30,4 +30,7 @@ export async function editCourseSectionAction(data:CreateSectionType) {
 }
 export async function getCreatedSectionByCourseIdAction(courseId:string) {
     return await getCreatedSectionByCourseId(courseId);
+}
+export async function getCreatedCourseByCourseIdAction(courseId:string) {
+    return await getCreatedCourseByCourseId(courseId);
 }

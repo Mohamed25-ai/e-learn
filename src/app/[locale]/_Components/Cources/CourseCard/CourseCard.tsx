@@ -12,6 +12,7 @@ import { faStar as faStarEmpty } from "@fortawesome/free-regular-svg-icons"
 import COURSEIMAGE from '@/assets/images/Static course image.jpg'
 import PROFILEIMAGE from '@/assets/images/blank-profile-picture-973460_960_720.png'
 import { Link } from "@/i18n/navigation"
+// import { Link } from "@/i18n/navigation"
 function StarRating({ rating }: { rating: number }) {
     return (
         <div className="flex items-center gap-0.5 text-(--warning)">
@@ -50,7 +51,7 @@ export default function CourseCard({ course }: CourseCardProps) {
     const noOfStudents = course.noOfStudents ?? null;
     const updatedAt = course.updatedAt ?? null;
     return (
-        <Link href={`/coursedetails/${id}}`}>
+        <Link href={`/coursedetails/${id}`}>
             <Card className="group/card overflow-hidden rounded-(--radius) border border-border bg-card p-0 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
                 {/* Thumbnail */}
                 <CardHeader className="p-0">

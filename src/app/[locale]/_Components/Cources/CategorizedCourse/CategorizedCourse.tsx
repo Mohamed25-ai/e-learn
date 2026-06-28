@@ -8,8 +8,8 @@ import { CategorizedCourseProps } from './categorizedcourse.types'
 export default function CategorizedCourse({meta,totalCount}:CategorizedCourseProps) {
     return (
         <header>
-            <div className='bg-foreground p-5'>
-                <div className='my-3'>
+            <div className='bg-(--primary-color) dark:bg-foreground p-5'>
+                <div className='my-3 p-1'>
                     <FontAwesomeIcon className='text-(--text-secondary) ' icon={faAngleLeft} />
                     <Link className='text-(--text-secondary) mb-4' href={'/categories'}>All Categories</Link>
                 </div>
