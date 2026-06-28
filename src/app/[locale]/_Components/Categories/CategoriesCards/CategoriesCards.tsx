@@ -51,7 +51,7 @@ export default function CategoriesCards({ categorie }: CategorieCardsProps) {
     setpageNum(1);
 }, [pageSize]);
     return (
-        <section className="w-full px-5 my-2">
+        <section id={categorie.id} className="w-full px-5 my-2">
             <header>
                 <div className="flex justify-between items-center">
 
@@ -70,11 +70,11 @@ export default function CategoriesCards({ categorie }: CategorieCardsProps) {
 
                         {/* Title + stats */}
                         <div className="flex flex-col gap-0.5">
-                            <h2 className="text-foreground font-bold text-xl leading-snug">
+                            <h2 className="text-foreground font-bold md:text-xl leading-snug">
                                 {categorie.name.trim()}
                             </h2>
                             <div className="flex items-center gap-3 text-sm text-(--text-secondary)">
-                                <span> courses</span>
+                                <span>{courses?.data?.totalCount} courses</span>
                                 <span className="w-1 h-1 rounded-full bg-border" />
                                 <span className="flex items-center gap-1.5">
                                     <FontAwesomeIcon icon={faUserGroup} className="text-xs" />
@@ -86,8 +86,8 @@ export default function CategoriesCards({ categorie }: CategorieCardsProps) {
 
                     {/* See all */}
                     <Link
-                        href={`/categorizedcourse/${categorie.id}`}
-                        className="MAIN_BUTTON"
+                        href={`/categorizedcourse/${categorie.id}?pageNumber=1`}
+                        className="MAIN_BUTTON text-nowrap"
                     >
                         See All
                         <FontAwesomeIcon icon={faArrowRight} className="transition-transform duration-200 group-hover:translate-x-1" />

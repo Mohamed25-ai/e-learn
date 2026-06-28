@@ -1,92 +1,3 @@
-// import {
-//     Card,
-//     CardAction,
-//     CardContent,
-//     CardDescription,
-//     CardFooter,
-//     CardHeader,
-//     CardTitle,
-
-// } from "@/components/ui/card"
-// import { CourseCardProps } from "./courcecard.typs"
-// import Image from "next/image"
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-// import { Button } from "@/components/ui/button";
-
-// export default function CourseCard({ course }: CourseCardProps) {
-//     const progress = 65;
-//     const remainingTime = "4h 30m remaining";
-//     const hasImage = course.instructorImage;
-//     return (
-//         <Card className="group/card  overflow-hidden rounded-(--radius) border border-border bg-card p-0 shadow-sm transition-all duration-300 hover:shadow-lg">
-//             <CardHeader className="p-0">
-//                 <div className="relative aspect-video w-full overflow-hidden">
-//                     <Image
-//                         src={course?.thumbnail || "/images/course-placeholder.png"}
-//                         alt={course?.title || "Course image"}
-//                         fill
-//                         className="object-cover transition-transform duration-300 group-hover/card:scale-105"
-//                     />
-//                 </div>
-//             </CardHeader>
-
-//             <CardContent className="group/card space-y-3 p-4">
-//                 <CardTitle className="px-0.5 line-clamp-2 text-sm font-semibold text-foreground group-hover/card:text-(--primary-color) transition-colors">
-//                     {course?.title}
-//                 </CardTitle>
-
-//                 <CardDescription className="line-clamp-2 text-xs text-(--text-secondary)">
-//                     {course?.description}
-//                 </CardDescription>
-
-//                 <div className="flex items-center gap-x-2">
-//                     <div className="relative h-6 w-6 rounded-full border border-border overflow-hidden flex items-center justify-center bg-(--primary-light) text-(--primary-color) text-xs font-bold">
-//                         {hasImage ? (
-//                             <Image
-//                                 src={course.instructorImage ?? ""}
-//                                 alt={course.instructorName}
-//                                 fill
-//                                 className="object-cover"
-//                             />
-//                         ) : (
-//                             course?.instructorName?.charAt(0) || "U"
-//                         )}
-//                     </div>
-
-//                     <p className="text-xs font-medium text-(--text-secondary)">
-//                         {course?.instructorName || "Dr. Angela Yu"}
-//                     </p>
-//                 </div>
-
-//                 <div className="flex items-center gap-2 text-xs">
-//                     <span className="font-semibold text-(--warning)">
-//                         {course?.averageRating ?? "0.0"}
-//                     </span>
-//                     <span className="text-(--text-muted)">Rating</span>
-//                 </div>
-
-//                 <div className="space-y-1 pt-2">
-//                     <div className="flex items-center justify-between text-xs">
-//                         <span className="text-(--text-secondary)">Progress</span>
-//                         <span className="font-semibold text-foreground">{progress}%</span>
-//                     </div>
-
-//                     <div className="h-2 w-full rounded-full bg-border">
-//                         <div
-//                             className="h-full rounded-full bg-(--primary-color) transition-all"
-//                             style={{ width: `${progress}%` }}
-//                         />
-//                     </div>
-//                 </div>
-//                 <div className="flex items-center gap-2 text-xs text-(--text-muted)">
-//                     <span>{remainingTime}</span>
-//                 </div>
-//             </CardContent>
-
-//         </Card>
-//     );
-// }
 import {
     Card,
     CardContent,
@@ -94,12 +5,13 @@ import {
 } from "@/components/ui/card"
 import { CourseCardProps } from "./courcecard.typs"
 import Image from "next/image"
-import Link from "next/link"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faClock, faCartShopping, faSignal, faChalkboardUser } from "@fortawesome/free-solid-svg-icons"
 import { faStar, faStarHalfStroke } from "@fortawesome/free-solid-svg-icons"
 import { faStar as faStarEmpty } from "@fortawesome/free-regular-svg-icons"
-
+import COURSEIMAGE from '@/assets/images/Static course image.jpg'
+import PROFILEIMAGE from '@/assets/images/blank-profile-picture-973460_960_720.png'
+import { Link } from "@/i18n/navigation"
 function StarRating({ rating }: { rating: number }) {
     return (
         <div className="flex items-center gap-0.5 text-(--warning)">
@@ -125,27 +37,27 @@ export default function CourseCard({ course }: CourseCardProps) {
     const id = course?.id ?? "";
     const price = course?.price ?? 0;
     const discountPercentage = course?.discountPercentage ?? 0;
-
     const hasDiscount = discountPercentage > 0;
-
     const discountedPrice = hasDiscount
-        ? price - (price * discountPercentage) / 100
-        : price;
-
+        ? price - (price * discountPercentage) / 100 : price;
     const instructorName = course?.instructorName ?? "Unknown Instructor";
-    const instructorImage = course?.instructorProfilePictureUrl??"";
-
-    const slug = title.toLowerCase().replace(/\s+/g, "-");
+    const instructorImage = course?.instructorProfilePictureUrl ??PROFILEIMAGE;
+    const courseImage = course?.thumbnail ?? COURSEIMAGE;
+    const courseDescripition = course.description ?? ""
+    const courseStatus = course.status ?? "";
+    const averageRating = course.averageRating ?? null;
+    const ratingCount = course.ratingCount ?? null;
+    const noOfStudents = course.noOfStudents ?? null;
+    const updatedAt = course.updatedAt ?? null;
     return (
-        <Link href={`/courses/${course.id}-${title.toLowerCase().replace(/\s+/g, '-')}`}>
+        <Link href={`/coursedetails/${id}}`}>
             <Card className="group/card overflow-hidden rounded-(--radius) border border-border bg-card p-0 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
-
                 {/* Thumbnail */}
                 <CardHeader className="p-0">
                     <div className="relative aspect-video w-full overflow-hidden">
                         <Image
-                            src={course?.thumbnail || "/images/course-placeholder.png"}
-                            alt={course?.title || "Course image"}
+                            src={courseImage}
+                            alt={title}
                             fill
                             className="object-cover transition-transform duration-300 group-hover/card:scale-105"
                         />
@@ -170,30 +82,30 @@ export default function CourseCard({ course }: CourseCardProps) {
                         <div className="relative h-5 w-5 rounded-full border border-border overflow-hidden flex items-center justify-center bg-(--primary-light) text-(--primary-color) text-xs font-bold shrink-0">
                             {instructorImage ? (
                                 <Image
-                                    src={course.instructorProfilePictureUrl??""}
-                                    alt={course.instructorName}
+                                    src={instructorImage}
+                                    alt={instructorName}
                                     fill
                                     className="object-cover"
                                 />
                             ) : (
-                                course?.instructorName?.charAt(0) || "U"
+                                instructorName.charAt(0) || "U"
                             )}
                         </div>
                         <p className="text-xs text-(--primary-color) font-medium truncate">
-                            {course?.instructorName}
+                            {instructorName}
                         </p>
                     </div>
 
                     {/* Rating */}
-                    {course?.averageRating != null && (
+                    {averageRating != null && (
                         <div className="flex items-center gap-1.5 text-xs">
                             <span className="font-bold text-(--warning)">
-                                {Number(course.averageRating).toFixed(1)}
+                                {Number(averageRating).toFixed(1)}
                             </span>
-                            <StarRating rating={course.averageRating} />
+                            <StarRating rating={averageRating} />
                             {course?.ratingCount != null && (
                                 <span className="text-(--text-muted)">
-                                    ({course.ratingCount.toLocaleString()})
+                                    ({averageRating.toLocaleString()})
                                 </span>
                             )}
                         </div>
@@ -262,10 +174,10 @@ export default function CourseCard({ course }: CourseCardProps) {
                     </div>
 
                     {/* Updated at */}
-                    {course?.updatedAt && (
+                    {updatedAt && (
                         <p className="text-[10px] text-(--text-muted) flex items-center gap-1">
                             <FontAwesomeIcon icon={faSignal} className="text-[10px]" />
-                            Updated {new Date(course.updatedAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                            Updated {new Date(updatedAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                         </p>
                     )}
 

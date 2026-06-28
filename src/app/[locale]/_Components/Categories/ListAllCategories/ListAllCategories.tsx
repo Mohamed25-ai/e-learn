@@ -2,6 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowTrendUp, faCode, faUserGroup } from "@fortawesome/free-solid-svg-icons"
 import { ListAllCategoriesProps } from './listallcategories.types'
+import { Link } from '@/i18n/navigation'
 
 export default function ListAllCategories({ categorie }: ListAllCategoriesProps) {
     function splitCategoryName(name: string) {
@@ -21,7 +22,7 @@ export default function ListAllCategories({ categorie }: ListAllCategoriesProps)
                     const [firstLine, secondLine] = splitCategoryName(categorie.name);
                     return (
                         (
-                            <div
+                            <Link href={`#${categorie.id}`}
                                 key={categorie.id}
                                 className='bg-white p-5 rounded-2xl border-2 border-border flex flex-col gap-4
                                             transition-all duration-200 hover:-translate-y-1
@@ -69,7 +70,7 @@ export default function ListAllCategories({ categorie }: ListAllCategoriesProps)
                                         students
                                     </span>
                                 </div>
-                            </div>
+                            </Link>
                         ))
                 })}
             </div>

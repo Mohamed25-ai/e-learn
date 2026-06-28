@@ -36,14 +36,10 @@ const itemVariants = {
 };
 export default function CoursesByCategoryId({ courseData, categoryid, handleNextPagination,
     handlePreviousPagination, isLoading }: CourseByCategoryIdProps) {
-
-
     const handleNext = () => {
         handleNextPagination();
     };
-
     const handlePrev = () => {
-
         handlePreviousPagination();
     };
     return (
