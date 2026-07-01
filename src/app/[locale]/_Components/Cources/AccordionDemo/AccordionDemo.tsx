@@ -13,7 +13,7 @@ export function AccordionDemo({contentData,section}:AccordionDemoProps) {
     function handleAccordionValue(value:string){
         setaccordionValue(value)
     }
-
+    const sectionid=section.id??""
     return (
         <Accordion
             type="single"
@@ -22,8 +22,8 @@ export function AccordionDemo({contentData,section}:AccordionDemoProps) {
             onValueChange={handleAccordionValue}
             className=" md:w-3/4 "
         >
-            <AccordionItem className="border my-5  rounded-lg" value={section.id}>
-                    <AccordionTrigger  className={`${accordionValue==section?.id&&"bg-(--primary-light) "} px-2`}>{section.title}</AccordionTrigger>
+            <AccordionItem className="border my-5  rounded-lg" value={section.id||""}>
+                    <AccordionTrigger  className={`${accordionValue==sectionid&&"bg-(--primary-light) "} px-2`}>{section.title||""}</AccordionTrigger>
                     {contentData.map((content)=>(<AccordionContent className="p-3">
                         <div className="bg-amber-200">
                             <h2>{content.title}</h2>

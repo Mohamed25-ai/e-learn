@@ -7,7 +7,7 @@ export default async function CoursesAccordionWrapper({data}:CoursesAccordionWra
     const contents=await getCourseContentAction(data.id)
     return (
         <div>
-            <AccordionDemo section={data} contentData={contents?.data} /> 
+            <AccordionDemo section={data||{}} contentData={contents?.data||[]} /> 
         </div>
     )
 }
