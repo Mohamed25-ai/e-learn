@@ -51,7 +51,7 @@ export default function CourseCard({ course }: CourseCardProps) {
     const noOfStudents = course.noOfStudents ?? null;
     const updatedAt = course.updatedAt ?? null;
     return (
-        <Link href={`/coursedetails/${id}`}>
+        <Link href={`/coursedetails/${id}/overview`}>
             <Card className="group/card overflow-hidden rounded-(--radius) border border-border bg-card p-0 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
                 {/* Thumbnail */}
                 <CardHeader className="p-0">

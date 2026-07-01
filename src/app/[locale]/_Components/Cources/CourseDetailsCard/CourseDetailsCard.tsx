@@ -28,7 +28,7 @@ export default function CourseDetailsCard({ data }: CourseDetailsProps) {
     ]
 
     return (
-        <div className='px-5 '>
+        <div className=' p-5  md:px-5 '>
             <Card className="overflow-hidden border border-border shadow-md rounded-2xl p-0">
                 {/* Thumbnail */}
                 <CardHeader className="p-0">

@@ -13,7 +13,7 @@ export default function CourseDetailsHeader({ data }: CourseDetailsHeaderProps) 
                 {data?.title}
             </h1>
             {/* Description */}
-            <p className='text-white/70 mt-3 text-sm leading-relaxed max-w-2xl'>
+            <p className='text-white/70 whitespace-normal wrap-break-word mt-3 text-sm leading-relaxed max-w-2xl'>
                 {data?.description}
             </p>
             {/* Overview */}

@@ -180,3 +180,33 @@ export async function getCreatedCourseByCourseId(courseId: string) {
         throw error;
     }
 }
+export async function getCourseSection(courseId: string) {
+    const api = await publicApi;
+    try {
+        const res = await api.get(`/Section/Paginated?CourseId=${courseId}`);
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error?.response?.data;
+        }
+        throw error;
+    }
+}
+export async function getCourseContent(sectionId: string) {
+    const api = await privateServerApi();
+    try {
+        const res = await api.get(`/Content/List?SectionId=${sectionId}`);
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error?.response?.data;
+        }
+        throw error;
+    }
+}
