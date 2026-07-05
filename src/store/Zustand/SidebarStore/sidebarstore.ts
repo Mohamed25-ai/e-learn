@@ -6,3 +6,8 @@ export const useSidebar = create<SidebarStoreType>((set) => ({
     setOpen: (open: boolean) => set({ isOpen: open }),
     toggle: () => set((s) => ({ isOpen: !s.isOpen })),
 }));
+export const useCourseLearningSidebarToggler=create<SidebarStoreType>((set)=>({
+    isOpen:true,
+    setOpen:(value:boolean)=>set({isOpen:value}),
+    toggle: () => set((s) => ({ isOpen: !s.isOpen })),
+}))

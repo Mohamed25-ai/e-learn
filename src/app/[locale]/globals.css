@@ -396,6 +396,11 @@
   background-color: #b3d4fc;
   color: #000;
 }
+
+/* Custom Classes */
+.customaccordiontrigger{
+  border-radius: 0%;
+}
 /* ------------------------------------- */
 /* [data-sonner-toast] {
   font-family: inherit !important;

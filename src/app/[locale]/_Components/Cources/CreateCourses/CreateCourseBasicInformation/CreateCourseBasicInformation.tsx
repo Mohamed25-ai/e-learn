@@ -19,7 +19,6 @@ export default function CreateCourseBasicInformation({ data }: BasicInformationP
                 </p>
             </header>
             <BasicInformationForm data={data} />
-
         </section>
     );
 }

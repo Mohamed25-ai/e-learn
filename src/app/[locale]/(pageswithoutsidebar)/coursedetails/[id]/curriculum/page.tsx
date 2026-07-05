@@ -7,7 +7,7 @@ export default async function page({params}:layoutProps) {
     const {id}=await params;
     return (
         <div>
-            {<CourseDetailsCurriculum courdeId={id} />}
+            {<CourseDetailsCurriculum courdeId={id} withHeader inPlay={false} />}
         </div>
     )
 }

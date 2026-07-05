@@ -13,6 +13,7 @@ import { CategorizedCoursePaginationProps } from "./categorizedcourse.types"
 import { useRouter } from "@/i18n/navigation"
 import { useTransition } from "react"
 import { ButtonLoader } from "../../_Components/Loaders/ButtonLoader/ButtonLoader"
+import { useLocale } from "next-intl"
 
 export default function CategorizedCoursePagination({ currentPage, hasNextPage, hasPreviousPage,
     totalCount, totalPages, categoryId
@@ -24,6 +25,8 @@ export default function CategorizedCoursePagination({ currentPage, hasNextPage, 
     const allPages = Array.from({ length: totalPages }, (_, i) => i + 1)
     const searchParams = useSearchParams();
     const currentPg = Number(searchParams.get("pageNumber"));
+    const locale = useLocale();
+    const isRtl = locale === 'ar';
     function handlePagination(page: number) {
         const currentPage = Number(searchParams.get("pageNumber"))
         if (currentPage > totalPages) {
@@ -60,10 +63,10 @@ export default function CategorizedCoursePagination({ currentPage, hasNextPage, 
     }
     return (
         <>
-            {hasPagination && <Pagination>
+            {hasPagination && <Pagination dir={isRtl?"rtl":"ltr"}>
                 {isPending && <ButtonLoader size={20} />}
-                {!isPending && <PaginationContent>
-                    <PaginationItem>
+                {!isPending && <PaginationContent >
+                    <PaginationItem >
                         <PaginationPrevious className="cursor-pointer" onClick={handlePreviousPage} />
                     </PaginationItem>
                     {allPages.map((page) => (
@@ -71,8 +74,8 @@ export default function CategorizedCoursePagination({ currentPage, hasNextPage, 
                             {page}
                         </PaginationLink>
                     ))}
-                    <PaginationItem>
-                        <PaginationNext className="cursor-pointer" onClick={handleNextPage} />
+                    <PaginationItem >
+                        <PaginationNext  className="cursor-pointer" onClick={handleNextPage} />
                     </PaginationItem>
                 </PaginationContent>}
             </Pagination>}

@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import { CategoryCombobox } from "./BasicInformationCategoryCombobox";
-import {  useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { BasicInformationFormType, BasicInformationProps } from "./createcoursecbasicinformation.types";
@@ -17,32 +17,35 @@ import { setCourseID, setCreateStep } from "@/store/redux/createcourse/createcou
 import { useAppDispatch } from "@/hooks/hooks";
 import { useRouter } from "@/i18n/navigation";
 import { ButtonLoader } from "../../../Loaders/ButtonLoader/ButtonLoader";
+import CourseObjectives from "./CourseObjectives/CourseObjectives";
 
-
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 export default function BasicInformationForm({ data }: BasicInformationProps) {
     const dispatch = useAppDispatch();
-    const router=useRouter();
+    const router = useRouter();
     const t = useTranslations("Course");
     const [thumbnail, setThumbnail] = useState<File | null>(null);
     const [isLoading, setisLoading] = useState(false);
     const [preview, setPreview] = useState<string | null>(null);
     const imageInput = useRef<HTMLInputElement>(null)
-    const { control, handleSubmit, setValue, setError, formState } = useForm<BasicInformationFormType>({
+    const basicInformationForm = useForm<BasicInformationFormType>({
         defaultValues: {
             Thumbnail: undefined,
             Title: '',
             Description: '',
+            Objectives: [],
+            TotalHours: undefined,
             Price: '',
             DiscountPercentage: '',
             CategoryId: ''
         },
         mode: "onChange"
     });
+    const { control, handleSubmit, setValue, setError, formState } = basicInformationForm
     const { errors } = formState;
     function handleImagePreview(file: File) {
-        if (file.size > 5 * 1024 * 1024) { // 5MB
-            setError("Thumbnail", { message: "Image must be less than 5MB" });
-            return false;
+        if (!file?.type.startsWith("image/")) {
+        return setError("Thumbnail", { message: "Only image files are allowed." });
         }
         const imageUrl = URL.createObjectURL(file);
         setPreview(imageUrl);
@@ -58,9 +61,23 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
         setValue("Thumbnail", null);
         setError("Thumbnail", { message: t("createcourse.thumbnail.required") });
     }
-    function cancelFirstStep(){
+    function cancelFirstStep() {
         router.push('/');
     }
+    function handleObjectivesValidation(value: string[]) {
+        const realValues = value.filter(
+            (val) => val != null && val.trim() !== ""
+        );
+        const realValuesLength = value.filter((val) => val.length > 15)
+        if (realValues.length < 3) {
+            return t("createcourse.objectives.minCount");
+        }
+        if (realValuesLength.length < 3) {
+            return t("createcourse.objectives.minLength");
+        }
+        return true
+    }
+
     async function handleBasicInformationStep(data: BasicInformationFormType) {
         setisLoading(true);
         const formdata = new FormData();
@@ -70,9 +87,14 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
         formdata.append("Title", data.Title);
         formdata.append("Description", data.Description);
         formdata.append("Price", data.Price);
+        data.Objectives?.forEach((objective) => {
+            formdata.append("Objectives", objective);
+        });
+        formdata.append("TotalHours", String(data.TotalHours));
         data.DiscountPercentage ? formdata.append("DiscountPercentage", data.DiscountPercentage) : formdata.append("DiscountPercentage", "0");
         formdata.append("CategoryId", data.CategoryId);
         const res = await createCourseBasicInformationAction(formdata);
+        console.log("res", res)
         if (res.status === 200) {
             dispatch(setCreateStep(1));
             dispatch(setCourseID(res?.data));
@@ -93,7 +115,7 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                         <span
                             onClick={handleClearImagePreview}
                             className="z-20 absolute text-foreground bg-(--error) right-10 top-10 flex items-center justify-center w-7 h-7 rounded-full cursor-pointer transition-colors"
-                            // style={{ backgroundColor: "", color: "var(--primary-foreground)" }}
+                        // style={{ backgroundColor: "", color: "var(--primary-foreground)" }}
                         >
                             <FontAwesomeIcon icon={faXmark} size="sm" />
                         </span>
@@ -124,7 +146,17 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                             <Controller
                                 name="Thumbnail"
                                 control={control}
-                                rules={{ validate: (value) => (!value || value === null ? t("createcourse.thumbnail.required") : true) }}
+                                rules={{
+                                    validate: (value) => {
+                                        (!value || value === null ? t("createcourse.thumbnail.required") : true)
+                                        if (!value?.type.startsWith("image/")) {
+                                            return "Only image files are allowed.";
+                                        }
+                                        if (value.size > MAX_FILE_SIZE) {
+                                            return "Maximum size is 5 MB";
+                                        }
+                                    }
+                                }}
                                 render={({ field }) => {
                                     return (
                                         <Input
@@ -158,10 +190,8 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                         )}
                     </Label>
                 </CardHeader>
-
                 <CardContent className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-
                         {/* Title */}
                         <div className="space-y-2 md:col-span-2">
                             <Label htmlFor="title" className="LABEL_STYLE ">
@@ -190,7 +220,6 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                                 </p>
                             )}
                         </div>
-
                         {/* Description */}
                         <div className="space-y-2 md:col-span-2">
                             <Label htmlFor="description" className="LABEL_STYLE">
@@ -201,7 +230,8 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                                 control={control}
                                 rules={{
                                     required: { value: true, message: t("createcourse.description.required") },
-                                    minLength: { value: 10, message: t("createcourse.description.minLength") },
+                                    minLength: { value: 100, message: t("createcourse.description.minLength") },
+                                    maxLength: { value: 500, message: t("createcourse.description.maxLength") },
                                 }}
                                 render={({ field }) => (
                                     <Textarea
@@ -218,7 +248,30 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                                 </p>
                             )}
                         </div>
-
+                        {/* {Objectives} */}
+                        <div className="space-y-2 md:col-span-2">
+                            <Label htmlFor="Objectives" className="LABEL_STYLE flex flex-col items-start">
+                                {t("createcourse.objectives.label")}
+                                <p>{t("createcourse.objectives.description")}</p>
+                            </Label>
+                            <Controller
+                                name="Objectives"
+                                control={control}
+                                rules={{
+                                    required: { value: true, message: t("createcourse.objectives.required") },
+                                    validate: (value) => handleObjectivesValidation(value || [])
+                                }}
+                                render={({ field }) => (
+                                    <CourseObjectives
+                                        onChange={field.onChange} />
+                                )}
+                            />
+                            {errors.Objectives && (
+                                <p className="text-sm" style={{ color: "var(--error)" }}>
+                                    {errors.Objectives.message}
+                                </p>
+                            )}
+                        </div>
                         {/* Price */}
                         <div className="space-y-2">
                             <Label htmlFor="price" className={"LABEL_STYLE"}>
@@ -234,7 +287,7 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                                 render={({ field }) => (
                                     <div className="relative">
                                         <span className={`absolute start-3 top-1/2 -translate-y-1/2 text-sm
-                    ${errors.Price ? "text-(--error)" : "text-muted-foreground"}`}>
+                                    ${errors.Price ? "text-(--error)" : "text-muted-foreground"}`}>
                                             {t("createcourse.price.currency")}
                                         </span>
                                         <Input
@@ -282,7 +335,41 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                                 )}
                             />
                         </div>
+                        {/* {Total hours} */}
+                        <div className="space-y-2 md:col-span-2">
+                            <Label htmlFor="TotalHours" className="LABEL_STYLE ">
+                                {t("createcourse.totalHours.label")}
+                            </Label>
+                            <Controller
+                                name="TotalHours"
+                                control={control}
+                                rules={{
+                                    required: { value: true, message: t("createcourse.totalHours.required") },
+                                    min: { value: 0, message: t("createcourse.totalHours.min") },
+                                }}
+                                render={({ field }) => (
+                                    <div className="relative">
+                                        <Input
+                                            id="TotalHours"
+                                            type="number"
 
+                                            placeholder="0"
+                                            className="INPUT_STYLE pe-8"
+                                            {...field}
+
+                                        />
+                                        <span className="absolute end-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
+                                            H
+                                        </span>
+                                    </div>
+                                )}
+                            />
+                            {errors.TotalHours && (
+                                <p className="text-sm" style={{ color: "var(--error)" }}>
+                                    {errors.TotalHours.message}
+                                </p>
+                            )}
+                        </div>
                         {/* Category */}
                         <div className="space-y-2 md:col-span-2">
                             <Label className="LABEL_STYLE">
@@ -326,9 +413,9 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
                             disabled={isLoading || !formState.isValid}
                             className="MAIN_BUTTON my-0 py-2.5 px-6 text-(--primary-color) flex items-center gap-2 transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-xs"
                         >
-                            {isLoading&&<span className="py-2.5 px-6" ><ButtonLoader /></span>}
-                            {!isLoading&&t("createcourse.actions.submit")}
-                            {!isLoading&&<ArrowRight className="h-4 w-4 rtl:rotate-180" />}
+                            {isLoading && <span className="py-2.5 px-6" ><ButtonLoader /></span>}
+                            {!isLoading && t("createcourse.actions.submit")}
+                            {!isLoading && <ArrowRight className="h-4 w-4 rtl:rotate-180" />}
                         </Button>
                     </div>
                 </CardContent>

@@ -4,13 +4,14 @@ import { CategoriesListProps } from "./categorieslist.type";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CategoriesOverview from "../CategoriesOverview/CategoriesOverview";
-import ListAllCategories from "../ListAllCategories/ListAllCategories";
-
-export default async function CategoriesList({ categories }: CategoriesListProps) {
-    // const { data } = categories;
+import ListAllCategories from "../ListAllCategoriesBadges/ListAllCategories";
+import { getLocale } from 'next-intl/server';
+export default async function CategoriesList({ categories,inLandingPage }: CategoriesListProps) {
+    const locale = await getLocale();
+    const isRtl = locale === 'ar';
     
     return (
-        <>
+        <div dir={isRtl ? "rtl" : "ltr"}>
             <header className="p-5 flex justify-between items-center">
                 <div>
                     <h2 className="text-4xl font-bold leading-tight text-foreground">
@@ -34,9 +35,9 @@ export default async function CategoriesList({ categories }: CategoriesListProps
             </header>
             <div className="px-5">
                 <CategoriesOverview />
-                <ListAllCategories categorie={categories?.data} />
+                <ListAllCategories categories={categories} inLandingPage={inLandingPage} />
             </div>
-            {categories?.data?.map((categorie) => <CategoriesCards key={categorie?.id} categorie={categorie} />)}
-        </>
+            {!inLandingPage&&categories.data?.map((categorie) => <CategoriesCards key={categorie?.id} categorie={categorie} />)}
+        </div>
     )
 }

@@ -9,11 +9,12 @@ export interface CourseData{
     price?:number,
     ratingCount?:number,
     status?:string,
-    thumbnail?:string,
+    thumbnailUrl?:string,
     title?:string,
     updatedAt?:string,
     instructorName:string,
     instructorProfilePictureUrl?:string,
+    objectives:[],
 }
 export interface CourseByCategoryIdProps{
     categoryid:string,

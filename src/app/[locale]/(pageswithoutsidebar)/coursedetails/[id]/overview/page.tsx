@@ -9,7 +9,7 @@ export default async function page({params}:layoutProps) {
       const courseDeatils = await getCreatedCourseByCourseIdAction(id);
   return (
     <div>
-      {<CourseDetailsOverview data={courseDeatils?.data} />}
+      {<CourseDetailsOverview data={courseDeatils?.data}  />}
     </div>
   )
 }

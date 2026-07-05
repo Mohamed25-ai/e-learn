@@ -9,7 +9,7 @@ import { Watch } from 'react-hook-form';
 const uploadConfig: { type: string, label: string; hint: string, icon: React.ReactNode }[] = [
     { type: "Document", label: "Click to upload File", hint: "Video, Pdf, or image (max 50MB)", icon: <FontAwesomeIcon size={"xl"} icon={faFile} /> },
 ];
-export default function FilesField({ onChange, setfieldValue, isFieldHasError,isEditContent
+export default function FilesField({ onChange, setfieldValue, isFieldHasError, isEditContent
     , setisFileExist, setFieldError, isContentAddedBefore }: FilesFieldPropsType) {
     const [filePreview, setfilePreview] = useState<string | null>(null)
     const [file, setfile] = useState<File | null>(null)
@@ -17,17 +17,18 @@ export default function FilesField({ onChange, setfieldValue, isFieldHasError,is
     //     (item) => item.type === selectedFileType
     // );
     const fileType = file?.type.split("/")[0];
-    const validType=file?.type.split("/")[0]=="video"||file?.type.split("/")[0]==="image"||file?.type=="application/pdf"
-    const disableCancel = !isContentAddedBefore&&validType;
+    const validType = file?.type.split("/")[0] == "video" || file?.type.split("/")[0] === "image" || file?.type == "application/pdf"
+    const disableCancel = !isContentAddedBefore && validType;
     function handleFilePreview(file: File) {
         const filePreview = URL.createObjectURL(file);
-        if(file.type.split("/")[0]=="video"||file.type.split("/")[0]==="image"||file.type=="application/pdf"){
+        if (file.type.split("/")[0] == "video" || file.type.split("/")[0] === "image" || file.type == "application/pdf") {
             setfilePreview(filePreview)
             return
         }
         return
     }
     function handleSetFile(e: React.ChangeEvent<HTMLInputElement>) {
+
         const file = e.target.files?.[0];
         if (!file) return;
         onChange(file);
@@ -43,15 +44,15 @@ export default function FilesField({ onChange, setfieldValue, isFieldHasError,is
             setfile(null)
             setisFileExist(false)
         }
-        if(isEditContent){
-            setFieldError("File",{type:undefined})
+        if (isEditContent) {
+            setFieldError("File", { type: undefined })
         }
     }
     return (
         <div className="relative  ">
             {file && disableCancel && <span
                 onClick={handleClosePreview}
-                className="z-50 absolute  text-foreground bg-(--error) right-0 top-0 flex items-center justify-center w-7 h-7 rounded-full cursor-pointer transition-colors"
+                className="z-20 absolute  text-foreground bg-(--error) right-0 top-0 flex items-center justify-center w-7 h-7 rounded-full cursor-pointer transition-colors"
             // style={{ backgroundColor: "", color: "var(--primary-foreground)" }}
             >
                 {<FontAwesomeIcon icon={faXmark} size="sm" />}

@@ -35,7 +35,7 @@ export default function CourseDetailsCard({ data }: CourseDetailsProps) {
                     <div className="relative w-full aspect-video overflow-hidden group">
                         <Image
                             fill
-                            src={data?.thumbnail || COURSEIMAGE}
+                            src={data?.thumbnailUrl || COURSEIMAGE}
                             alt={data?.title || 'Course thumbnail'}
                             className="object-cover"
                         />

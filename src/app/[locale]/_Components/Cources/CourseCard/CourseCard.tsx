@@ -43,7 +43,7 @@ export default function CourseCard({ course }: CourseCardProps) {
         ? price - (price * discountPercentage) / 100 : price;
     const instructorName = course?.instructorName ?? "Unknown Instructor";
     const instructorImage = course?.instructorProfilePictureUrl ??PROFILEIMAGE;
-    const courseImage = course?.thumbnail ?? COURSEIMAGE;
+    const courseImage = course?.thumbnailUrl ?? COURSEIMAGE;
     const courseDescripition = course.description ?? ""
     const courseStatus = course.status ?? "";
     const averageRating = course.averageRating ?? null;

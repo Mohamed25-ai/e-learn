@@ -210,3 +210,18 @@ export async function getCourseContent(sectionId: string) {
         throw error;
     }
 }
+export async function getCourseContentById(contentId: string) {
+    const api = await privateServerApi();
+    try {
+        const res = await api.get(`/Content/GetById/${contentId}`);
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error?.response?.data;
+        }
+        throw error;
+    }
+}

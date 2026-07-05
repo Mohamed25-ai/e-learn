@@ -1,3 +1,5 @@
 export type CourseDetailsCurriculumProps={
-    courdeId:string
+    courdeId:string,
+    withHeader?:boolean
+    inPlay:boolean
 }

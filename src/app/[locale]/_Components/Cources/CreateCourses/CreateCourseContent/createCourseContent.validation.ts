@@ -92,11 +92,12 @@ export const sectionRules: RegisterOptions<SubmitContentFormType, "SectionId"> =
 //         return "Only PDF, image, or video files are allowed.";
 //     },
 // });
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 export const getFileRules = (
     isEdit: boolean
 ): RegisterOptions<SubmitContentFormType, "File"> => ({
     required: isEdit ? false : "File is required",
-
     validate: (file) => {
         if (!file) {
             // No file selected during edit -> valid
@@ -105,7 +106,9 @@ export const getFileRules = (
             // No file selected during create -> invalid
             return "File is required";
         }
-
+        if(file.size>MAX_FILE_SIZE){
+            return "Maximum size is 5 MB";
+        }
         const type = file.type;
 
         if (

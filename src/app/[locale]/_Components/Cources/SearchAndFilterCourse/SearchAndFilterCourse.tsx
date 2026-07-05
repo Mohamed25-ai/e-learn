@@ -14,15 +14,18 @@ import { Loader2 } from "lucide-react";
 export function SearchAndFilterCourse({
     currentPage,
 }: SearchAndFilterCourseProps) {
+    const [isPending, startTransition] = useTransition();
     const searchInput = useRef<HTMLInputElement | null>(null);
     const router = useRouter();
     const searchParams = useSearchParams();
 
     function handleSearchCourse() {
         const params = new URLSearchParams(searchParams.toString());
-        const searchData = searchInput.current?.value;
+        const searchData = searchInput.current?.value.trim();
         params.set("searchCourse", searchData || "");
-        router.push(`?${params.toString()}`);
+        startTransition(() => {
+            router.push(`?${params.toString()}`);
+        });
     }
     return (
         <div className="flex items-center p-2">
@@ -35,9 +38,9 @@ export function SearchAndFilterCourse({
                             className="INPUT_STYLE bg-white py-5 pr-10"
                             placeholder="Search Courses..."
                         />
-                        {/* {isPending && (
-                            <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />
-                        )} */}
+                        {isPending && (
+                            <Loader2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin" />
+                        )}
                     </ButtonGroup>
                 </Field>
             </div>

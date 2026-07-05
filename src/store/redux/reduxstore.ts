@@ -5,17 +5,19 @@ import {
 import { combineReducers, configureStore, createAsyncThunk } from "@reduxjs/toolkit";
 import { createCourseReducer } from "./createcourse/createcourseslice";
 import { createCourseApi } from "./api/createCourseApi";
+import { courseLearningSliceReducer } from "./courselearninig/courselearning.slice";
 
 
 const rootReducer = combineReducers({
     createCourse: createCourseReducer,
+    courseLearning:courseLearningSliceReducer,
     [createCourseApi.reducerPath]: createCourseApi.reducer,
 });
 
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["createCourse"],
+    whitelist: ["createCourse","courseLearning"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

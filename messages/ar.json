@@ -1,179 +1,194 @@
 {
-    "Navbar": {
-        "getStarted": "ابدأ الآن"
+  "Navbar": {
+    "getStarted": "ابدأ الآن"
+  },
+  "Home": {},
+  "Auth": {
+    "common": {
+      "login": "تسجيل الدخول",
+      "register": "إنشاء حساب",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "goToRegister": "ليس لديك حساب؟",
+      "goToLogin": "لديك حساب بالفعل؟"
     },
-    "Home": {},
-    "Auth": {
-        "common": {
-            "login": "تسجيل الدخول",
-            "register": "إنشاء حساب",
-            "email": "البريد الإلكتروني",
-            "password": "كلمة المرور",
-            "confirmPassword": "تأكيد كلمة المرور",
-            "goToRegister": "ليس لديك حساب؟",
-            "goToLogin": "لديك حساب بالفعل؟"
-        },
-        "loginPage": {
-            "title": "مرحباً بعودتك",
-            "subtitle": "سجل الدخول إلى حسابك للمتابعة",
-            "forgotPassword": "نسيت كلمة المرور؟",
-            "submitButton": "تسجيل الدخول"
-        },
-        "registerPage": {
-            "title": "إنشاء حساب",
-            "subtitle": "سجل للبدء",
-            "submitButton": "إنشاء حساب"
-        },
-        "forgotPasswordPage": {
-            "title": "نسيت كلمة المرور؟",
-            "subtitle": "أدخل عنوان بريدك الإلكتروني وسنرسل لك رمز تحقق لإعادة تعيين كلمة المرور",
-            "emailLabel": "أدخل بريدك الإلكتروني",
-            "emailPlaceholder": "أدخل بريدك الإلكتروني",
-            "submitButton": "إرسال رمز التحقق",
-            "rememberPassword": "هل تتذكر كلمة المرور؟",
-            "backToLogin": "تسجيل الدخول"
-        },
-        "verifyCodePage": {
-            "title": "التحقق من الرمز",
-            "subtitle": "لقد أرسلنا رمز تحقق مكون من 6 أرقام إلى",
-            "codeLabel": "أدخل رمز التحقق",
-            "digitsEntered": "{count} / 6 أرقام تم إدخالها",
-            "submitButton": "التحقق من الرمز",
-            "didNotReceiveCode": "لم تستلم الرمز؟",
-            "resendCode": "إعادة إرسال الرمز",
-            "resendIn": "إعادة الإرسال خلال {time}",
-            "verifying": "جاري التحقق…"
-        },
-        "confirmEmailPage": {
-            "title": "تأكيد بريدك الإلكتروني",
-            "subtitle": "لقد أرسلنا رمزاً مكوناً من 6 أرقام إلى",
-            "codeLabel": "رمز التحقق",
-            "didNotReceiveCode": "لم تستلمه؟",
-            "resendCode": "إعادة الإرسال",
-            "resendIn": "إعادة الإرسال خلال {time}",
-            "verifying": "جاري التحقق…",
-            "submitButton": "تأكيد البريد الإلكتروني",
-            "successMessage": "تم تأكيد البريد الإلكتروني! جاري التحويل…",
-            "backToLogin": {
-                "prefix": "هل تتذكر كلمة المرور؟",
-                "link": "العودة لتسجيل الدخول"
-            }
-        },
-        "resetPasswordPage": {
-            "title": "إنشاء كلمة مرور جديدة",
-            "subtitle": "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمات المرور المستخدمة سابقاً",
-            "newPasswordLabel": "كلمة المرور الجديدة",
-            "newPasswordPlaceholder": "أدخل كلمة المرور الجديدة",
-            "confirmNewPasswordLabel": "تأكيد كلمة المرور الجديدة",
-            "confirmNewPasswordPlaceholder": "تأكيد كلمة المرور الجديدة",
-            "submitButton": "إعادة تعيين كلمة المرور"
-        },
-        "fields": {
-            "fullName": "الاسم الكامل",
-            "userName": "اسم المستخدم",
-            "email": "البريد الإلكتروني",
-            "password": "كلمة المرور",
-            "confirmPassword": "تأكيد كلمة المرور",
-            "profilePicture": "الصورة الشخصية"
-        },
-        "placeholders": {
-            "fullName": "أدخل اسمك الكامل",
-            "userName": "أدخل اسم المستخدم",
-            "email": "أدخل بريدك الإلكتروني",
-            "password": "أدخل كلمة المرور",
-            "confirmPassword": "أدخل كلمة المرور",
-            "profilePicture": "اختر صورة"
-        },
-        "errors": {
-            "email": {
-                "required": "البريد الإلكتروني مطلوب",
-                "invalid": "الرجاء إدخال عنوان بريد إلكتروني صالح"
-            },
-            "password": {
-                "required": "كلمة المرور مطلوبة",
-                "minLength": "يجب أن تتكون كلمة المرور من {min} أحرف على الأقل",
-                "uppercase": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل",
-                "lowercase": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل",
-                "digit": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
-                "special": "يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل (!@#$%…)",
-                "strength": {
-                    "weak": "ضعيفة",
-                    "fair": "مقبولة",
-                    "good": "جيدة",
-                    "strong": "قوية"
-                }
-            },
-            "confirmPassword": {
-                "required": "الرجاء تأكيد كلمة المرور",
-                "mismatch": "كلمتا المرور غير متطابقتين"
-            },
-            "fullName": {
-                "required": "الاسم الكامل مطلوب",
-                "tooShort": "يجب أن يتكون الاسم الكامل من حرفين على الأقل"
-            },
-            "userName": {
-                "required": "اسم المستخدم مطلوب",
-                "tooShort": "يجب أن يتكون اسم المستخدم من 3 أحرف على الأقل",
-                "invalid": "يمكن أن يحتوي اسم المستخدم على أحرف وأرقام وشرطات سفلية فقط"
-            }
-        }
+    "loginPage": {
+      "title": "مرحباً بعودتك",
+      "subtitle": "سجل الدخول إلى حسابك للمتابعة",
+      "forgotPassword": "نسيت كلمة المرور؟",
+      "submitButton": "تسجيل الدخول"
     },
-    "Course": {
-        "createcourse": {
-            "basicInformation": {
-                "heading": "المعلومات الأساسية",
-                "subheading": "أدخل التفاصيل الأساسية لكورسك"
-            },
-            "thumbnail": {
-                "label": "صورة الكورس",
-                "cta": "انقر لرفع صورة الكورس",
-                "hint": "الحجم الموصى به: 1280×720 بكسل (نسبة 16:9)",
-                "required": "صورة الكورس مطلوبة"
-            },
-            "title": {
-                "label": "العنوان",
-                "placeholder": "أدخل عنوان الكورس",
-                "required": "العنوان مطلوب",
-                "minLength": "يجب أن يكون العنوان 3 أحرف على الأقل",
-                "maxLength": "يجب أن لا يتجاوز العنوان 100 حرف"
-            },
-            "description": {
-                "label": "الوصف",
-                "placeholder": "اكتب وصفًا مختصرًا للكورس",
-                "required": "الوصف مطلوب",
-                "minLength": "يجب أن يكون الوصف 10 أحرف على الأقل"
-            },
-            "price": {
-                "label": "السعر",
-                "currency": "ج.م",
-                "required": "السعر مطلوب",
-                "min": "يجب أن يكون السعر أكبر من 0"
-            },
-            "discount": {
-                "label": "نسبة الخصم (اختياري)"
-            },
-            "category": {
-                "label": "التصنيف",
-                "required": "التصنيف مطلوب"
-            },
-            "actions": {
-                "cancel": "إلغاء",
-                "submit": "حفظ والمتابعة"
-            },
-            "steps": {
-                "basicInformation": {
-                    "title": "المعلومات الأساسية",
-                    "description": "الخطوة 1"
-                },
-                "sectionContent": {
-                    "title": "محتوي الجزء",
-                    "description": "الخطوة 2"
-                },
-                "courseContent": {
-                    "title": "محتوي الكورس",
-                    "description": "الخطوة 3"
-                }
-            }
+    "registerPage": {
+      "title": "إنشاء حساب",
+      "subtitle": "سجل للبدء",
+      "submitButton": "إنشاء حساب"
+    },
+    "forgotPasswordPage": {
+      "title": "نسيت كلمة المرور؟",
+      "subtitle": "أدخل عنوان بريدك الإلكتروني وسنرسل لك رمز تحقق لإعادة تعيين كلمة المرور",
+      "emailLabel": "أدخل بريدك الإلكتروني",
+      "emailPlaceholder": "أدخل بريدك الإلكتروني",
+      "submitButton": "إرسال رمز التحقق",
+      "rememberPassword": "هل تتذكر كلمة المرور؟",
+      "backToLogin": "تسجيل الدخول"
+    },
+    "verifyCodePage": {
+      "title": "التحقق من الرمز",
+      "subtitle": "لقد أرسلنا رمز تحقق مكون من 6 أرقام إلى",
+      "codeLabel": "أدخل رمز التحقق",
+      "digitsEntered": "{count} / 6 أرقام تم إدخالها",
+      "submitButton": "التحقق من الرمز",
+      "didNotReceiveCode": "لم تستلم الرمز؟",
+      "resendCode": "إعادة إرسال الرمز",
+      "resendIn": "إعادة الإرسال خلال {time}",
+      "verifying": "جاري التحقق…"
+    },
+    "confirmEmailPage": {
+      "title": "تأكيد بريدك الإلكتروني",
+      "subtitle": "لقد أرسلنا رمزاً مكوناً من 6 أرقام إلى",
+      "codeLabel": "رمز التحقق",
+      "didNotReceiveCode": "لم تستلمه؟",
+      "resendCode": "إعادة الإرسال",
+      "resendIn": "إعادة الإرسال خلال {time}",
+      "verifying": "جاري التحقق…",
+      "submitButton": "تأكيد البريد الإلكتروني",
+      "successMessage": "تم تأكيد البريد الإلكتروني! جاري التحويل…",
+      "backToLogin": {
+        "prefix": "هل تتذكر كلمة المرور؟",
+        "link": "العودة لتسجيل الدخول"
+      }
+    },
+    "resetPasswordPage": {
+      "title": "إنشاء كلمة مرور جديدة",
+      "subtitle": "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمات المرور المستخدمة سابقاً",
+      "newPasswordLabel": "كلمة المرور الجديدة",
+      "newPasswordPlaceholder": "أدخل كلمة المرور الجديدة",
+      "confirmNewPasswordLabel": "تأكيد كلمة المرور الجديدة",
+      "confirmNewPasswordPlaceholder": "تأكيد كلمة المرور الجديدة",
+      "submitButton": "إعادة تعيين كلمة المرور"
+    },
+    "fields": {
+      "fullName": "الاسم الكامل",
+      "userName": "اسم المستخدم",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "profilePicture": "الصورة الشخصية"
+    },
+    "placeholders": {
+      "fullName": "أدخل اسمك الكامل",
+      "userName": "أدخل اسم المستخدم",
+      "email": "أدخل بريدك الإلكتروني",
+      "password": "أدخل كلمة المرور",
+      "confirmPassword": "أدخل كلمة المرور",
+      "profilePicture": "اختر صورة"
+    },
+    "errors": {
+      "email": {
+        "required": "البريد الإلكتروني مطلوب",
+        "invalid": "الرجاء إدخال عنوان بريد إلكتروني صالح"
+      },
+      "password": {
+        "required": "كلمة المرور مطلوبة",
+        "minLength": "يجب أن تتكون كلمة المرور من {min} أحرف على الأقل",
+        "uppercase": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل",
+        "lowercase": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل",
+        "digit": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
+        "special": "يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل (!@#$%…)",
+        "strength": {
+          "weak": "ضعيفة",
+          "fair": "مقبولة",
+          "good": "جيدة",
+          "strong": "قوية"
         }
+      },
+      "confirmPassword": {
+        "required": "الرجاء تأكيد كلمة المرور",
+        "mismatch": "كلمتا المرور غير متطابقتين"
+      },
+      "fullName": {
+        "required": "الاسم الكامل مطلوب",
+        "tooShort": "يجب أن يتكون الاسم الكامل من حرفين على الأقل"
+      },
+      "userName": {
+        "required": "اسم المستخدم مطلوب",
+        "tooShort": "يجب أن يتكون اسم المستخدم من 3 أحرف على الأقل",
+        "invalid": "يمكن أن يحتوي اسم المستخدم على أحرف وأرقام وشرطات سفلية فقط"
+      }
     }
+  },
+  "Course": {
+    "createcourse": {
+      "basicInformation": {
+        "heading": "المعلومات الأساسية",
+        "subheading": "أدخل التفاصيل الأساسية لكورسك"
+      },
+      "thumbnail": {
+        "label": "صورة الكورس",
+        "cta": "انقر لرفع صورة الكورس",
+        "hint": "الحجم الموصى به: 1280×720 بكسل (نسبة 16:9)",
+        "required": "صورة الكورس مطلوبة"
+      },
+      "title": {
+        "label": "العنوان",
+        "placeholder": "أدخل عنوان الكورس",
+        "required": "العنوان مطلوب",
+        "minLength": "يجب أن يكون العنوان 3 أحرف على الأقل",
+        "maxLength": "يجب أن لا يتجاوز العنوان 100 حرف"
+      },
+      "description": {
+        "label": "الوصف",
+        "placeholder": "اكتب وصفًا مختصرًا للكورس",
+        "required": "الوصف مطلوب",
+        "minLength": "يجب أن يكون الوصف 100 أحرف على الأقل",
+        "maxLength": "يجب أن يكون الوصف اقل من 500 حرف"
+      },
+      "totalHours": {
+        "label": "إجمالي الساعات",
+        "required": "إجمالي الساعات مطلوب",
+        "min": "يجب أن يكون إجمالي الساعات أكبر من 0"
+      },
+      "objectives": {
+        "label": "الأهداف",
+        "description": "اذكر ما سيكون الطلاب قادرين على فعله بعد إتمام هذه الدورة",
+        "required": "الأهداف مطلوبة",
+        "minCount": "الحد الأدنى للأهداف هو 3",
+        "minLength": "يجب ألا يقل طول كل هدف عن 15 حرفًا",
+        "addButton": "+ إضافة هدف",
+        "placeholder": "مثال: بناء REST API من الصفر"
+      },
+      "price": {
+        "label": "السعر",
+        "currency": "ج.م",
+        "required": "السعر مطلوب",
+        "min": "يجب أن يكون السعر أكبر من 0"
+      },
+      "discount": {
+        "label": "نسبة الخصم (اختياري)"
+      },
+      "category": {
+        "label": "التصنيف",
+        "required": "التصنيف مطلوب"
+      },
+      "actions": {
+        "cancel": "إلغاء",
+        "submit": "حفظ والمتابعة"
+      },
+      "steps": {
+        "basicInformation": {
+          "title": "المعلومات الأساسية",
+          "description": "الخطوة 1"
+        },
+        "sectionContent": {
+          "title": "محتوي الجزء",
+          "description": "الخطوة 2"
+        },
+        "courseContent": {
+          "title": "محتوي الكورس",
+          "description": "الخطوة 3"
+        }
+      }
+    }
+  }
 }

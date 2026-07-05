@@ -32,7 +32,8 @@ export default function Navbar() {
     const sidebarToggle = useSidebar((state) => state.toggle);
     const [isOpen, setisOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
-
+    const locale = useLocale(); // Detect locale
+    const isRtl = locale === 'ar'; // Adjust to your RTL language code
     function navtoggle(open: boolean) {
         if (open) {
             if (path === '/') { setisOpen(false); return; }

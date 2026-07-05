@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCoursesByCategorieId } from "@/services/courses/courses.service";
 import { getCoursesByCategorieIdAction } from "@/actions/courses/courses.actions";
-
+import { useLocale } from 'next-intl';
 export default function CategoriesCards({ categorie }: CategorieCardsProps) {
     const [pageNum, setpageNum] = useState(1);
     const [pageSize, setPageSize] = useState(4);
@@ -19,7 +19,8 @@ export default function CategoriesCards({ categorie }: CategorieCardsProps) {
         queryKey: ['getCourseByCategoryId', categorie.id, pageNum, pageSize],
         queryFn: () => getCoursesByCategorieIdAction(categorie.id, pageSize, pageNum)
     })
-    console.log("object", courses)
+    const locale = useLocale();
+    const isRtl = locale === 'ar';
 
     function handlePreviousPagination() {
         if (courses.data?.hasPreviousPage) {
@@ -48,10 +49,10 @@ export default function CategoriesCards({ categorie }: CategorieCardsProps) {
         return () => window.removeEventListener("resize", updatePageSize);
     }, []);
     useEffect(() => {
-    setpageNum(1);
-}, [pageSize]);
+        setpageNum(1);
+    }, [pageSize]);
     return (
-        <section id={categorie.id} className="w-full px-5 my-2">
+        <section dir={isRtl ? "rtl" : "ltr"} id={categorie.id} className="w-full px-5 my-2">
             <header>
                 <div className="flex justify-between items-center">
 

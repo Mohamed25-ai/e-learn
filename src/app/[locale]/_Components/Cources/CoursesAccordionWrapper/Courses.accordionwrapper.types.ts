@@ -1,5 +1,6 @@
 import { SectionData } from "../CoursesByCategoryId/coursebycategoryId.types"
 
 export type CoursesAccordionWrapperProps={
-    data:SectionData
+    data:SectionData,
+    inPlayPage:boolean
 }

@@ -3,69 +3,79 @@ import { CourseDetailsHeaderProps } from './coursedetailsheader.types'
 import Image from 'next/image'
 import PROFILEIMAGE from '@/assets/images/blank-profile-picture-973460_960_720.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar, faUsers, faClock } from '@fortawesome/free-solid-svg-icons'
+import { faStar, faUsers, faClock, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { Link } from '@/i18n/navigation'
 
 export default function CourseDetailsHeader({ data }: CourseDetailsHeaderProps) {
     return (
-        <div className='  px-8 py-10'>
-            {/* Title */}
-            <h1 className='text-white font-extrabold text-3xl leading-snug max-w-3xl'>
-                {data?.title}
-            </h1>
-            {/* Description */}
-            <p className='text-white/70 whitespace-normal wrap-break-word mt-3 text-sm leading-relaxed max-w-2xl'>
-                {data?.description}
-            </p>
-            {/* Overview */}
-            <div className='flex items-center gap-5 mt-5 flex-wrap'>
-                {data?.averageRating != null && (
-                    <div className='flex items-center gap-1.5 text-sm'>
-                        <FontAwesomeIcon icon={faStar} className='text-(--warning)' />
-                        <span className='text-white font-bold'>
-                            {Number(data.averageRating).toFixed(1)}
-                        </span>
-                        {data?.ratingCount != null && (
-                            <span className='text-white/60'>
-                                ({data.ratingCount.toLocaleString()} ratings)
+        <>
+
+            <div className='px-8 py-5'>
+                <div className='mb-4 '>
+
+                    <Link href={`/courses`} className='text-foreground hover:text-white'>
+                        <FontAwesomeIcon className='me-1 ' icon={faArrowLeft} />
+                        Back to courses</Link>
+                </div>
+                {/* Title */}
+                <h1 className='text-white font-extrabold text-3xl leading-snug max-w-3xl'>
+                    {data?.title}
+                </h1>
+                {/* Description */}
+                <p className='text-white/70 whitespace-normal wrap-break-word mt-3 text-sm leading-relaxed max-w-2xl'>
+                    {data?.description}
+                </p>
+                {/* Overview */}
+                <div className='flex items-center gap-5 mt-5 flex-wrap'>
+                    {data?.averageRating != null && (
+                        <div className='flex items-center gap-1.5 text-sm'>
+                            <FontAwesomeIcon icon={faStar} className='text-(--warning)' />
+                            <span className='text-white font-bold'>
+                                {Number(data.averageRating).toFixed(1)}
                             </span>
-                        )}
-                    </div>
-                )}
+                            {data?.ratingCount != null && (
+                                <span className='text-white/60'>
+                                    ({data?.ratingCount.toLocaleString()} ratings)
+                                </span>
+                            )}
+                        </div>
+                    )}
 
-                {data?.noOfStudents != null && (
-                    <div className='flex items-center gap-1.5 text-sm text-white/80'>
-                        <FontAwesomeIcon icon={faUsers} className='text-white/60' />
-                        <span>{data.noOfStudents.toLocaleString()} students</span>
-                    </div>
-                )}
+                    {data?.noOfStudents != null && (
+                        <div className='flex items-center gap-1.5 text-sm text-white/80'>
+                            <FontAwesomeIcon icon={faUsers} className='text-white/60' />
+                            <span>{data.noOfStudents.toLocaleString()} students</span>
+                        </div>
+                    )}
 
-                {/* {data?.duration && (
+                    {/* {data?.duration && (
                     <div className='flex items-center gap-1.5 text-sm text-white/80'>
                         <FontAwesomeIcon icon={faClock} className='text-white/60' />
                         <span>{data.duration} total hours</span>
                     </div>
                 )} */}
 
-            </div>
-
-            {/* Instructor */}
-            <div className='flex items-center gap-3 mt-8'>
-                <div className='relative w-12 h-12 rounded-full overflow-hidden border-2 border-white/30 shrink-0'>
-                    <Image
-                        src={data.instructorProfilePictureUrl || PROFILEIMAGE}
-                        alt={data.instructorName}
-                        fill
-                        className='object-cover'
-                    />
                 </div>
-                <div className='flex flex-col gap-0.5'>
-                    <span className='text-white/60 text-xs'>Instructor</span>
-                    <span className='text-white font-semibold text-sm'>
-                        {data.instructorName}
-                    </span>
-                </div>
-            </div>
 
-        </div>
+                {/* Instructor */}
+                <div className='flex items-center gap-3 mt-8'>
+                    <div className='relative w-12 h-12 rounded-full overflow-hidden border-2 border-white/30 shrink-0'>
+                        <Image
+                            src={data?.instructorProfilePictureUrl || PROFILEIMAGE}
+                            alt={data?.instructorName}
+                            fill
+                            className='object-cover'
+                        />
+                    </div>
+                    <div className='flex flex-col gap-0.5'>
+                        <span className='text-white/60 text-xs'>Instructor</span>
+                        <span className='text-white font-semibold text-sm'>
+                            {data?.instructorName}
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </>
     )
 }

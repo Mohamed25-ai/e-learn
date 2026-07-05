@@ -98,6 +98,7 @@ export default function CourseContentForm({
         setisLoading(false);
         return;
       }
+      setisLoading(false);
     }
     if (!isAddedBefore) {
       const res = await createCourseContentAction(formData);

@@ -8,7 +8,7 @@ export default async function page() {
     const categories = await listAllCategories(locale);
     return (
         <>
-            <CategoriesList categories={categories.data}  />
+            <CategoriesList categories={categories?.data} inLandingPage={false}  />
         </>
     )
 }
