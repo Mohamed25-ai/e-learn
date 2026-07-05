@@ -11,10 +11,9 @@ import CourseLearningVideoScreen from '@/app/[locale]/_Components/Cources/Course
 type layoutProps = {
     children: React.ReactNode,
     params: Promise<{ id: string, locale: string }> // Added locale to params if available
-    searchParams: Promise<{ ToggleSidebar: string }>
 }
 
-export default async function Layout({ children, params, searchParams }: layoutProps) {
+export default async function Layout({ children, params }: layoutProps) {
     const { id } = await params;
     const locale = await getLocale();
     const courseDeatils = await getCreatedCourseByCourseIdAction(id);
