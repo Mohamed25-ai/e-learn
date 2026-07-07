@@ -401,6 +401,42 @@
 .customaccordiontrigger{
   border-radius: 0%;
 }
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: var(--primary-color) !important;
+    background-color: var(--primary-light);
+    transition: all 0.2s ease;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background-color: var(--primary-color);
+    color: white !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 14px !important;
+    font-weight: 700;
+}
+
+.swiper-button-disabled {
+    opacity: 0.3 !important;
+}
+
+.swiper-pagination-bullet {
+    background-color: var(--border) !important;
+    opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: var(--primary-color) !important;
+}
 /* ------------------------------------- */
 /* [data-sonner-toast] {
   font-family: inherit !important;

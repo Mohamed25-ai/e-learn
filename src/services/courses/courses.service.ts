@@ -2,7 +2,7 @@ import axios from "axios";
 import { publicApi } from "../public-api";
 import { privateServerApi } from "../private-server-api";
 import { CreateSectionType } from "./coursesapi.types";
-import { SubmitContentFormType } from "@/app/[locale]/_Components/Cources/CreateCourses/CreateCourseContent/createcoursecontent.types";
+import { CreateCourseContentInputsData, SubmitContentFormType } from "@/app/[locale]/_Components/Cources/CreateCourses/CreateCourseContent/createcoursecontent.types";
 
 const BASE_URL = process.env.BASE_URL;
 export async function addInstructorRule() {
@@ -128,7 +128,7 @@ export async function getCreatedSectionByCourseId(courseId: string) {
         throw error;
     }
 }
-export async function createCourseContent(data: FormData) {
+export async function createCourseContent(data: CreateCourseContentInputsData) {
     const api = await privateServerApi();
     try {
         const res = await api.post(`/Content/Create`, data, {
@@ -147,7 +147,7 @@ export async function createCourseContent(data: FormData) {
         throw error;
     }
 }
-export async function editCourseContent(data: FormData) {
+export async function editCourseContent(data: CreateCourseContentInputsData) {
     const api = await privateServerApi();
     try {
         const res = await api.put(`/Content/Edit`, data, {

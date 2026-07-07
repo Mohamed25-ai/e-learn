@@ -4,7 +4,7 @@ import { addCourseSection, addInstructorRule, createCourseBasicInformation, crea
 
 } from "@/services/courses/courses.service";
 import { CreateSectionType } from "@/services/courses/coursesapi.types";
-import { SubmitContentFormType } from "@/app/[locale]/_Components/Cources/CreateCourses/CreateCourseContent/createcoursecontent.types";
+import { CreateCourseContentInputsData, SubmitContentFormType } from "@/app/[locale]/_Components/Cources/CreateCourses/CreateCourseContent/createcoursecontent.types";
 
 export async function addInstrucorRuleAction() {
     const tok = await getUserToken()??"";
@@ -16,10 +16,10 @@ export async function getCoursesByCategorieIdAction(id:string,pageSize?:number,p
 export async function createCourseBasicInformationAction(data:FormData) {
     return await createCourseBasicInformation(data);
 }
-export async function createCourseContentAction(data:FormData) {
+export async function createCourseContentAction(data:CreateCourseContentInputsData) {
     return await createCourseContent(data);
 }
-export async function editCourseContentAction(data:FormData) {
+export async function editCourseContentAction(data:CreateCourseContentInputsData) {
     return await editCourseContent(data);
 }
 export async function addCourseSectionAction(data:CreateSectionType) {

@@ -10,15 +10,15 @@ import FadeUp from '@/app/[locale]/_Components/Animation/FadeUp';
 import { getLocale } from 'next-intl/server'; // Import this
 export default async function page({ params, searchParams }: CategorizedCourseProps) {
     const param = await params;
-    const { pageSize, pageNumber, searchCourse,filter } = await searchParams;
+    const { pageSize, pageNumber, searchCourse, filter } = await searchParams;
     const locale = await getLocale();
     const isRtl = locale === 'ar'; // Adjust to your RTL language code
-    const pgSize = pageSize || 4;
+    const pgSize = pageSize || 8;
     const pgNumber = pageNumber || 1
-    const searchData=searchCourse||undefined
-    const FilterData=filter||undefined
-    const courses = await getCoursesByCategorieId(param.id, Number(pgSize), Number(pgNumber),FilterData,searchData);
-   return (
+    const searchData = searchCourse || undefined
+    const FilterData = filter || undefined
+    const courses = await getCoursesByCategorieId(param.id, Number(pgSize), Number(pgNumber), FilterData, searchData);
+    return (
         <section dir={isRtl ? 'rtl' : 'ltr'}>
             <FadeUp>
                 <CategorizedCourse
@@ -26,11 +26,11 @@ export default async function page({ params, searchParams }: CategorizedCoursePr
                     totalCount={courses?.data?.totalCount}
                 />
             </FadeUp>
-            
+
             <FadeUp delay={0.1}>
                 <SearchAndFilterCourse currentPage={courses?.data?.currentPage} />
             </FadeUp>
-            
+
             {courses?.data?.data.length === 0 && (
                 <h1 className='flex text-foreground font-bold items-center justify-center'>
                     Not Found Courses
@@ -51,12 +51,12 @@ export default async function page({ params, searchParams }: CategorizedCoursePr
 
             <div className='my-4'>
                 <Suspense>
-                    <CategorizedCoursePagination 
-                        categoryId={param?.id} 
-                        currentPage={courses?.data?.currentPage} 
+                    <CategorizedCoursePagination
+                        categoryId={param?.id}
+                        currentPage={courses?.data?.currentPage}
                         hasNextPage={courses?.data?.hasNextPage}
-                        hasPreviousPage={courses?.data?.hasPreviousPage} 
-                        totalCount={courses?.data?.totalCount} 
+                        hasPreviousPage={courses?.data?.hasPreviousPage}
+                        totalCount={courses?.data?.totalCount}
                         totalPages={courses?.data?.totalPages}
                     />
                 </Suspense>

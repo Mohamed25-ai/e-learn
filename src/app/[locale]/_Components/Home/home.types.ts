@@ -5,3 +5,7 @@ export interface TopCategoriesProps {
     inLandingPage?: boolean
 
 }
+export interface TopCategoriesSwiperProps{
+    categories: CategoriesType,
+    inLandingPage?: boolean
+}

@@ -64,3 +64,13 @@ export interface FieldsErrorMessagePropsType{
     message:string|"Error Happend In Message",
     field:string
 }
+export interface CreateCourseContentInputsData {
+    title: string;
+    sectionId: string;
+    publicId: string;
+    url: string;
+    resourceType: string;
+    format: string;
+    duration?: number;
+    bytes: number;
+}

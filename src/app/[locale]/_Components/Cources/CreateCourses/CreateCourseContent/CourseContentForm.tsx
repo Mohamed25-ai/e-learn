@@ -33,6 +33,10 @@ import { setAddedContent, setCreatedContentId } from "@/store/redux/createcourse
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-hot-toast";
 import { ButtonLoader } from "../../../Loaders/ButtonLoader/ButtonLoader";
+import { uploadCloudinaryFiles } from "@/services/courses/cloudinary.service";
+
+
+
 
 export default function CourseContentForm({
   fromOrder,
@@ -45,8 +49,7 @@ export default function CourseContentForm({
   handleAddedSuccessContent,
 }: CourseContentFormPropsType) {
   const createCourseSote = useAppSelector((state) => state.createCourse);
-  const dispath = useAppDispatch();
-  // const [SelectedFileType, setSelectedFileType] = useState<File | undefined>(undefined);
+  const dispatch = useAppDispatch();
   const [isFileExist, setisFileExist] = useState(false);
   const [isLoading, setisLoading] = useState(false);
   const isCardAddedBrefore = addedContent[fromOrder] === true;
@@ -83,33 +86,62 @@ export default function CourseContentForm({
     data: SubmitContentFormType,
     isEdit: boolean,
   ) {
-    const formData = new FormData();
-    formData.append("Title", data.Title);
-    formData.append("SectionId", data.SectionId);
-    formData.append("File", data.File!);
-    setisLoading(true);
-    const isAddedBefore = createCourseSote.createdContentuccessifuly.includes(fromOrder);
-    if (isAddedBefore && isEdit && editCurrentCard[fromOrder]) {
-      formData.append("id", createCourseSote.createdContentId[fromOrder]!);
-      const res = await editCourseContentAction(formData)
-      if (res.status === 200) {
-        toast.success("Changes Saved Successifuly");
-        handleEditCardContent(false);
-        setisLoading(false);
+    try {
+      setisLoading(true);
+
+      // 1. Upload file to Cloudinary
+      const uploadResult = await uploadCloudinaryFiles(data.File!, {
+        folder: `EduCore`,
+      });
+
+      // 2. Prepare payload for backend
+      const payload = {
+        id: createCourseSote.createdContentId[fromOrder],
+        title: data.Title,
+        sectionId: data.SectionId,
+        publicId: uploadResult.public_id,
+        url: uploadResult.secure_url,
+        resourceType: uploadResult.resource_type,
+        format: uploadResult.format,
+        duration: uploadResult.duration,
+        bytes: uploadResult.bytes,
+      };
+
+      const isAddedBefore =
+        createCourseSote.createdContentuccessifuly.includes(fromOrder);
+
+      // 3. Edit
+      if (isAddedBefore && isEdit && editCurrentCard[fromOrder]) {
+        
+        const res = await editCourseContentAction(payload);
+
+        if (res.status === 200) {
+          toast.success("Changes saved successfully");
+          handleEditCardContent(false);
+        }
+
         return;
       }
+
+      // 4. Create
+      if (!isAddedBefore) {
+        const res = await createCourseContentAction(payload);
+        dispatch(setAddedContent(fromOrder));
+        handleAddedSuccessContent(fromOrder, true);
+        dispatch(
+          setCreatedContentId({
+            key: fromOrder,
+            value: res.data,
+          })
+        );
+        toast.success("Lesson added successfully");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to upload lesson");
+    } finally {
       setisLoading(false);
     }
-    if (!isAddedBefore) {
-      const res = await createCourseContentAction(formData);
-      dispath(setAddedContent(fromOrder));
-      handleAddedSuccessContent(fromOrder, true);
-      dispath(setCreatedContentId({ key: fromOrder, value: res.data }));
-      toast.success("Lesson Added successifuly");
-      setisLoading(false);
-      return;
-    }
-    setisLoading(false);
   }
   return (
     <form
