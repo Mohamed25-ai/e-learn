@@ -8,6 +8,7 @@ import TopCategories from "../_Components/Home/TopCategories/TopCategories";
 
 export default async function page() {
   const locale=await getLocale();
+  
   const categories = await listAllCategories(locale);
   return (
     <section className="mt-12">
