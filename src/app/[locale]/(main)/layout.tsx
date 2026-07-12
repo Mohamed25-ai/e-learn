@@ -2,7 +2,6 @@
 import React from 'react'
 import Navbar from '../_Components/Layout/Navbar/Navbar'
 import Sidebar from '../_Components/Layout/Sidebar/Sidebar'
-import { useSidebar } from '@/store/Zustand/SidebarStore/sidebarstore'
 
 export default function layout({ children }: { children: React.ReactNode }) {
 

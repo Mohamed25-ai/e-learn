@@ -16,7 +16,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
-import { setSidebarState, toggleNavbar, toggleSidebar } from '@/store/redux/togglers/togglers.slice';
+import {  toggleNavbar, toggleSidebar } from '@/store/redux/togglers/togglers.slice';
 
 
 

@@ -6,7 +6,7 @@ import { MainSwiperType } from './mainswiper.type';
 import { Navigation, Autoplay, EffectCoverflow } from 'swiper/modules';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import CourseCard from '../../Cources/CourseCard/CourseCard';
+import CourseCard from '../../Courses/CourseCard/CourseCard';
 
 
 export default function HomeCoursesSwiper({ courseData }: MainSwiperType) {
