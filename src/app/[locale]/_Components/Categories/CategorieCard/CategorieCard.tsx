@@ -5,7 +5,7 @@ import React from 'react'
 
 type CategorieCardProps = {
     categorie: CategoriesDataType
-    fromSwiper?:boolean
+    fromSwiper?: boolean
 }
 function splitCategoryName(name: string) {
     const index = name.indexOf("&")
@@ -14,7 +14,7 @@ function splitCategoryName(name: string) {
     }
     return [name.slice(0, index).trim(), name.slice(index).trim()]
 }
-export default function CategorieCard({ categorie,fromSwiper }: CategorieCardProps) {
+export default function CategorieCard({ categorie, fromSwiper }: CategorieCardProps) {
     const [firstLine, secondLine] = splitCategoryName(categorie.name);
 
     return (

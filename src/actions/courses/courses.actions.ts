@@ -4,7 +4,7 @@ import { addCourseSection, addInstructorRule, createCourseBasicInformation, crea
 
 } from "@/services/courses/courses.service";
 import { CreateSectionType } from "@/services/courses/coursesapi.types";
-import { CreateCourseContentInputsData, SubmitContentFormType } from "@/app/[locale]/_Components/Cources/CreateCourses/CreateCourseContent/createcoursecontent.types";
+import { CreateCourseContentInputsData } from "@/app/[locale]/_Components/Courses/CreateCourses/CreateCourseContent/createcoursecontent.types";
 
 export async function addInstrucorRuleAction() {
     const tok = await getUserToken()??"";

@@ -1,0 +1,66 @@
+import React, { Suspense } from 'react'
+import { CategorizedCourseProps } from '../categorizedcourse.types'
+import { getCoursesByCategorieId } from '@/services/courses/courses.service';
+import CategorizedCoursePagination from '../CategorizedCoursePagination';
+import FadeUp from '@/app/[locale]/_Components/Animation/FadeUp';
+import { getLocale } from 'next-intl/server'; // Import this
+import CategorizedCourse from '@/app/[locale]/_Components/Courses/CategorizedCourse/CategorizedCourse';
+import { SearchAndFilterCourse } from '@/app/[locale]/_Components/Courses/SearchAndFilterCourse/SearchAndFilterCourse';
+import CourseCard from '@/app/[locale]/_Components/Courses/CourseCard/CourseCard';
+import { CourseData } from '@/app/[locale]/_Components/Courses/CoursesByCategoryId/coursebycategoryId.types';
+export default async function page({ params, searchParams }: CategorizedCourseProps) {
+    const param = await params;
+    const { pageSize, pageNumber, searchCourse, filter } = await searchParams;
+    const locale = await getLocale();
+    const isRtl = locale === 'ar'; // Adjust to your RTL language code
+    const pgSize = pageSize || 8;
+    const pgNumber = pageNumber || 1
+    const searchData = searchCourse || undefined
+    const FilterData = filter || undefined
+    const courses = await getCoursesByCategorieId(param.id, Number(pgSize), Number(pgNumber), FilterData, searchData);
+    return (
+        <section dir={isRtl ? 'rtl' : 'ltr'}>
+            <FadeUp>
+                <CategorizedCourse
+                    meta={courses?.data?.meta}
+                    totalCount={courses?.data?.totalCount}
+                />
+            </FadeUp>
+
+            <FadeUp delay={0.1}>
+                <SearchAndFilterCourse currentPage={courses?.data?.currentPage} />
+            </FadeUp>
+
+            {courses?.data?.data.length === 0 && (
+                <h1 className='flex text-foreground font-bold items-center justify-center'>
+                    Not Found Courses
+                </h1>
+            )}
+
+            {/* Use Tailwind logical grid and spacing */}
+            <div className="px-5 mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                {courses?.data?.data.map((course: CourseData, index: number) => (
+                    <FadeUp
+                        key={course.id}
+                        delay={index * 0.08}
+                    >
+                        <CourseCard course={course} />
+                    </FadeUp>
+                ))}
+            </div>
+
+            <div className='my-4'>
+                <Suspense>
+                    <CategorizedCoursePagination
+                        categoryId={param?.id}
+                        currentPage={courses?.data?.currentPage}
+                        hasNextPage={courses?.data?.hasNextPage}
+                        hasPreviousPage={courses?.data?.hasPreviousPage}
+                        totalCount={courses?.data?.totalCount}
+                        totalPages={courses?.data?.totalPages}
+                    />
+                </Suspense>
+            </div>
+        </section>
+    )
+}

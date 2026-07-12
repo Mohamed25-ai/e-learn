@@ -2,7 +2,7 @@ import axios from "axios";
 import { publicApi } from "../public-api";
 import { privateServerApi } from "../private-server-api";
 import { CreateSectionType } from "./coursesapi.types";
-import { CreateCourseContentInputsData, SubmitContentFormType } from "@/app/[locale]/_Components/Cources/CreateCourses/CreateCourseContent/createcoursecontent.types";
+import { CreateCourseContentInputsData } from "@/app/[locale]/_Components/Courses/CreateCourses/CreateCourseContent/createcoursecontent.types";
 
 const BASE_URL = process.env.BASE_URL;
 export async function addInstructorRule() {
@@ -134,7 +134,6 @@ export async function createCourseContent(data: CreateCourseContentInputsData) {
         const res = await api.post(`/Content/Create`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         });
-        console.log("ADFfffffffffff", res.data)
         return {
             status: res.status,
             data: res.data

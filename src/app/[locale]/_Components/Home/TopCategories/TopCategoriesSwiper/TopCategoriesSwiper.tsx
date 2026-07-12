@@ -1,12 +1,11 @@
 'use client';
 
-import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules';
-import { TopCategoriesSwiperProps } from '../../home.types';
-import { Swiper, SwiperSlide, useSwiper, useSwiperSlide } from 'swiper/react';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules';
+import { TopCategoriesSwiperProps } from '../../home.types';
+import { Swiper, SwiperSlide, useSwiper, useSwiperSlide } from 'swiper/react';
 
 import CategorieCard from '../../../Categories/CategorieCard/CategorieCard';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +16,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 export default function TopCategoriesSwiper({ categories }: TopCategoriesSwiperProps) {
     // const swiper=useSwiperSlide()
     return (
-        <div className="px-10 relative">
+        <div className="px-10 relative mt-5">
             <Swiper
                 className='group '
                 spaceBetween={35}
@@ -51,8 +50,9 @@ export default function TopCategoriesSwiper({ categories }: TopCategoriesSwiperP
                     1024: { slidesPerView: 5 },
                 }}
                 onSwiper={(swiper)=>console.log(swiper)}
+                
             >
-                {categories.data.map((categorie) => (
+                {categories?.data?.map((categorie) => (
                     <SwiperSlide key={categorie.id} className="h-auto">
                         <CategorieCard fromSwiper categorie={categorie} />
                     </SwiperSlide>

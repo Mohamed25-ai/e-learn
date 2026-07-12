@@ -23,10 +23,10 @@ export default async function CategoriesList({ categories,inLandingPage }: Categ
                 </div>
 
                 <Link
-                    href="/courses"
+                    href={inLandingPage?"/categories":"/courses"}
                     className="MAIN_BUTTON gap-2 whitespace-nowrap group"
                 >
-                    Browse All Courses
+                    {inLandingPage?"Browse All Categories":"Browse All Courses"}
                     <FontAwesomeIcon
                         icon={faArrowRight}
                         className="transition-transform duration-200 group-hover:translate-x-1"
@@ -37,7 +37,7 @@ export default async function CategoriesList({ categories,inLandingPage }: Categ
                 <CategoriesOverview />
                 <ListAllCategories categories={categories} inLandingPage={inLandingPage} />
             </div>
-            {!inLandingPage&&categories.data?.map((categorie) => <CategoriesCards key={categorie?.id} categorie={categorie} />)}
+            {!inLandingPage&&categories?.data?.map((categorie) => <CategoriesCards key={categorie?.id} categorie={categorie} />)}
         </div>
     )
 }

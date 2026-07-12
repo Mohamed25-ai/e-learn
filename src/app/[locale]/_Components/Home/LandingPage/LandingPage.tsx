@@ -7,8 +7,8 @@ import Link from "next/link";
 export default function LandingPage() {
     const stats = [
         { icon: faUserGraduate, value: '50k+', label: 'Students' },
-        { icon: faBookOpen,     value: '200+', label: 'Courses'  },
-        { icon: faStar,         value: '4.9',  label: 'Rating'   },
+        { icon: faBookOpen, value: '200+', label: 'Courses' },
+        { icon: faStar, value: '4.9', label: 'Rating' },
     ];
 
     return (

@@ -1,29 +1,53 @@
 'use client'
-import { useSidebar } from '@/store/Zustand/SidebarStore/sidebarstore'
-import { Link, usePathname } from '@/i18n/navigation'
+import { Link, usePathname, useRouter } from '@/i18n/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faLayerGroup, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faGraduationCap, faLayerGroup, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
+import { setSidebarState } from '@/store/redux/togglers/togglers.slice';
+import { useEffect, useRef } from 'react';
+import { Button } from '@/components/ui/button';
 
 
 const SIDEBAR_LINKS = [
-    { href: "/courses",       label: "Courses",       icon: faBook },
-    { href: "/categories",    label: "Categories",    icon: faLayerGroup },
+    { href: "/courses", label: "Courses", icon: faBook },
+    { href: "/categories", label: "Categories", icon: faLayerGroup },
     { href: "/createcourse", label: "Create Course", icon: faPlus },
 ];
 
 export default function Sidebar() {
-    const isOpen = useSidebar((state) => state.isOpen);
-    const toggle = useSidebar((state) => state.toggle);
-    const path   = usePathname();
-    function toggleSidebar(){
-        toggle();
+    const sidebarTogglersStore = useAppSelector((state) => state.sidebarTogglerSlice);
+    const sidebarRef = useRef<HTMLDivElement>(null);
+    const router=useRouter();
+    const dispatch = useAppDispatch();
+    const path = usePathname();
+    function toggleSidebar() {
+        dispatch(setSidebarState({ val: false }));
     }
+    function handleBecomeInstructor(){
+        router.push("/become-instructor")
+    }
+
+
+    // useEffect(() => {
+    //     function handleOutsideClick(e: MouseEvent) {
+    //         if (sidebarRef.current && !sidebarRef.current.contains(e.target as Node)) {
+    //             dispatch(setSidebarState({ val: false }));
+    //         }
+    //     }
+    //     document.addEventListener("click", handleOutsideClick);
+    //     return () => {
+    //         document.removeEventListener("click", handleOutsideClick);
+    //     };
+    // }, []);
+
     return (
-        <aside>
+        <aside ref={sidebarRef}>
             {/* Backdrop */}
             <div
-                className={`fixed inset-0 z-20 bg-black/30 backdrop-blur-sm transition-opacity duration-300 md:hidden
-                    ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+                className={`fixed inset-0 z-20 bg-black/30 backdrop-blur-sm transition-opacity 
+                    duration-300 md:hidden
+                    ${sidebarTogglersStore.isOpen ? "opacity-100 pointer-events-auto" :
+                        "opacity-0 pointer-events-none"}`}
             />
 
             {/* Panel */}
@@ -32,7 +56,7 @@ export default function Sidebar() {
                     w-64 md:w-1/5 bg-sidebar border-e border-border
                     flex flex-col gap-1 pt-4 px-3 pb-6
                     transition-transform duration-300 ease-in-out shadow-xl
-                    ${isOpen ? "translate-x-0" : "ltr:-translate-x-full rtl:translate-x-full"}
+                    ${sidebarTogglersStore.isOpen ? "translate-x-0" : "ltr:-translate-x-full rtl:translate-x-full"}
                     md:ltr:translate-x-0 md:rtl:translate-x-0`}
             >
                 {/* Links */}
@@ -49,7 +73,7 @@ export default function Sidebar() {
                                         ? "text-white shadow-sm bg-(--primary-color)"
                                         : "text-(--text-secondary) hover:text-(--primary-color) hover:bg-(--primary-light)"
                                     }`}
-                                
+
                             >
                                 <span
                                     className={`flex items-center justify-center w-7 h-7 rounded-lg text-xs transition-all
@@ -67,12 +91,31 @@ export default function Sidebar() {
                         );
                     })}
                 </nav>
-
                 {/* Bottom divider + version */}
-                <div className="mt-auto pt-4 border-t border-border">
-                    <p className="text-xs text-center text-(--text-muted) " >
-                        EduCore v1.0
-                    </p>
+                <div className="mt-auto ">
+                    <div className="bg-foreground rounded-2xl p-5 flex flex-col gap-4">
+
+                        <div className="w-12 h-12 rounded-xl bg-(--primary-light) flex items-center justify-center">
+                            <FontAwesomeIcon icon={faGraduationCap} className="text-(--primary-color) text-xl" />
+                        </div>
+
+                        <h4 className="text-white font-semibold">
+                            Become an Instructor
+                        </h4>
+
+                        <p className="text-white/60 text-sm leading-relaxed">
+                            Share your knowledge and earn revenue
+                        </p>
+
+                        <button onClick={handleBecomeInstructor} className="BUTTON_STYLE w-full justify-center">
+                            Apply Now
+                        </button>
+
+                    </div>                    <div className='pt-4 mt-5 border-t border-border'>
+                        <p className="text-xs text-center text-(--text-muted) " >
+                            EduCore v1.0
+                        </p>
+                    </div>
                 </div>
             </div>
         </aside>

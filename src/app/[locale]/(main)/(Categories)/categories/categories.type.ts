@@ -15,3 +15,6 @@ export interface CategoriesType {
     messages?:[]
     succeeded:boolean
 };
+export interface CategoriesResponseType{
+    data:CategoriesType
+} 

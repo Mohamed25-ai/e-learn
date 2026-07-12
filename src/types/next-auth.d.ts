@@ -6,7 +6,7 @@ declare module "next-auth" {
         id: string
         email: string,
         userName: string
-        fullName:string
+        fullName: string
         roles: string[] | string
         token: string
         expiresAt: string
@@ -29,18 +29,19 @@ declare module "next-auth" {
         error: string | boolean
         tokenErrorMessage: string
         profilePictureUrl?: string
-        fullName?:string
-        currentTime?:number
-        expiresIn?:number
+        fullName?: string
+        currentTime?: number
+        expiresIn?: number
     }
     interface Session {
         id?: string;
-        userRole?: string[]|string;
+        userRole?: string[] | string;
         tokenError?: boolean;
         tokenErrorMessage?: string | undefined;
-        fullName?:string,
-        email?:string,
-        image?:string
+        profilePictureUrl?: string
+        fullName?: string,
+        email?: string,
+        image?: string
     }
 
 
@@ -51,7 +52,7 @@ declare module "next-auth/jwt" {
         email?: string;
         message?: string;
         isSucceeded?: boolean;
-        fullName?:string
+        fullName?: string
         userName?: string;
         role?: string[] | string;
 
@@ -64,7 +65,7 @@ declare module "next-auth/jwt" {
         error?: boolean | boolean;
         tokenErrorMessage?: string;
         profilePictureUrl?: string
-        currentTime?:number
-        expiresIn?:number
+        currentTime?: number
+        expiresIn?: number
     }
 }

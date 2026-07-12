@@ -9,6 +9,7 @@ function transformDate(dateStr: string) {
     return new Date(dateStr).getTime();
 }
 
+console.log("object", transformDate("2026-08-06T13:48:04.921Z"), Date.now())
 export const nextAuthConfig: NextAuthOptions = {
     session: {
         strategy: "jwt"
@@ -72,6 +73,7 @@ export const nextAuthConfig: NextAuthOptions = {
                         token.id = data.data.id;
                         token.email = data.data.email;
                         token.message = data.data.message;
+                        token.fullName = data.data.fullName;
                         token.userName = data.data.userName;
                         token.role = data.data.roles;
                         token.profilePictureUrl = data.data.profilePictureUrl;
@@ -79,6 +81,8 @@ export const nextAuthConfig: NextAuthOptions = {
                         token.userTokenExpiration = data.data.expiresAt;
                         token.userRefreshToken = data.data.refreshToken;
                         token.userRefreshExpirationDate = data.data.refreshTokenExpiration;
+                        token.currentTime = Date.now();
+                        token.expiresIn = Date.now() + 15 * 60 * 1000;
                         token.error = false;
                         token.tokenErrorMessage = undefined;
                         return token; // ← early return, skip the user.* mapping below
@@ -92,44 +96,19 @@ export const nextAuthConfig: NextAuthOptions = {
                 token.email = user.email;
                 token.message = user.message;
                 token.userName = user.userName;
-                token.fullName=user.fullName;
+                token.fullName = user.fullName;
                 token.role = user.roles;
                 token.profilePictureUrl = user.profilePictureUrl;
                 token.userToken = user.token; // access token
                 token.userTokenExpiration = user.expiresAt; // access exp (ISO string)
                 token.userRefreshToken = user.refreshToken;
                 token.userRefreshExpirationDate = user.refreshTokenExpiration; // refresh exp (ISO string)
-                token.currentTime=Date.now();
-                token.expiresIn=15*60*1000;
+                token.currentTime = Date.now();
+                token.expiresIn = Date.now() + 15 * 60 * 1000;
                 token.error = false;
                 token.tokenErrorMessage = undefined;
                 console.log("First Login User", token);
                 return token;
-            }
-
-            if (!token.userToken || !token.userTokenExpiration) {
-                token.error = true;
-                token.tokenErrorMessage = "MissingTokenData";
-                return token;
-            }
-            const timeNow = Date.now();
-            if (token.userRefreshExpirationDate) {
-                if (timeNow >= transformDate(token.userRefreshExpirationDate)) {
-                    token.error = true;
-                    token.tokenErrorMessage = "RefreshTokenExpired";
-                    return token;
-                }
-            }
-            // ✅ If expiration is missing, treat token as still valid (don't fall into refresh)
-            if (!token.userTokenExpiration) {
-                return token;
-            }
-            const buffer = 60_000; // 1 minute early refresh
-            if (token.userTokenExpiration) {
-                if (timeNow < transformDate(token.userTokenExpiration) - buffer) {
-                    console.log("Token still valid before 1 min", token)
-                    return token; // still valid
-                }
             }
 
             // if (!token.userToken || !token.userTokenExpiration) {
@@ -137,10 +116,7 @@ export const nextAuthConfig: NextAuthOptions = {
             //     token.tokenErrorMessage = "MissingTokenData";
             //     return token;
             // }
-            // if(!token.expiresIn){
-            //     return token
-            // }
-            // const timeNow=Date.now();
+            // const timeNow = Date.now();
             // if (token.userRefreshExpirationDate) {
             //     if (timeNow >= transformDate(token.userRefreshExpirationDate)) {
             //         token.error = true;
@@ -148,27 +124,55 @@ export const nextAuthConfig: NextAuthOptions = {
             //         return token;
             //     }
             // }
-            // const expiresAt =(token.currentTime as number) +(token.expiresIn as number);
-            // if(token.currentTime){
-            //     if(timeNow<expiresAt){
-            //         console.log("Token still valid before 0 min", token)
-            //         return token
+            // // ✅ If expiration is missing, treat token as still valid (don't fall into refresh)
+            // if (!token.userTokenExpiration) {
+            //     return token;
+            // }
+            // const buffer = 60_000; // 1 minute early refresh
+            // if (token.userTokenExpiration) {
+            //     if (timeNow < transformDate(token.userTokenExpiration) - buffer) {
+            //         console.log("Token still valid before 1 min", token)
+            //         return token; // still valid
             //     }
             // }
-            try {   
+
+            if (!token.userToken || !token.userTokenExpiration) {
+                token.error = true;
+                token.tokenErrorMessage = "MissingTokenData";
+                return token;
+            }
+            if (!token.expiresIn) {
+                return token;
+            }
+            if (token.userRefreshExpirationDate) {
+                if (Date.now() >= transformDate(token.userRefreshExpirationDate)) {
+                    token.error = true;
+                    token.tokenErrorMessage = "RefreshTokenExpired";
+                    return token;
+                }
+            }
+            const buffer = 60_000;
+            if (token.currentTime) {
+                if (Date.now() < token.expiresIn - buffer) {
+                    console.log("Token still valid before 0 min", token)
+                    return token
+                }
+            }
+            try {
                 const refreshedToken = await refreshTokenAction(token.userRefreshToken as string);
                 token.email = refreshedToken.email;
                 token.id = refreshedToken.id;
                 token.message = refreshedToken.message;
                 token.userName = refreshedToken.userName;
-                token.fullName=refreshedToken.name;
+                token.fullName = refreshedToken.name;
                 // ✅ same corrected names
                 token.role = refreshedToken.roles;
                 token.profilePictureUrl = refreshedToken.profilePictureUrl;
 
                 token.userToken = refreshedToken.token;
                 token.userTokenExpiration = refreshedToken.expiresAt;
-
+                token.currentTime = Date.now();
+                token.expiresIn = Date.now() + 15 * 60 * 1000;
                 token.userRefreshToken = refreshedToken.refreshToken;
                 token.userRefreshExpirationDate =
                     refreshedToken.refreshTokenExpiration;
@@ -190,13 +194,14 @@ export const nextAuthConfig: NextAuthOptions = {
                 session.userRole = token.role;
                 session.tokenErrorMessage = token.tokenErrorMessage;
                 session.user = {
-                    name: (token.fullName as string) ,
-                    email: (token.email as string) ,
-                    image: (token.profilePictureUrl as string) ,
+                    name: (token.fullName as string),
+                    email: (token.email as string),
+                    image: (token.profilePictureUrl as string),
                 };
-                // session.name=token.name||"";
-                // session.email=token.email;
-                // session.image=token.profilePictureUrl
+                session.fullName = token.fullName!;
+                session.email = token.email;
+                session.profilePictureUrl = token.profilePictureUrl
+            
             }
             console.log("User Session", session)
             return session;

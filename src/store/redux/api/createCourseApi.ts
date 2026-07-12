@@ -9,7 +9,7 @@ export const createCourseApi=createApi({
     }),
     endpoints:(builder)=>({
         getCreatedSectionsByCourseId:builder.query({
-            query:(courseId:string)=>`Section/Paginated?CourseId=${courseId}`,
+            query:(courseId:string)=>`/Section/List?CourseId=${courseId}`,
             providesTags:["getCreatedSections"]
         })
     })

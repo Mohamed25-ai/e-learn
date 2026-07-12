@@ -23,7 +23,7 @@
 //             hasShownToast.current = true;
 
 //             let errorMessage = 'Session error. Please login again.';
-            
+
 //             if (tokenErrorMessage === 'RefreshTokenExpired') {
 //                 errorMessage = '⏰ Your session has expired. Please login again.';
 //             } else if (tokenErrorMessage === 'RefreshAccessTokenError') {
@@ -66,9 +66,14 @@ import toast from 'react-hot-toast';
 // Module-level flag — survives locale-triggered remounts
 let sessionErrorHandled = false;
 
+async function logOutUser() {
+    await signOut({
+        redirect: true,
+        callbackUrl: '/login'
+    });
+}
 export default function CheckSession({ children }: { children: React.ReactNode }) {
     const { data: session, status } = useSession();
-
     useEffect(() => {
         if (status === 'loading') return;
         if (sessionErrorHandled) return;
@@ -80,7 +85,6 @@ export default function CheckSession({ children }: { children: React.ReactNode }
             sessionErrorHandled = true;
 
             let errorMessage = 'Session error. Please login again.';
-
             if (tokenErrorMessage === 'RefreshTokenExpired') {
                 errorMessage = '⏰ Your session has expired. Please login again.';
             } else if (tokenErrorMessage === 'RefreshAccessTokenError') {
@@ -95,12 +99,8 @@ export default function CheckSession({ children }: { children: React.ReactNode }
                 icon: '🔐',
             });
 
-            setTimeout(() => {
-                signOut({
-                    redirect: true,
-                    callbackUrl: '/login'
-                });
-            }, 2000);
+            logOutUser()
+
         }
     }, [session, status]);
 

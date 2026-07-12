@@ -2,15 +2,19 @@ import axios from "axios";
 import { publicApi } from "../public-api";
 
 
-export async function listAllCategories(locale?:string) {
+export async function listAllCategories(locale?:string,PageNumber?:number,PageSize?:number,Search?:string) {
     const api=await publicApi;
     try {
         const res=await api.get(`/Category/List`,{
             headers:{
                 "Accept-Language":locale=="en"?" ":"ar-EG"
+            },
+            params:{
+                PageNumber,
+                PageSize,
+                Search
             }
         });
-        console.log('AllCategories',res.data);
         return {
             data:res.data,
             status:res.status

@@ -8,10 +8,6 @@ const stats = [
     { icon: faAward, value: '48', label: 'Expert Instructors' },
 ];
 export default function CategoriesOverview() {
-
-
-
-
     return (
         <div className="grid grid-cols-4 gap-4">
             {stats.map(({ icon, value, label }) => (

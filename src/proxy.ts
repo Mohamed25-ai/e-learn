@@ -6,7 +6,8 @@ import { routing } from "./i18n/routing";
 const intlMiddleware = createMiddleware(routing);
 
 const PROTECTED = ["/cart", "/courses", "/settings", "/createcourse", "/categories",
-    "/createcourse", "/profile", "/edit-password","/categorizedcourse","/coursedetails","/courselearn"];
+    "/createcourse", "/profile", "/edit-password", "/categorized-course", "/course-details"
+    ,"/course-learn", "/become-instructor"];
 const AUTH_PAGES = ["/login", "/confirmemail", "/forgot-password"];
 
 export default async function proxy(req: NextRequest) {
@@ -24,7 +25,7 @@ export default async function proxy(req: NextRequest) {
     }
     const locale = firstSegment;
     const isProtected = PROTECTED.some(
-    (p) => restPath === p || restPath.startsWith(`${p}/`));
+        (p) => restPath === p || restPath.startsWith(`${p}/`));
     const isAuthPage = AUTH_PAGES.some((p) => restPath === p || restPath.startsWith(`${p}/`));
     const isLoggedIn = !!token?.userToken && !token?.error;
 

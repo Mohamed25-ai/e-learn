@@ -6,11 +6,15 @@ import { combineReducers, configureStore, createAsyncThunk } from "@reduxjs/tool
 import { createCourseReducer } from "./createcourse/createcourseslice";
 import { createCourseApi } from "./api/createCourseApi";
 import { courseLearningSliceReducer } from "./courselearninig/courselearning.slice";
+import { courseLearningSidebarTogglerStoreReducer, navbarTogglersStoreReducer, sidebarTogglersStoreReducer } from "./togglers/togglers.slice";
 
 
 const rootReducer = combineReducers({
     createCourse: createCourseReducer,
     courseLearning:courseLearningSliceReducer,
+    navbarTogglerSlice:navbarTogglersStoreReducer,
+    sidebarTogglerSlice:sidebarTogglersStoreReducer,
+    courseLearningSidebarSlice:courseLearningSidebarTogglerStoreReducer,
     [createCourseApi.reducerPath]: createCourseApi.reducer,
 });
 

@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faChevronDown, faMagnifyingGlass, faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
-import { useSidebar } from '@/store/Zustand/SidebarStore/sidebarstore';
 import { signOut, useSession } from 'next-auth/react';
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import LanguageToggle from '../LanguageToggle/LanguageToggle';
@@ -16,6 +15,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
+import { setSidebarState, toggleNavbar, toggleSidebar } from '@/store/redux/togglers/togglers.slice';
 
 
 
@@ -25,22 +26,30 @@ const LINKS = [
     { href: "/createcourse", label: "Create Course" },
 ];
 
+const PAGES_WITHOUT_NAVBAR = ["/","/cart", "/become-instructor", "/courselearn"
+    , "categorizedcourse","/coursedetails","/categorizedcourse"]
 export default function Navbar() {
+    const navbarTogglerStore = useAppSelector((state) => state.navbarTogglerSlice);
+    const sidebarTogglerStore = useAppSelector((state) => state.sidebarTogglerSlice);
+    const dispatch = useAppDispatch();
     const path = usePathname();
     const router = useRouter();
     const userSession = useSession();
-    const sidebarToggle = useSidebar((state) => state.toggle);
     const [isOpen, setisOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const locale = useLocale(); // Detect locale
     const isRtl = locale === 'ar'; // Adjust to your RTL language code
-    function navtoggle(open: boolean) {
-        if (open) {
-            if (path === '/') { setisOpen(false); return; }
-            if (userSession.status === "unauthenticated") { setisOpen(false); return; }
+    function navtoggle() {
+        if (navbarTogglerStore.isOpen) {
+            if (path === '/' && userSession.status === "unauthenticated") { return; }
         }
-        if (userSession.status === "unauthenticated") { setisOpen(true); return; }
-        if (path === '/') { setisOpen(true); return; }
+        if (userSession.status === "authenticated" && path === '/') {
+            dispatch(toggleNavbar());
+            return;
+        }
+    }
+    function toggleSide() {
+        dispatch(toggleSidebar())
     }
     async function handleLogout() {
         await signOut({ redirect: false });
@@ -50,6 +59,7 @@ export default function Navbar() {
 
     const isAuth = userSession.status === "authenticated";
     const user = userSession.data?.user;
+    const authenticatedUserName=userSession.data?.fullName||userSession.data?.user?.name;
     const userRole = Array.isArray(userSession?.data?.userRole)
         ? userSession.data.userRole
         : [userSession?.data?.userRole || ""];
@@ -65,7 +75,7 @@ export default function Navbar() {
                         variant="ghost"
                         size="icon"
                         className="md:hidden w-8 h-8 rounded-lg text-(--primary-color) hover:bg-(--primary-light) shrink-0"
-                        onClick={() => { sidebarToggle(); navtoggle(isOpen); }}
+                        onClick={() => { toggleSide(); navtoggle(); }}
                     >
                         <FontAwesomeIcon icon={faBars} />
                     </Button>
@@ -81,7 +91,7 @@ export default function Navbar() {
                     </Link>
 
                     {/* Desktop Nav Links */}
-                    {isAuth && path == "/" && (
+                    {isAuth && PAGES_WITHOUT_NAVBAR.includes(path) && (
                         <ul className="hidden md:flex  items-center gap-1 ms-2">
                             {LINKS.map(({ href, label }) => (
                                 <li key={href}>
@@ -140,7 +150,7 @@ export default function Navbar() {
                                         <div className="w-7 h-7 rounded-full bg-(--primary-color) flex items-center justify-center text-white text-xs font-bold shrink-0 overflow-hidden">
                                             {user?.image
                                                 ? <img src={user.image} alt={user?.name ?? ""} className="w-full h-full object-cover" />
-                                                : <span>{user?.name?.charAt(0).toUpperCase() ?? "U"}</span>
+                                                : <span>{authenticatedUserName?.charAt(0).toUpperCase() ?? "U"}</span>
                                             }
                                         </div>
                                         <span className="hidden sm:block text-sm font-semibold max-w-24 truncate text-foreground">
@@ -206,14 +216,14 @@ export default function Navbar() {
             </div>
 
             {/* Mobile dropdown menu */}
-            {isAuth && isOpen && (
+            {isAuth && navbarTogglerStore.isOpen && (
                 <div className="fixed top-12 left-0 bg-white z-30 w-full bg-navbar border-b border-border shadow-md md:hidden">
                     <ul className="flex flex-col px-4 py-2 gap-1">
                         {LINKS.map(({ href, label }) => (
                             <li key={href}>
                                 <Link
                                     href={href}
-                                    onClick={() => { sidebarToggle(); setisOpen(isOpen) }}
+                                    onClick={(e) => { e.stopPropagation(); toggleSide(); navtoggle() }}
                                     className={`flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200
                                         ${path === href
                                             ? "text-(--primary-color) bg-(--primary-light)"

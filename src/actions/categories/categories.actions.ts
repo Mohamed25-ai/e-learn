@@ -2,6 +2,6 @@
 
 import { listAllCategories } from "@/services/categories/categories.service"
 
-export async function listAllCategoriesAction(locale?:string) {
-    return await listAllCategories(locale);
+export async function listAllCategoriesAction(locale?:string,PageNumber?:number,PageSize?:number,Search?:string) {
+    return await listAllCategories(locale,PageNumber,PageSize,Search);
 }

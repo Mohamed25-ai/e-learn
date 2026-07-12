@@ -17,7 +17,10 @@ import CheckSession from "../Auth/CheckSession/CheckSession";
 export default function SessionProviderWrapper({ children }:{children: React.ReactNode}) {
 const [queryClient] = useState(() => new QueryClient());
   return (
-    <SessionProvider refetchInterval={4 * 60} >
+    <SessionProvider 
+    refetchInterval={4 * 60}
+    refetchOnWindowFocus={true}
+    >
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <QueryClientProvider client={queryClient}>
