@@ -7,7 +7,7 @@ export default function TopCategories({ categories,inLandingPage}: TopCategories
     console.log("object",categories)
     return (
         <section>
-            <div className="categories">
+            <div className="categories py-3 px-5">
                 <CategoriesList categories={categories}  inLandingPage={inLandingPage} />
                 <TopCategoriesSwiper categories={categories} />
             </div>

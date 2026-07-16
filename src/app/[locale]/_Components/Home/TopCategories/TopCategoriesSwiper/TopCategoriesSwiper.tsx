@@ -1,9 +1,8 @@
 'use client';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { TopCategoriesSwiperProps } from '../../home.types';
 import { Swiper, SwiperSlide, useSwiper, useSwiperSlide } from 'swiper/react';
 
@@ -19,8 +18,9 @@ export default function TopCategoriesSwiper({ categories }: TopCategoriesSwiperP
         <div className="px-10 relative mt-5">
             <Swiper
                 className='group '
-                spaceBetween={35}
-                modules={[Navigation, Autoplay,Pagination]}
+                spaceBetween={24}
+
+                modules={[Navigation, Autoplay, Pagination]}
                 // pagination
                 navigation={{
                     nextEl: ".swiper-button-next",
@@ -33,24 +33,22 @@ export default function TopCategoriesSwiper({ categories }: TopCategoriesSwiperP
                     stopOnLastSlide: true
                 }}
                 loop
-                effect="coverflow"
-                centeredSlides={true}
-                slidesPerView="auto"
-                coverflowEffect={{
-                    rotate: 30,
-                    stretch: 0,
-                    depth: 100,
-                    modifier: 1,
-                    slideShadows: true,
-                }}
                 breakpoints={{
-                    0: { slidesPerView: 1 },
-                    480: { slidesPerView: 2 },
-                    768: { slidesPerView: 3 },
-                    1024: { slidesPerView: 5 },
+                    0: {
+                        slidesPerView: 2,
+                    },
+                    640: {
+                        slidesPerView: 3,
+                    },
+                    1024: {
+                        slidesPerView: 4,
+                    },
+                    1280: {
+                        slidesPerView: 5,
+                    },
                 }}
-                onSwiper={(swiper)=>console.log(swiper)}
-                
+                onSwiper={(swiper) => console.log(swiper)}
+
             >
                 {categories?.data?.map((categorie) => (
                     <SwiperSlide key={categorie.id} className="h-auto">
@@ -62,15 +60,15 @@ export default function TopCategoriesSwiper({ categories }: TopCategoriesSwiperP
                 <Button
                     className="swiper-button-prev absolute top-3/4 right-0  z-10 "
                 >
-                    <FontAwesomeIcon icon={faChevronLeft} />
-                    
+                    <FontAwesomeIcon size='sm' icon={faChevronLeft} />
+
                 </Button>
 
                 {/* Next */}
                 <Button
                     className=" swiper-button-next absolute top-3/4 right-0  z-10 ">
-                    <FontAwesomeIcon icon={faChevronRight} />
-                    
+                    <FontAwesomeIcon size='sm' icon={faChevronRight} />
+
                 </Button>
             </div>
         </div>

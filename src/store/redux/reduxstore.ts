@@ -7,6 +7,7 @@ import { createCourseReducer } from "./createcourse/createcourseslice";
 import { createCourseApi } from "./api/createCourseApi";
 import { courseLearningSliceReducer } from "./courselearninig/courselearning.slice";
 import { courseLearningSidebarTogglerStoreReducer, navbarTogglersStoreReducer, sidebarTogglersStoreReducer } from "./togglers/togglers.slice";
+import { userProfileSliceReducer } from "./userprofile/userprofile.slice";
 
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     navbarTogglerSlice:navbarTogglersStoreReducer,
     sidebarTogglerSlice:sidebarTogglersStoreReducer,
     courseLearningSidebarSlice:courseLearningSidebarTogglerStoreReducer,
+    userProfileSlice:userProfileSliceReducer,
     [createCourseApi.reducerPath]: createCourseApi.reducer,
 });
 

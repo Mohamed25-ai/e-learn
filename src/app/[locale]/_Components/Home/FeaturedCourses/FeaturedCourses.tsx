@@ -8,13 +8,14 @@ import { CategoriesDataType } from '@/app/[locale]/(main)/(Categories)/categorie
 import FeaturedCategoryCourses from './FeaturedCategoryCourses/FeaturedCategoryCourses'
 
 
-export default function FeaturedCourses({categories}:FeaturedCoursesProps) {
-    const {data}=categories;
+export default function FeaturedCourses({ categories }: FeaturedCoursesProps) {
+    const { data } = categories;
     return (
-        <section className='px-5 mt-5'>
-            <header className='flex items-center justify-between'>
+        <section className='p-5 mt-5 '>
+            <header className='flex items-center justify-between md:px-5'>
                 <div>
-                    <h2 className='text-4xl font-bold leading-tight text-foreground'>Featured Courses</h2>
+                    <h2 className='text-4xl  font-bold 
+                     leading-tight text-foreground'>Featured Courses</h2>
                     <p className='mt-1.5 text-sm text-(--text-secondary)'>Handpicked courses to help you reach your goals</p>
                 </div>
                 <div>
@@ -30,14 +31,14 @@ export default function FeaturedCourses({categories}:FeaturedCoursesProps) {
                     </Link>
                 </div>
             </header>
-            <div>
-                {data?.data?.map((categorie)=>{
+            <div className='md:px-5 mt-5'>
+                {data?.data?.map((categorie) => {
                     return (
                         <div key={categorie.id}>
-                        <CategorieHeader key={categorie.id} categorie={categorie} />
-                        <div>
-                            <FeaturedCategoryCourses key={categorie.id} categorie={categorie} />
-                        </div>
+                            <CategorieHeader key={categorie.id} categorie={categorie} />
+                            <div>
+                                <FeaturedCategoryCourses key={categorie.id} categorie={categorie} />
+                            </div>
                         </div>
                     )
                 })}

@@ -18,12 +18,12 @@ export default function CategorieCard({ categorie, fromSwiper }: CategorieCardPr
     const [firstLine, secondLine] = splitCategoryName(categorie.name);
 
     return (
-        <div>
+        <div >
             <div
                 key={categorie.id}
-                className='bg-white p-5 rounded-2xl border-2 border-border flex flex-col gap-4
-                                            transition-all duration-200 hover:-translate-y-1
-                                            hover:shadow-[0_6px_20px_rgba(73,187,189,0.12)] cursor-pointer'
+                className='h-57 md:h-55 bg-white p-5 rounded-2xl border-2 border-border flex flex-col gap-4
+                            transition-all duration-200 hover:-translate-y-1
+                            hover:shadow-[0_6px_20px_rgba(73,187,189,0.12)] cursor-pointer'
             >
                 {/* Icon / Thumbnail */}
                 <div>

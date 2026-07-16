@@ -2,9 +2,7 @@
 
 import { confirmEmail, confirmResetPassword, refreshToken, register, resetPassword, sendResetPassword, signInWithGoogle } from "@/services/auth/auth.service"
 
-export async function loginAction() {
 
-};
 
 export async function registerAction(formData: FormData) {
     return await register(formData);

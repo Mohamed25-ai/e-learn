@@ -12,7 +12,7 @@ const PDF_EXTENSIONS = ["pdf"]
 
 export default function CourseLearningVideoScreen() {
     const lessonId = useAppSelector((state) => state.courseLearning.lessionId);
-    const {isOpen} =useAppSelector((state) => state.courseLearningSidebarSlice);
+    const { isOpen } = useAppSelector((state) => state.courseLearningSidebarSlice);
     const lessonUrl = useAppSelector(
         (state) => state.courseLearning.selectedLessionUrl[lessonId]
     );
@@ -42,7 +42,8 @@ export default function CourseLearningVideoScreen() {
 
             {imageUrl && (
                 <div
-                    className={`mt-8 md:mt-14 w-full px-3 sm:px-5 py-3 bg-(--primary-light) rounded-xl ${isOpen ? "" : "flex items-center justify-center transition-all duration-300"
+                    className={`mt-8 md:mt-14 w-full px-3 sm:px-5 py-3 bg-(--primary-light) rounded-xl ${isOpen ? "" :
+                        "flex items-center justify-center transition-all duration-300"
                         }`}
                 >
                     <div className="relative w-full max-w-4xl aspect-video mx-auto rounded-xl overflow-hidden">

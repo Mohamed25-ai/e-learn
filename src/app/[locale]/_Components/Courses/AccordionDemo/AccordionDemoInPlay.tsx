@@ -30,22 +30,22 @@ const fileIcons: Record<string, IconDefinition> = {
 export default function AccordionDemoInPlay({ contentData, section, inPlay }: AccordionDemoProps) {
     const courseLearningStore = useAppSelector((state) => state.courseLearning);
     const dispatch = useAppDispatch();
-    const locale=useLocale();
-    const router=useRouter();
-    const searchParams=useSearchParams();
+    const locale = useLocale();
+    const router = useRouter();
+    const searchParams = useSearchParams();
     const [accordionValue, setAccordionValue] = useState("");
     const isOpen = accordionValue === section.id;
     function setSelectedContent(sectionId: string, lessonId: string, lessionUrl: string) {
-        if(searchParams.get("lessonId")==lessonId){
+        if (searchParams.get("lessonId") == lessonId) {
             return
         }
         dispatch(steInitialState());
-        const params=new URLSearchParams(searchParams.toString())
+        const params = new URLSearchParams(searchParams.toString())
         dispatch(setSelectedLessonUrl({ lessionId: lessonId, lessionUrl: lessionUrl }));
         dispatch(setSelectedLesson({ sectionId: sectionId, lessionId: lessonId }));
         dispatch(setSelectedLessonSection(sectionId));
         dispatch(setLessonId(lessonId));
-        params.set("lessonId",lessonId.toString());
+        params.set("lessonId", lessonId.toString());
         router.push(`?${params.toString()}`)
     }
 
@@ -54,7 +54,7 @@ export default function AccordionDemoInPlay({ contentData, section, inPlay }: Ac
     }, [courseLearningStore.lessonSection])
 
     return (
-        <div dir={locale==="ar"&&"rtl"||""}>
+        <div dir={locale === "ar" && "rtl" || ""}>
             <Accordion
                 type="single"
                 collapsible
@@ -72,9 +72,9 @@ export default function AccordionDemoInPlay({ contentData, section, inPlay }: Ac
                         className={`${inPlay && "customaccordiontrigger"} px-4 py-3 outline-none focus-visible:ring-0 transition-colors duration-200
                                         hover:no-underline
                                         ${isOpen
-                                        ? 'bg-(--primary-light)'
-                                        : 'bg-white hover:bg-(--input-background)'
-                                    }`}
+                                ? 'bg-(--primary-light)'
+                                : 'bg-white hover:bg-(--input-background)'
+                            }`}
                     >
                         <div className="flex items-start gap-3 text-right">
                             <FontAwesomeIcon

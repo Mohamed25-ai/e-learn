@@ -2,5 +2,4 @@ import { CategoriesDataType } from "@/app/[locale]/(main)/(Categories)/categorie
 
 export interface CategorieCardsProps{
     categorie:CategoriesDataType,
-
 }

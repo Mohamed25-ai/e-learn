@@ -5,7 +5,6 @@ import { privateServerApi } from "../private-server-api";
 const BASE_URL = process.env.BASE_URL;
 export async function confirmEmail(email: string, code: string) {
     const api = await publicApi;
-    console.log(code)
     try {
         const res = await api.get(`/Authentication/ConfirmEmail?Email=${email}&Code=${code}`);
         console.log('dataaaa', res.data)

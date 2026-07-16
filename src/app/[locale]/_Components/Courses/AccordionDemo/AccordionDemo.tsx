@@ -65,7 +65,8 @@ export function AccordionDemo({ contentData, section, inPlay }: AccordionDemoPro
                 >
                     {/* Trigger */}
                     <AccordionTrigger
-                        className={`${inPlay && "customaccordiontrigger"} px-4 py-3 outline-none focus-visible:ring-0 transition-colors duration-200
+                        className={`${inPlay && "customaccordiontrigger"} px-4 py-3 outline-none 
+                            focus-visible:ring-0 transition-colors duration-200
                                         hover:no-underline
                                         ${isOpen
                                 ? 'bg-(--primary-light)'
@@ -117,7 +118,7 @@ export function AccordionDemo({ contentData, section, inPlay }: AccordionDemoPro
                                                     <FontAwesomeIcon
                                                         icon={icon}
                                                         className="text-(--text-secondary) group-hover/item:text-(--primary-color)
-                                                           transition-colors duration-200 shrink-0"
+                                                            transition-colors duration-200 shrink-0"
                                                     />
                                                     <span className="text-sm text-(--text-secondary) group-hover/item:text-(--primary-color)
                                                             transition-colors duration-200">

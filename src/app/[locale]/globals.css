@@ -8,67 +8,67 @@
 :root {
   /* Typography */
   --font-size: 16px;
-  --font-family: 'Poppins', sans-serif;
+  --font-family: "Poppins", sans-serif;
 
   /* Primary Colors */
-  --primary-color: #49BBBD;
-  --primary-hover: #3FAEB0;
-  --primary-active: #2E9B9D;
-  --primary-light: #E9F7F7;
-  --primary-foreground: #FFFFFF;
+  --primary-color: #49bbbd;
+  --primary-hover: #3faeb0;
+  --primary-active: #2e9b9d;
+  --primary-light: #e9f7f7;
+  --primary-foreground: #ffffff;
 
   /* Backgrounds */
-  --background: #FAFBFC;
-  --card: #FFFFFF;
-  --navbar: #FFFEFE;
-  --sidebar: #FFFFFF;
-  --input-background: #F6F7FB;
+  --background: #fafbfc;
+  --card: #ffffff;
+  --navbar: #fffefe;
+  --sidebar: #ffffff;
+  --input-background: #f6f7fb;
 
   /* Borders */
-  --border: #E6E8F0;
-  --input-border: #D8DCE8;
+  --border: #e6e8f0;
+  --input-border: #d8dce8;
   /* Text Colors */
   --foreground: #252641;
   --text-secondary: #696984;
-  --text-muted: #9AA0B4;
-  --text-light: #FFFFFF;
-  --text-hover: #49BBBD;
+  --text-muted: #9aa0b4;
+  --text-light: #ffffff;
+  --text-hover: #49bbbd;
 
   /* Status Colors */
-  --success: #22C55E;
-  --error: #EF4444;
-  --warning: #F59E0B;
+  --success: #22c55e;
+  --error: #ef4444;
+  --warning: #f59e0b;
 
   /* Legacy compatibility */
   --card-foreground: #252641;
-  --popover: #FFFFFF;
+  --popover: #ffffff;
   --popover-foreground: #252641;
-  --secondary: #F6F7FB;
+  --secondary: #f6f7fb;
   --secondary-foreground: #252641;
-  --muted: #F6F7FB;
+  --muted: #f6f7fb;
   --muted-foreground: #696984;
-  --accent: #E9F7F7;
+  --accent: #e9f7f7;
   --accent-foreground: #252641;
-  --destructive: #EF4444;
-  --destructive-foreground: #FFFFFF;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
   --input: transparent;
-  --switch-background: #D8DCE8;
+  --switch-background: #d8dce8;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #49BBBD;
-  --chart-1: #49BBBD;
-  --chart-2: #22C55E;
-  --chart-3: #F59E0B;
-  --chart-4: #EF4444;
+  --ring: #49bbbd;
+  --chart-1: #49bbbd;
+  --chart-2: #22c55e;
+  --chart-3: #f59e0b;
+  --chart-4: #ef4444;
   --chart-5: #696984;
   --radius: 0.75rem;
   --sidebar-foreground: #252641;
-  --sidebar-primary: #49BBBD;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #E9F7F7;
+  --sidebar-primary: #49bbbd;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e9f7f7;
   --sidebar-accent-foreground: #252641;
-  --sidebar-border: #E6E8F0;
-  --sidebar-ring: #49BBBD;
+  --sidebar-border: #e6e8f0;
+  --sidebar-ring: #49bbbd;
 }
 
 .dark {
@@ -159,7 +159,6 @@
     font-family: var(--font-family);
   }
 
-
   html {
     font-size: var(--font-size);
     font-family: var(--font-family);
@@ -209,9 +208,7 @@
   }
 }
 
-
 @layer components {
-
   /* ─── INPUT ─────────────────────────────────────────────── */
   .INPUT_STYLE {
     @apply w-full transition-all duration-200 ease-in-out border-2 outline-none rounded-xl p-4 rtl:text-[13px] text-sm;
@@ -228,7 +225,6 @@
     color: var(--text-muted);
     transition: opacity 0.2s ease;
   }
-
 
   .INPUT_STYLE:focus-visible {
     border-color: var(--primary-color);
@@ -266,7 +262,11 @@
   /* Error state */
   .INPUT_STYLE.input-error {
     border-color: var(--error) !important;
-    background-color: color-mix(in srgb, var(--input-background) 97%, var(--error) 3%);
+    background-color: color-mix(
+      in srgb,
+      var(--input-background) 97%,
+      var(--error) 3%
+    );
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
   }
 
@@ -277,14 +277,12 @@
       0 2px 8px rgba(239, 68, 68, 0.08) !important;
   }
 
-
   /* ─── LABEL ─────────────────────────────────────────────── */
   .LABEL_STYLE {
     @apply text-sm font-medium mb-1.5 block select-none;
     color: var(--foreground);
     letter-spacing: 0.01em;
   }
-
 
   /* ─── PRIMARY BUTTON (filled) ────────────────────────────── */
   .BUTTON_STYLE {
@@ -334,7 +332,6 @@
     color: var(--primary-color);
   }
 
-
   /* ─── OUTLINE BUTTON ─────────────────────────────────────── */
   .MAIN_BUTTON {
     @apply inline-flex items-center justify-center gap-2
@@ -350,7 +347,8 @@
     background-color: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
-    box-shadow: 0 4px 12px color-mix(in srgb, var(--primary-color) 25%, transparent);
+    box-shadow: 0 4px 12px
+      color-mix(in srgb, var(--primary-color) 25%, transparent);
     transform: translateY(-1px);
   }
 
@@ -398,44 +396,68 @@
 }
 
 /* Custom Classes */
-.customaccordiontrigger{
+.customaccordiontrigger {
   border-radius: 0%;
 }
-
+.custom-swiper-navigation {
+  color: var(--primary-color) !important;
+  background-color: var(--primary-light);
+  transition: all 0.2s ease;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+}
+.custom-swiper-navigation:hover {
+  background-color: var(--primary-color);
+  color: white !important;
+}
 .swiper-button-next,
 .swiper-button-prev {
-    color: var(--primary-color) !important;
-    background-color: var(--primary-light);
-    transition: all 0.2s ease;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
+  color: var(--primary-color) !important;
+  background-color: var(--primary-light);
+  transition: all 0.2s ease;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
 }
-
+.custom-swiper-navigation::after {
+  font-size: 14px !important;
+  font-weight: 700;
+}
+.custom-swiper-navigation:disabled {
+  opacity: 0.3 !important;
+}
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-    background-color: var(--primary-color);
-    color: white !important;
+  background-color: var(--primary-color);
+  color: white !important;
 }
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
-    font-size: 14px !important;
-    font-weight: 700;
+  font-size: 14px !important;
+  font-weight: 700;
 }
 
 .swiper-button-disabled {
-    opacity: 0.3 !important;
+  opacity: 0.3 !important;
 }
 
 .swiper-pagination-bullet {
-    background-color: var(--border) !important;
-    opacity: 1;
+  background-color: var(--border) !important;
+  opacity: 1;
 }
 
 .swiper-pagination-bullet-active {
-    background-color: var(--primary-color) !important;
+  background-color: var(--primary-color) !important;
 }
 /* ------------------------------------- */
 /* [data-sonner-toast] {

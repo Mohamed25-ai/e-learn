@@ -4,7 +4,7 @@ import LANDING_IMAGE from "@/assets/images/photo-1771408427146-09be9a1d4535.jpg"
 import Image from "next/image";
 import Link from "next/link";
 
-export default function LandingPage() {
+export default function HeroSection() {
     const stats = [
         { icon: faUserGraduate, value: '50k+', label: 'Students' },
         { icon: faBookOpen, value: '200+', label: 'Courses' },
@@ -12,7 +12,7 @@ export default function LandingPage() {
     ];
 
     return (
-        <div className="flex flex-col-reverse md:flex-row items-center justify-between
+        <div className="flex flex-col-reverse md:flex-row items-center justify-between 
                         gap-10 px-5 md:px-8 py-10 md:py-16 min-h-[90vh]">
 
             {/* Left */}
