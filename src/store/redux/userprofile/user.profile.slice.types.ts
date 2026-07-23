@@ -1,4 +1,6 @@
 export type UserProfileSliceType={
     profileDetailsView:string,
-    isUserEditNow:boolean
+    isUserEditNow:boolean,
+    temporaryProfileImageForEdit:File|null,
+    temporaryProfileImageForEditUrl:string
 }

@@ -5,6 +5,7 @@ import PersonalInformation from "./PersonalInformation";
 import ProfileUserCourses from "./ProfileUserCourses";
 import { ProfileDetailsProps } from "./profile.details.types";
 import { useAppSelector } from "@/hooks/hooks";
+import ProfileSecurity from "./ProfileSecurity";
 
 export default function ProfileDetails({ userData }: ProfileDetailsProps) {
     const userProfileStore = useAppSelector((state) => state.userProfileSlice);
@@ -16,6 +17,7 @@ export default function ProfileDetails({ userData }: ProfileDetailsProps) {
             {userProfileStore.profileDetailsView == "overview" && <PersonalInformation userData={userData} />}
             {userProfileStore.profileDetailsView == "mycourses" && <ProfileUserCourses />}
             {userProfileStore.profileDetailsView == "certificates"}
+            {userProfileStore.profileDetailsView == "security" &&< ProfileSecurity userData={userData} />}
         </div>
     )
 }

@@ -53,8 +53,8 @@ export default function CourseCard({ course }: CourseCardProps) {
     return (
         <Link href={`/course-details/${id}/overview`}>
             <Card className="group/card overflow-hidden rounded-radius border border-border 
-            bg-card p-0 shadow-sm transition-all duration-300 hover:shadow-lg 
-            hover:-translate-y-1 cursor-pointer h-120 md:h-90">
+                 bg-card p-0 shadow-sm transition-all duration-300 hover:shadow-lg 
+                 hover:-translate-y-1 cursor-pointer md:h-88">
                 {/* Thumbnail */}
                 <CardHeader className="p-0">
                     <div className="relative aspect-video w-full overflow-hidden">

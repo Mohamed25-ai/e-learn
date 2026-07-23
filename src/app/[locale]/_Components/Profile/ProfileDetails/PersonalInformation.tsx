@@ -9,7 +9,7 @@ import PersonalInformationForm from "./PersonalInformationForm"
 export default function PersonalInformation({ userData }: PersonalInformationProps) {
   return (
     <Card className="mt-5">
-      <CardHeader>
+      <CardHeader className="">
         <h2 className="text-foreground font-bold">
           <FontAwesomeIcon className="me-2 text-(--primary-color)" icon={faGear} />
           Personal Information

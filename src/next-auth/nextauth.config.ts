@@ -9,7 +9,6 @@ function transformDate(dateStr: string) {
     return new Date(dateStr).getTime();
 }
 
-console.log("object", transformDate("2026-08-06T13:48:04.921Z"), Date.now())
 export const nextAuthConfig: NextAuthOptions = {
     session: {
         strategy: "jwt"
@@ -160,22 +159,23 @@ export const nextAuthConfig: NextAuthOptions = {
             }
             try {
                 const refreshedToken = await refreshTokenAction(token.userRefreshToken as string);
-                token.email = refreshedToken.email;
-                token.id = refreshedToken.id;
-                token.message = refreshedToken.message;
-                token.userName = refreshedToken.userName;
-                token.fullName = refreshedToken.name;
+                console.log("Token Refreshed Successifuly",refreshedToken)
+                console.log("Token Refreshed Successifuly Data",refreshedToken.data)
+                token.email = refreshedToken.data?.email;
+                token.id = refreshedToken.data.id;
+                token.message = refreshedToken.data?.message;
+                token.userName = refreshedToken.data?.userName;
+                token.fullName = refreshedToken.data?.fullName;
                 // ✅ same corrected names
-                token.role = refreshedToken.roles;
-                token.profilePictureUrl = refreshedToken.profilePictureUrl;
-
-                token.userToken = refreshedToken.token;
-                token.userTokenExpiration = refreshedToken.expiresAt;
+                token.role = refreshedToken.data?.roles;
+                token.profilePictureUrl = refreshedToken.data?.profilePictureUrl;
+                token.userToken = refreshedToken.data?.token;
+                token.userTokenExpiration = refreshedToken.data?.expiresAt;
                 token.currentTime = Date.now();
                 token.expiresIn = Date.now() + 15 * 60 * 1000;
-                token.userRefreshToken = refreshedToken.refreshToken;
+                token.userRefreshToken = refreshedToken.data?.refreshToken;
                 token.userRefreshExpirationDate =
-                    refreshedToken.refreshTokenExpiration;
+                    refreshedToken.data?.refreshTokenExpiration;
                 token.error = false;
                 token.tokenErrorMessage = undefined;
                 console.log("Token refreshed successifuly")

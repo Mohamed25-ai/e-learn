@@ -159,11 +159,10 @@ export default function RegisterForm() {
                     id="password"
                     type={isPasswordShown ? "text" : "password"}
                     placeholder={t("placeholders.password")}
-                    className={`${INPUT_STYLE} w-full pe-12 ${
-                      formState.errors.Password
+                    className={`${INPUT_STYLE} w-full pe-12 ${formState.errors.Password
                         ? "border-(--error) focus-visible:border-(--error) focus-visible:ring-[color-mix(in_srgb,var(--error)_20%,transparent)]"
                         : ""
-                    }`}
+                      }`}
                     {...field}
                   />
                   <button
@@ -201,11 +200,10 @@ export default function RegisterForm() {
                     id="confirmPassword"
                     type={isConfirmPasswordShown ? "text" : "password"}
                     placeholder={t("placeholders.confirmPassword")}
-                    className={`${INPUT_STYLE} w-full pe-12 ${
-                      formState.errors.ConfirmPassword
+                    className={`${INPUT_STYLE} w-full pe-12 ${formState.errors.ConfirmPassword
                         ? "border-(--error) focus-visible:border-(--error) focus-visible:ring-[color-mix(in_srgb,var(--error)_20%,transparent)]"
                         : ""
-                    }`}
+                      }`}
                     {...field}
                   />
                   <button
@@ -240,11 +238,10 @@ export default function RegisterForm() {
               <FormControl>
                 <label
                   className={`flex items-center gap-3 w-full rounded-xl border-2 border-dashed px-4 py-3 cursor-pointer transition-all duration-200
-                                    ${
-                                      field.value
-                                        ? "border-(--primary-color) bg-(--primary-light)"
-                                        : "border-(--primary-light) bg-(--input-background) hover:border-(--primary-color)"
-                                    }`}
+                                    ${field.value
+                      ? "border-(--primary-color) bg-(--primary-light)"
+                      : "border-(--primary-light) bg-(--input-background) hover:border-(--primary-color)"
+                    }`}
                 >
                   {/* Icon */}
                   <span

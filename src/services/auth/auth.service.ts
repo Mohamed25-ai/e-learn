@@ -59,13 +59,19 @@ export async function refreshToken(reftoken: string) {
             },
         });
         console.log("refresheddata", res.data)
-        return res.data;
+        return {
+            data: res.data,
+            status: res.status,
+        }
 
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            const errorData = error.response?.data;
-            console.log('refreshError', errorData)
-            return errorData;
+            const status = error.response?.status;
+            const data = error.response?.data;
+            return {
+                data,
+                status
+            };
         }
         throw error;
     }
@@ -136,13 +142,13 @@ export async function sendResetPassword(email: string) {
 };
 export async function signInWithGoogle(idToken: string) {
     const api = await publicApi;
-    const payload={
-        idToken:idToken
+    const payload = {
+        idToken: idToken
     }
     try {
-        const res = await api.post(`/Authentication/SignInWithGoogleAsync`,payload,{
-            headers:{
-                "Content-Type":"application/json"
+        const res = await api.post(`/Authentication/SignInWithGoogleAsync`, payload, {
+            headers: {
+                "Content-Type": "application/json"
             }
         });
         return {

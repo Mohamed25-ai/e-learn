@@ -1,16 +1,12 @@
 import CategoriesList from "../../Categories/CategoriesList/CategoriesList";
-import ListAllCategories from "../../Categories/ListAllCategoriesBadges/ListAllCategories";
 import { TopCategoriesProps } from "../home.types";
 import TopCategoriesSwiper from "./TopCategoriesSwiper/TopCategoriesSwiper";
 
-export default function TopCategories({ categories,inLandingPage}: TopCategoriesProps) {
-    console.log("object",categories)
+export default function TopCategories({ categories, inLandingPage }: TopCategoriesProps) {
     return (
-        <section>
-            <div className="categories py-3 px-5">
-                <CategoriesList categories={categories}  inLandingPage={inLandingPage} />
-                <TopCategoriesSwiper categories={categories} />
-            </div>
+        <section className="py-6 px-5">
+            <CategoriesList categories={categories} inLandingPage={inLandingPage} />
+            <TopCategoriesSwiper categories={categories} />
         </section>
-    )
+    );
 }

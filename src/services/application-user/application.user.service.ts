@@ -21,3 +21,51 @@ export async function getProfileUserData(userId: string) {
         throw error;
     }
 }
+export async function editProfileUserData(userData: FormData) {
+    const api = await privateServerApi();
+    try {
+        const res = await api.put(`/User/Edit`,userData,{
+            headers:{
+                "Content-Type":"multipart/form-data"
+            }
+        })
+        return {
+            data: res.data,
+            status: res.status
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const status = error.response?.status;
+            const data = error.response?.data;
+            return {
+                data,
+                status
+            };
+        }
+        throw error;
+    }
+}
+export async function changeProfileUserPassword(userData: FormData) {
+    const api = await privateServerApi();
+    try {
+        const res = await api.put(`/User/ChangePassword`,userData,{
+            headers:{
+                "Content-Type":"multipart/form-data"
+            }
+        })
+        return {
+            data: res.data,
+            status: res.status
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const status = error.response?.status;
+            const data = error.response?.data;
+            return {
+                data,
+                status
+            };
+        }
+        throw error;
+    }
+}

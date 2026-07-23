@@ -6,24 +6,25 @@ import { combineReducers, configureStore, createAsyncThunk } from "@reduxjs/tool
 import { createCourseReducer } from "./createcourse/createcourseslice";
 import { createCourseApi } from "./api/createCourseApi";
 import { courseLearningSliceReducer } from "./courselearninig/courselearning.slice";
-import { courseLearningSidebarTogglerStoreReducer, navbarTogglersStoreReducer, sidebarTogglersStoreReducer } from "./togglers/togglers.slice";
-import { userProfileSliceReducer } from "./userprofile/userprofile.slice";
+import { changeUserProfilePasswordIconsTogglersReducer, courseLearningSidebarTogglerStoreReducer, navbarTogglersStoreReducer, sidebarTogglersStoreReducer } from "./togglers/togglers.slice";
+import { setTemporaryProfileImageForEdit, userProfileSliceReducer } from "./userprofile/userprofile.slice";
 
 
 const rootReducer = combineReducers({
     createCourse: createCourseReducer,
-    courseLearning:courseLearningSliceReducer,
-    navbarTogglerSlice:navbarTogglersStoreReducer,
-    sidebarTogglerSlice:sidebarTogglersStoreReducer,
-    courseLearningSidebarSlice:courseLearningSidebarTogglerStoreReducer,
-    userProfileSlice:userProfileSliceReducer,
+    courseLearning: courseLearningSliceReducer,
+    navbarTogglerSlice: navbarTogglersStoreReducer,
+    sidebarTogglerSlice: sidebarTogglersStoreReducer,
+    courseLearningSidebarSlice: courseLearningSidebarTogglerStoreReducer,
+    userProfileSlice: userProfileSliceReducer,
+    changeUserProfilePasswordIconsTogglersSlice:changeUserProfilePasswordIconsTogglersReducer,
     [createCourseApi.reducerPath]: createCourseApi.reducer,
 });
 
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["createCourse","courseLearning"],
+    whitelist: ["createCourse", "courseLearning"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -34,7 +35,10 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER,setTemporaryProfileImageForEdit.type],
+                ignoredPaths: [
+                    "userProfileSlice.temporaryProfileImageForEdit",
+                ],
             },
         }).concat(createCourseApi.middleware)
 });
