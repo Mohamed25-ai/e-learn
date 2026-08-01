@@ -1,4 +1,4 @@
-import { addInstructorRule, getCoursesByCategorieId } from '@/services/courses/courses.service';
+import { getCoursesByCategorieId } from '@/services/courses/courses.service';
 import React from 'react'
 
 export default async function page() {

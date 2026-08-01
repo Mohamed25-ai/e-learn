@@ -1,11 +1,12 @@
 'use client'
 import { Link, usePathname, useRouter } from '@/i18n/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faGraduationCap, faLayerGroup, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faCartPlus, faGraduationCap, faLayerGroup, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 import { setSidebarState } from '@/store/redux/togglers/togglers.slice';
 import { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
+import { useSession } from 'next-auth/react';
 
 
 const SIDEBAR_LINKS = [
@@ -17,6 +18,7 @@ const SIDEBAR_LINKS = [
 export default function Sidebar() {
     const sidebarTogglersStore = useAppSelector((state) => state.sidebarTogglerSlice);
     const sidebarRef = useRef<HTMLDivElement>(null);
+    const userSession=useSession();
     const router=useRouter();
     const dispatch = useAppDispatch();
     const path = usePathname();
@@ -26,7 +28,7 @@ export default function Sidebar() {
     function handleBecomeInstructor(){
         router.push("/become-instructor")
     }
-
+    console.log("userSession",userSession)
 
     // useEffect(() => {
     //     function handleOutsideClick(e: MouseEvent) {
@@ -92,7 +94,7 @@ export default function Sidebar() {
                     })}
                 </nav>
                 {/* Bottom divider + version */}
-                <div className="mt-auto ">
+                {<div className="mt-auto ">
                     <div className="bg-foreground rounded-2xl p-5 flex flex-col gap-4">
 
                         <div className="w-12 h-12 rounded-xl bg-(--primary-light) flex items-center justify-center">
@@ -116,7 +118,7 @@ export default function Sidebar() {
                             EduCore v1.0
                         </p>
                     </div>
-                </div>
+                </div>}
             </div>
         </aside>
     );

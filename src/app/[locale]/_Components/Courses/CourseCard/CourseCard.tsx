@@ -1,6 +1,7 @@
 import {
     Card,
     CardContent,
+    CardFooter,
     CardHeader,
 } from "@/components/ui/card"
 import { CourseCardProps } from "./courcecard.typs"
@@ -12,6 +13,8 @@ import { faStar as faStarEmpty } from "@fortawesome/free-regular-svg-icons"
 import COURSEIMAGE from '@/assets/images/Static course image.jpg'
 import PROFILEIMAGE from '@/assets/images/blank-profile-picture-973460_960_720.png'
 import { Link } from "@/i18n/navigation"
+import AddToCartBtn from "../../Cart/AddToCartBtn"
+import { useSession } from "next-auth/react"
 // import { Link } from "@/i18n/navigation"
 function StarRating({ rating }: { rating: number }) {
     return (
@@ -34,6 +37,7 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export default function CourseCard({ course }: CourseCardProps) {
+    const userSession = useSession();
     const title = course?.title ?? "Untitled Course";
     const id = course?.id ?? "";
     const price = course?.price ?? 0;
@@ -50,11 +54,14 @@ export default function CourseCard({ course }: CourseCardProps) {
     const ratingCount = course.ratingCount ?? null;
     const noOfStudents = course.noOfStudents ?? null;
     const updatedAt = course.updatedAt ?? null;
+    const isUserInstructorAndCreatedThisCourse = userSession.data?.userRole.includes("Instructor") &&
+        course.instructorId == userSession.data.id;
     return (
-        <Link href={`/course-details/${id}/overview`}>
-            <Card className="group/card overflow-hidden rounded-radius border border-border 
-                 bg-card p-0 shadow-sm transition-all duration-300 hover:shadow-lg 
-                 hover:-translate-y-1 cursor-pointer md:h-88">
+        <Card className="group/card overflow-hidden rounded-radius border border-border  
+            bg-card p-0 pb-4 shadow-sm transition-all duration-300 hover:shadow-lg 
+            hover:-translate-y-1 cursor-pointer ">
+            <Link className="py-0!"
+                scroll={false} href={`/course-details/${id}/overview`}>
                 {/* Thumbnail */}
                 <CardHeader className="p-0">
                     <div className="relative aspect-video w-full overflow-hidden">
@@ -66,37 +73,42 @@ export default function CourseCard({ course }: CourseCardProps) {
                         />
                         {/* Level badge */}
                         {/* {course?.level && (
-                            <span className="absolute top-3 right-3 text-xs font-medium px-3 py-1 rounded-full bg-white/90 text-(--primary-color) border border-(--primary-color)">
+                                <span className="absolute top-3 right-3 text-xs font-medium px-3 py-1 rounded-full bg-white/90 text-(--primary-color) border border-(--primary-color)">
                                 {course.level}
-                            </span>
-                        )} */}
+                                </span>
+                                )} */}
                     </div>
                 </CardHeader>
-
-                <CardContent className="p-4 flex flex-col gap-3">
-
+                <CardContent className="px-4 flex flex-col gap-3">
                     {/* Title */}
                     <h3 className="text-sm font-bold text-foreground line-clamp-2 group-hover/card:text-(--primary-color) transition-colors leading-snug">
                         {course?.title}
                     </h3>
 
                     {/* Instructor */}
-                    <div className="flex items-center gap-2">
-                        <div className="relative h-5 w-5 rounded-full border border-border overflow-hidden flex items-center justify-center bg-(--primary-light) text-(--primary-color) text-xs font-bold shrink-0">
-                            {instructorImage ? (
-                                <Image
-                                    src={instructorImage}
-                                    alt={instructorName}
-                                    fill
-                                    className="object-cover"
-                                />
-                            ) : (
-                                instructorName.charAt(0) || "U"
-                            )}
+                    <div className="flex justify-between items-center gap-2">
+                        <div className="flex items-center gap-1.5">
+                            <div className="relative h-5 w-5 rounded-full border border-border overflow-hidden flex items-center justify-center bg-(--primary-light) text-(--primary-color) text-xs font-bold shrink-0">
+                                {instructorImage ? (
+                                    <Image
+                                        src={instructorImage}
+                                        alt={instructorName}
+                                        fill
+                                        className="object-cover"
+                                    />
+                                ) : (
+                                    instructorName.charAt(0) || "U"
+                                )}
+                            </div>
+                            <p className="text-xs text-(--primary-color) font-medium truncate">
+                                {instructorName}
+                            </p>
                         </div>
-                        <p className="text-xs text-(--primary-color) font-medium truncate">
-                            {instructorName}
-                        </p>
+                        {hasDiscount && <div>
+                            <span className="text-xs font-semibold text-(--success)">
+                                {discountPercentage}% off
+                            </span>
+                        </div>}
                     </div>
 
                     {/* Rating */}
@@ -116,76 +128,83 @@ export default function CourseCard({ course }: CourseCardProps) {
 
                     {/* Meta: duration, lectures, students */}
                     {/* <div className="flex items-center gap-3 text-xs text-(--text-secondary) flex-wrap">
-                        {course?.duration && (
-                            <span className="flex items-center gap-1">
-                                <FontAwesomeIcon icon={faClock} className="text-[10px]" />
-                                {course.duration}
-                            </span>
-                        )}
-                        {course?.lecturesCount != null && (
-                            <span className="flex items-center gap-1">
-                                <FontAwesomeIcon icon={faChalkboardUser} className="text-[10px]" />
-                                {course.lecturesCount} lectures
-                            </span>
-                        )}
-                        {course?.noOfStudents != null && (
-                            <span className="flex items-center gap-1">
-                                {course.noOfStudents.toLocaleString()}k
-                            </span>
-                        )}
-                    </div> */}
+                            {course?.duration && (
+                                <span className="flex items-center gap-1">
+                                    <FontAwesomeIcon icon={faClock} className="text-[10px]" />
+                                    {course.duration}
+                                </span>
+                            )}
+                            {course?.lecturesCount != null && (
+                                <span className="flex items-center gap-1">
+                                    <FontAwesomeIcon icon={faChalkboardUser} className="text-[10px]" />
+                                    {course.lecturesCount} lectures
+                                </span>
+                            )}
+                            {course?.noOfStudents != null && (
+                                <span className="flex items-center gap-1">
+                                    {course.noOfStudents.toLocaleString()}k
+                                </span>
+                            )}
+                        </div> */}
 
                     {/* Tags */}
                     {/* {course?.tags && course.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5">
-                            {course.tags.map((tag: string) => (
-                                <span
-                                    key={tag}
-                                    className="text-xs px-2.5 py-0.5 rounded-full border border-(--border) text-(--text-secondary) bg-(--input-background)"
-                                >
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
-                    )} */}
+                            <div className="flex flex-wrap gap-1.5">
+                                {course.tags.map((tag: string) => (
+                                    <span
+                                        key={tag}
+                                        className="text-xs px-2.5 py-0.5 rounded-full border border-(--border) text-(--text-secondary) bg-(--input-background)"
+                                    >
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        )} */}
 
                     {/* Divider */}
-                    <div className="border-t border-border" />
-
-                    {/* Price + Add button */}
-                    <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-base font-bold text-foreground">
-                                ${hasDiscount ? discountedPrice?.toFixed(2) : price.toFixed(2)}
-                            </span>
-                            {hasDiscount && (
-                                <>
-                                    <span className="text-xs text-(--text-muted) line-through">
-                                        ${price.toFixed(2)}
-                                    </span>
-                                    <span className="text-xs font-semibold text-(--success)">
-                                        {discountPercentage}% off
-                                    </span>
-                                </>
-                            )}
-                        </div>
-
-                        <button className="MAIN_BUTTON text-xs px-3 py-1.5 shrink-0">
-                            <FontAwesomeIcon icon={faCartShopping} />
-                            Add
-                        </button>
-                    </div>
-
-                    {/* Updated at */}
-                    {updatedAt && (
-                        <p className="text-[10px] text-(--text-muted) flex items-center gap-1">
-                            <FontAwesomeIcon icon={faSignal} className="text-[10px]" />
-                            Updated {new Date(updatedAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-                        </p>
-                    )}
 
                 </CardContent>
-            </Card>
-        </Link>
+            </Link>
+
+
+
+            <CardFooter className="border-t border-border px-3 pt-3 pb-0 flex flex-col gap-2">
+                {/* Price + Add button */}
+                <div className="flex items-center justify-between gap-2 w-full min-h-8">
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-base font-bold text-foreground">
+                            ${hasDiscount ? discountedPrice?.toFixed(2) : price.toFixed(2)}
+                        </span>
+                        {hasDiscount && (
+                            <>
+                                <span className="text-xs text-(--text-muted) line-through">
+                                    ${price.toFixed(2)}
+                                </span>
+
+                            </>
+                        )}
+                    </div>
+
+                    {/* Always reserve space — invisible placeholder when instructor owns the course */}
+                    <div className="shrink-0 min-w-15 flex justify-end">
+                        {!isUserInstructorAndCreatedThisCourse
+                            ? <AddToCartBtn courseId={course.id!} />
+                            : <span className="text-xs font-medium text-(--primary-color)
+                                   bg-(--primary-light) px-2.5 py-1 rounded-full whitespace-nowrap">
+                                Your Course
+                            </span>
+                        }
+                    </div>
+                </div>
+
+                {/* Updated at */}
+                {updatedAt && (
+                    <p className="text-[10px] text-(--text-muted) flex items-center gap-1">
+                        <FontAwesomeIcon icon={faSignal} className="text-[10px]" />
+                        Updated {new Date(updatedAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                    </p>
+                )}
+            </CardFooter>
+        </Card>
     )
 }

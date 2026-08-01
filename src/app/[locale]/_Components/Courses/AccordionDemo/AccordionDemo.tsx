@@ -49,6 +49,8 @@ export function AccordionDemo({ contentData, section, inPlay }: AccordionDemoPro
         dispatch(setLessonId(lessionId));
     }
     useEffect(() => {
+
+        
     }, [])
     return (
         <div dir={locale === "ar" && "rtl" || ""}>
@@ -106,7 +108,7 @@ export function AccordionDemo({ contentData, section, inPlay }: AccordionDemoPro
                             return (
                                 <div key={content.id}>
                                     <Link onClick={() => handleSelectedLesson(section.id, content.id, content.url)}
-                                        href={`/courselearn/${section.courseId}/play?lessonId=${content.id}`}>
+                                        href={`/course-learn/${section.courseId}/play?lessonId=${content.id}`}>
                                         <AccordionContent
                                             className="p-0 bg-white"
                                         >

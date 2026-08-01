@@ -74,16 +74,17 @@ export const nextAuthConfig: NextAuthOptions = {
                         token.message = data.data.message;
                         token.fullName = data.data.fullName;
                         token.userName = data.data.userName;
-                        token.role = data.data.roles;
+                        token.roles = data.data.roles;
                         token.profilePictureUrl = data.data.profilePictureUrl;
-                        token.userToken = data.data.token;
-                        token.userTokenExpiration = data.data.expiresAt;
-                        token.userRefreshToken = data.data.refreshToken;
-                        token.userRefreshExpirationDate = data.data.refreshTokenExpiration;
-                        token.currentTime = Date.now();
-                        token.expiresIn = Date.now() + 15 * 60 * 1000;
+                        token.token = data.data.token;
+                        token.expiresAtFromBackend = data.data.expiresAt;
+                        token.refreshToken = data.data.refreshToken;
+                        token.refreshTokenExpirationFromBackend = data.data.refreshTokenExpiration;
+                        token.currentTimeUserLogin = Date.now();
+                        token.expiresInStatically = Date.now() + 15 * 60 * 1000;
                         token.error = false;
                         token.tokenErrorMessage = undefined;
+                        token.isLoggedByGoogle = true;
                         return token; // ← early return, skip the user.* mapping below
                     } catch {
                         token.error = true;
@@ -94,92 +95,73 @@ export const nextAuthConfig: NextAuthOptions = {
                 token.id = user.id;
                 token.email = user.email;
                 token.message = user.message;
-                token.userName = user.userName;
                 token.fullName = user.fullName;
-                token.role = user.roles;
+                token.userName = user.userName;
+                token.roles = user.roles;
                 token.profilePictureUrl = user.profilePictureUrl;
-                token.userToken = user.token; // access token
-                token.userTokenExpiration = user.expiresAt; // access exp (ISO string)
-                token.userRefreshToken = user.refreshToken;
-                token.userRefreshExpirationDate = user.refreshTokenExpiration; // refresh exp (ISO string)
-                token.currentTime = Date.now();
-                token.expiresIn = Date.now() + 15 * 60 * 1000;
+                token.token = user.token;
+                token.expiresAtFromBackend = user.expiresAt;
+                token.refreshToken = user.refreshToken;
+                token.refreshTokenExpirationFromBackend = user.refreshTokenExpiration;
+                token.currentTimeUserLogin = Date.now();
+                token.expiresInStatically = Date.now() + 15 * 60 * 1000;
                 token.error = false;
                 token.tokenErrorMessage = undefined;
                 console.log("First Login User", token);
                 return token;
             }
 
-            // if (!token.userToken || !token.userTokenExpiration) {
-            //     token.error = true;
-            //     token.tokenErrorMessage = "MissingTokenData";
-            //     return token;
-            // }
-            // const timeNow = Date.now();
-            // if (token.userRefreshExpirationDate) {
-            //     if (timeNow >= transformDate(token.userRefreshExpirationDate)) {
-            //         token.error = true;
-            //         token.tokenErrorMessage = "RefreshTokenExpired";
-            //         return token;
-            //     }
-            // }
-            // // ✅ If expiration is missing, treat token as still valid (don't fall into refresh)
-            // if (!token.userTokenExpiration) {
-            //     return token;
-            // }
-            // const buffer = 60_000; // 1 minute early refresh
-            // if (token.userTokenExpiration) {
-            //     if (timeNow < transformDate(token.userTokenExpiration) - buffer) {
-            //         console.log("Token still valid before 1 min", token)
-            //         return token; // still valid
-            //     }
-            // }
-
-            if (!token.userToken || !token.userTokenExpiration) {
+            if (!token.token) {
                 token.error = true;
                 token.tokenErrorMessage = "MissingTokenData";
                 return token;
             }
-            if (!token.expiresIn) {
+            if (!token.expiresInStatically) {
                 return token;
             }
-            if (token.userRefreshExpirationDate) {
-                if (Date.now() >= transformDate(token.userRefreshExpirationDate)) {
+            if (token.refreshTokenExpirationFromBackend) {
+                if (Date.now() >= transformDate(token.refreshTokenExpirationFromBackend)) {
                     token.error = true;
                     token.tokenErrorMessage = "RefreshTokenExpired";
                     return token;
                 }
             }
             const buffer = 60_000;
-            if (token.currentTime) {
-                if (Date.now() < token.expiresIn - buffer) {
+            if (token.currentTimeUserLogin) {
+                if (Date.now() < token.expiresInStatically - buffer) {
                     console.log("Token still valid before 0 min", token)
-                    return token
+                    return token;
                 }
             }
             try {
-                const refreshedToken = await refreshTokenAction(token.userRefreshToken as string);
-                console.log("Token Refreshed Successifuly",refreshedToken)
-                console.log("Token Refreshed Successifuly Data",refreshedToken.data)
-                token.email = refreshedToken.data?.email;
+                const refreshedToken = await refreshTokenAction(token.refreshToken as string);
+                console.log("Token Refreshed Successifuly", refreshedToken)
+                console.log("Token Refreshed Successifuly Data", refreshedToken.data)
+                if (!refreshedToken.data) {
+                    token.error = true;
+                    token.tokenErrorMessage ="RefreshAccessTokenError";
+                    return token;
+                }
                 token.id = refreshedToken.data.id;
-                token.message = refreshedToken.data?.message;
-                token.userName = refreshedToken.data?.userName;
-                token.fullName = refreshedToken.data?.fullName;
-                // ✅ same corrected names
-                token.role = refreshedToken.data?.roles;
-                token.profilePictureUrl = refreshedToken.data?.profilePictureUrl;
-                token.userToken = refreshedToken.data?.token;
-                token.userTokenExpiration = refreshedToken.data?.expiresAt;
-                token.currentTime = Date.now();
-                token.expiresIn = Date.now() + 15 * 60 * 1000;
-                token.userRefreshToken = refreshedToken.data?.refreshToken;
-                token.userRefreshExpirationDate =
-                    refreshedToken.data?.refreshTokenExpiration;
+                token.email = refreshedToken.data.email;
+                token.message = refreshedToken.data.message;
+                token.fullName = refreshedToken.data.fullName;
+                token.userName = refreshedToken.data.userName;
+                token.roles = refreshedToken.data.roles;
+                token.profilePictureUrl = refreshedToken.data.profilePictureUrl;
+                token.token = refreshedToken.data.token;
+                token.expiresAtFromBackend = refreshedToken.data.expiresAt;
+                token.refreshToken = refreshedToken.data.refreshToken;
+                token.refreshTokenExpirationFromBackend = refreshedToken.data.refreshTokenExpiration;
+                token.currentTimeUserLogin = Date.now();
+                token.expiresInStatically = Date.now() + 15 * 60 * 1000;
                 token.error = false;
                 token.tokenErrorMessage = undefined;
-                console.log("Token refreshed successifuly")
+                if (token.isLoggedByGoogle) {
+                    token.isLoggedByGoogle = true;
+                }
                 return token;
+                
             } catch (error) {
                 token.error = true;
                 token.tokenErrorMessage = "RefreshAccessTokenError";
@@ -189,19 +171,21 @@ export const nextAuthConfig: NextAuthOptions = {
         session({ session, token, user }) {
             if (token) {
                 console.log("Token in Session", token)
-                session.id = token.id;
-                session.tokenError = token.error;
-                session.userRole = token.role;
-                session.tokenErrorMessage = token.tokenErrorMessage;
                 session.user = {
                     name: (token.fullName as string),
                     email: (token.email as string),
                     image: (token.profilePictureUrl as string),
                 };
+                session.id = token.id;
+                session.tokenError = token.error
+                session.userRole = token.roles;
+                session.tokenErrorMessage = token.tokenErrorMessage;
                 session.fullName = token.fullName!;
                 session.email = token.email;
                 session.profilePictureUrl = token.profilePictureUrl
-            
+                if (token.isLoggedByGoogle) {
+                    session.isLoggedByGoogle = true;
+                }
             }
             console.log("User Session", session)
             return session;

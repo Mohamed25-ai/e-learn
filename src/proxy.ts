@@ -27,7 +27,7 @@ export default async function proxy(req: NextRequest) {
     const isProtected = PROTECTED.some(
         (p) => restPath === p || restPath.startsWith(`${p}/`));
     const isAuthPage = AUTH_PAGES.some((p) => restPath === p || restPath.startsWith(`${p}/`));
-    const isLoggedIn = !!token?.userToken && !token?.error;
+    const isLoggedIn = !!token?.token && !token?.error;
 
     // protected + logged in
     if (isLoggedIn && isProtected) {

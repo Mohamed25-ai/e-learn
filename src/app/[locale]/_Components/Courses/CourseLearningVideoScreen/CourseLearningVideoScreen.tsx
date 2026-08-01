@@ -1,13 +1,10 @@
 "use client"
-
 import { useAppSelector } from "@/hooks/hooks"
-import { RootState } from "@/store/redux/reduxstore";
-
 import { useLocale } from "next-intl";
 import Image from "next/image";
 
 const VIDEO_EXTENSIONS = ["mp4", "mov", "avi"]
-const IMAGE_EXTENSIONS = ["jpg", "jpeg", "gif", "webp"]
+const IMAGE_EXTENSIONS = ["jpg", "jpeg", "gif", "webp","png"]
 const PDF_EXTENSIONS = ["pdf"]
 
 export default function CourseLearningVideoScreen() {

@@ -11,7 +11,7 @@ import { signIn } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFormType, loginSchema } from "./LoginFormSchema";
 import toast from "react-hot-toast";
-import { getUserToken } from "@/utils/getAuthenticatedUserToken/getAuthenticatedUserToken";
+
 import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { ClipLoader } from "react-spinners";

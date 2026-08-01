@@ -3,13 +3,11 @@ import { getUserToken } from "@/utils/getAuthenticatedUserToken/getAuthenticated
 
 export async function privateServerApi() {
     const token = await getUserToken();
-    // console.log("Accessioi",token)
     if(!token){
-        throw new Error("SESSION_EXPIRED");
+        throw new Error("Token Not Exist");
     }
     return axios.create({
         baseURL: process.env.BASE_URL,
-        
         headers: {
             "Authorization": `Bearer ${token}`,
         }

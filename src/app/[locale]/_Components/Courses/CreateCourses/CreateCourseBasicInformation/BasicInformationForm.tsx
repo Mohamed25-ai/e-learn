@@ -62,7 +62,9 @@ export default function BasicInformationForm({ data }: BasicInformationProps) {
         setError("Thumbnail", { message: t("createcourse.thumbnail.required") });
     }
     function cancelFirstStep() {
-        router.push('/');
+        router.push('/',{
+            scroll:false
+        });
     }
     function handleObjectivesValidation(value: string[]) {
         const realValues = value.filter(

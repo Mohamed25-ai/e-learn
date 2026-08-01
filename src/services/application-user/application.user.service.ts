@@ -69,3 +69,23 @@ export async function changeProfileUserPassword(userData: FormData) {
         throw error;
     }
 }
+export async function applyToBecomeInstructor() {
+    const api = await privateServerApi();
+    try {
+        const res = await api.post(`/User/Add-Instructor-Role`)
+        return {
+            data: res.data,
+            status: res.status
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const status = error.response?.status;
+            const data = error.response?.data;
+            return {
+                data,
+                status
+            };
+        }
+        throw error;
+    }
+}

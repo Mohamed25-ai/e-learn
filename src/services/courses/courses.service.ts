@@ -3,25 +3,8 @@ import { publicApi } from "../public-api";
 import { privateServerApi } from "../private-server-api";
 import { CreateSectionType } from "./coursesapi.types";
 import { CreateCourseContentInputsData } from "@/app/[locale]/_Components/Courses/CreateCourses/CreateCourseContent/createcoursecontent.types";
-
 const BASE_URL = process.env.BASE_URL;
-export async function addInstructorRule() {
-    const api = await privateServerApi();
-    try {
-        const res = await api.post(`/User/Add-Instructor-Role`, {
-        })
-        console.log("addistrule", res.data)
-        return {
-            status: res.status,
-            data: res.data
-        }
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log("Rule error", error?.response?.data)
-        }
-        throw error;
-    }
-};
+
 export async function getCoursesByCategorieId(categoryid: string, pageSize?: number, pageNumber?: number, orderBy?: string, search?: string) {
     const api = await publicApi;
     try {
@@ -128,7 +111,7 @@ export async function getCreatedSectionByCourseId(courseId: string) {
         throw error;
     }
 }
-export async function createCourseContent(data: CreateCourseContentInputsData) {
+export async function createCourseContent(data: FormData) {
     const api = await privateServerApi();
     try {
         const res = await api.post(`/Content/Create`, data, {
@@ -146,7 +129,7 @@ export async function createCourseContent(data: CreateCourseContentInputsData) {
         throw error;
     }
 }
-export async function editCourseContent(data: CreateCourseContentInputsData) {
+export async function editCourseContent(data: FormData) {
     const api = await privateServerApi();
     try {
         const res = await api.put(`/Content/Edit`, data, {

@@ -9,11 +9,13 @@ import { Input } from '@/components/ui/input'
 import { useRef, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { ButtonLoader } from '../Loaders/ButtonLoader/ButtonLoader'
+import { useSession } from 'next-auth/react'
 
 
 export default function ProfileDataCard({ data, onSubmit }: ProfileDataCardProps) {
     const { isUserEditNow, temporaryProfileImageForEditUrl, temporaryProfileImageForEdit } = useAppSelector((state) => state.userProfileSlice);
     const temporayProfileImageEdited = useRef<HTMLInputElement | null>(null);
+    const userSession=useSession();
     const { formState } = useFormContext();
     const [imageUrl, setimageUrl] = useState<string | null>("")
     const dispatch = useAppDispatch();
@@ -60,7 +62,7 @@ export default function ProfileDataCard({ data, onSubmit }: ProfileDataCardProps
                                 {imageUrl && <Image className='rounded-full ' fill src={imageUrl!} alt={data.fullName} />}
                             </div>
                         </div>}
-                        {isUserEditNow && (
+                        {isUserEditNow&&!userSession.data?.isLoggedByGoogle && (
                             <label
                                 htmlFor="profile-image"
                                 className="bg-(--primary-color) mt-5 w-10 h-10

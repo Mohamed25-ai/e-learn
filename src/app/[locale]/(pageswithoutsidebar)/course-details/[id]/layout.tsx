@@ -1,5 +1,4 @@
 import React from 'react'
-import { ParamsType } from '../coursedetails.types'
 import { getCreatedCourseByCourseIdAction } from '@/actions/courses/courses.actions';
 import CourseDetails from '@/app/[locale]/_Components/Courses/CourseDetails/CourseDetails';
 type layoutProps = {

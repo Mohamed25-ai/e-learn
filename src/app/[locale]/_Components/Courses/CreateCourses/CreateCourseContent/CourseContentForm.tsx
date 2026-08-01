@@ -52,7 +52,6 @@ export default function CourseContentForm({
   const dispatch = useAppDispatch();
   const [isFileExist, setisFileExist] = useState(false);
   const [isLoading, setisLoading] = useState(false);
-  const [progress, setprogress] = useState(0)
   const isCardAddedBrefore = addedContent[fromOrder] === true;
   const isEditMode =
     !isLoading &&
@@ -66,6 +65,7 @@ export default function CourseContentForm({
     mode: "onChange",
   });
   const { handleSubmit, control, formState } = submitContentForm;
+  console.log(editCurrentCard[fromOrder])
   function handleSetExistedFile(value: boolean) {
     setisFileExist(value);
   }
@@ -89,58 +89,46 @@ export default function CourseContentForm({
   ) {
     try {
       setisLoading(true);
-
-      // 1. Upload file to Cloudinary
-      const uploadResult = await uploadCloudinaryFiles(data.File!, {
-        folder: `EduCore`,
-        onProgress: (progress) => {
-          setprogress(progress);
-        },
-      });
-      console.log(uploadResult)
-
       // 2. Prepare payload for backend
-      const payload = {
-        id: createCourseSote.createdContentId[fromOrder],
-        title: data.Title,
-        sectionId: data.SectionId,
-        // publicId: uploadResult,
-        // url: uploadResult.secure_url,
-        // resourceType: uploadResult.resource_type,
-        // format: uploadResult.format,
-        // duration: uploadResult.duration,
-        // bytes: uploadResult.bytes,
-      };
+      const formData=new FormData();
+      formData.append("Title",data.Title)
+      formData.append("SectionId",data.SectionId);
+      if(data.File&&!isEdit){
+        formData.append("File",data.File)
+      }
+      if(isEdit&&createCourseSote.createdContentId[fromOrder]){
+        formData.append("Id",createCourseSote.createdContentId[fromOrder])
+      }
       const isAddedBefore =
         createCourseSote.createdContentuccessifuly.includes(fromOrder);
 
       // 3. Edit
-      // if (isAddedBefore && isEdit && editCurrentCard[fromOrder]) {
+      if (isAddedBefore && isEdit && editCurrentCard[fromOrder]) {
 
-      //   const res = await editCourseContentAction(payload);
+        const res = await editCourseContentAction(formData);
+        console.log("ers",res)
+        if (res.status === 200) {
+          toast.success("Changes saved successfully");
+          handleEditCardContent(false);
+        }
 
-      //   if (res.status === 200) {
-      //     toast.success("Changes saved successfully");
-      //     handleEditCardContent(false);
-      //   }
-
-      //   return;
-      // }
+        return;
+      }
 
       // 4. Create
-      // if (!isAddedBefore) {
-      //   const res = await createCourseContentAction(payload);
-      //   dispatch(setAddedContent(fromOrder));
-      //   handleAddedSuccessContent(fromOrder, true);
-      //   dispatch(
-      //     setCreatedContentId({
-      //       key: fromOrder,
-      //       value: res.data,
-      //     })
-      //   );
-      //   toast.success("Lesson added successfully");
-      //   console.log("ressss",res)
-      // }
+      if (!isAddedBefore) {
+        const res = await createCourseContentAction(formData);
+        dispatch(setAddedContent(fromOrder));
+        handleAddedSuccessContent(fromOrder, true);
+        dispatch(
+          setCreatedContentId({
+            key: fromOrder,
+            value: res.data,
+          })
+        );
+        toast.success("Lesson added successfully");
+        console.log("ressss",res)
+      }
     } catch (error) {
       console.error(error);
       toast.error("Failed to upload lesson");

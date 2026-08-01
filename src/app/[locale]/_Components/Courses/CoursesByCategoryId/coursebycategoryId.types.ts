@@ -13,8 +13,9 @@ export interface CourseData{
     title?:string,
     updatedAt?:string,
     instructorName:string,
+    instructorId:string
     instructorProfilePictureUrl?:string,
-    objectives:[],
+    objectives:string[],
 }
 export interface CourseByCategoryIdProps{
     categoryid:string,

@@ -8,6 +8,7 @@ import { createCourseApi } from "./api/createCourseApi";
 import { courseLearningSliceReducer } from "./courselearninig/courselearning.slice";
 import { changeUserProfilePasswordIconsTogglersReducer, courseLearningSidebarTogglerStoreReducer, navbarTogglersStoreReducer, sidebarTogglersStoreReducer } from "./togglers/togglers.slice";
 import { setTemporaryProfileImageForEdit, userProfileSliceReducer } from "./userprofile/userprofile.slice";
+import { userCartSliceReducer } from "./cart/cart.slice";
 
 
 const rootReducer = combineReducers({
@@ -18,13 +19,14 @@ const rootReducer = combineReducers({
     courseLearningSidebarSlice: courseLearningSidebarTogglerStoreReducer,
     userProfileSlice: userProfileSliceReducer,
     changeUserProfilePasswordIconsTogglersSlice:changeUserProfilePasswordIconsTogglersReducer,
+    userCartSlice:userCartSliceReducer,
     [createCourseApi.reducerPath]: createCourseApi.reducer,
 });
 
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["createCourse", "courseLearning"],
+    whitelist: ["createCourse", "courseLearning","userCartSlice"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -11,10 +11,12 @@ import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { editProfileUserDataAction } from "@/actions/application-user/application-user.actions";
 import toast from "react-hot-toast";
 import { setEditUserProfileState } from "@/store/redux/userprofile/userprofile.slice";
+import { useSession } from "next-auth/react";
 
 export default function Profile({ data }: ProfileProps) {
     const userProfileStore = useAppSelector((state) => state.userProfileSlice);
-    const dispatch=useAppDispatch();
+    const userSession=useSession();
+    const dispatch = useAppDispatch();
     const router = useRouter();
     const methods = useForm({
         defaultValues: {
@@ -44,6 +46,8 @@ export default function Profile({ data }: ProfileProps) {
             dispatch(setEditUserProfileState(false));
             router.refresh();
             toast.success("Profile Updated Successifuly");
+            const ress=await userSession.update();
+            console.log(ress)
         } else {
             toast.error(res.data?.title);
         }
@@ -65,7 +69,7 @@ export default function Profile({ data }: ProfileProps) {
                     </div>
                 </header>
                 <div className="px-5 mt-5 md:flex gap-5">
-                    <ProfileDataCard data={data}  onSubmit={onSubmit}  />
+                    <ProfileDataCard data={data} onSubmit={onSubmit} />
                     <ProfileDetails userData={data} />
                 </div>
             </section>

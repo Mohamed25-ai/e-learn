@@ -19,7 +19,9 @@ export default function CourseLearningSidebarToggler({ courseId }: CourseLearnin
     function handleCloseCourseLesson() {
         const params=new URLSearchParams(searchParams.toString());
         params.delete("lessonID")
-        router.push(`/coursedetails/${courseId}/overview`);
+        router.push(`/course-details/${courseId}/overview`,{
+            scroll:false
+        });
         dispatch(steInitialState());
     }
 

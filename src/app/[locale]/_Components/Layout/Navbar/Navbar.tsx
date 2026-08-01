@@ -16,7 +16,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
-import {  toggleNavbar, toggleSidebar } from '@/store/redux/togglers/togglers.slice';
+import { toggleNavbar, toggleSidebar } from '@/store/redux/togglers/togglers.slice';
+import CartInNavbar from '../../Cart/CartInNavbar';
+import Image from 'next/image';
 
 
 
@@ -26,8 +28,8 @@ const LINKS = [
     { href: "/createcourse", label: "Create Course" },
 ];
 
-const PAGES_WITHOUT_NAVBAR = ["/","/cart", "/become-instructor", "/courselearn"
-    , "categorizedcourse","/coursedetails","/categorizedcourse"]
+const PAGES_WITHOUT_NAVBAR = ["/", "/cart", "/become-instructor", "/courselearn",
+    "categorizedcourse", "/coursedetails", "/categorizedcourse"]
 export default function Navbar() {
     const navbarTogglerStore = useAppSelector((state) => state.navbarTogglerSlice);
     const sidebarTogglerStore = useAppSelector((state) => state.sidebarTogglerSlice);
@@ -59,7 +61,7 @@ export default function Navbar() {
 
     const isAuth = userSession.status === "authenticated";
     const user = userSession.data?.user;
-    const authenticatedUserName=userSession.data?.fullName||userSession.data?.user?.name;
+    const authenticatedUserName = userSession.data?.fullName || userSession.data?.user?.name;
     const userRole = Array.isArray(userSession?.data?.userRole)
         ? userSession.data.userRole
         : [userSession?.data?.userRole || ""];
@@ -131,8 +133,8 @@ export default function Navbar() {
 
                     {/* Right side */}
                     <div className="flex items-center gap-2 ms-auto">
+                        {isAuth && <CartInNavbar />}
                         <LanguageToggle />
-
                         {!isAuth && (
                             <Link
                                 href="/login"
@@ -147,11 +149,10 @@ export default function Navbar() {
                                 <DropdownMenuTrigger asChild>
                                     <button className="flex items-center gap-2 px-2 py-1 rounded-xl transition-all duration-200 hover:bg-(--primary-light) outline-none cursor-pointer">
                                         {/* Avatar */}
-                                        <div className="w-7 h-7 rounded-full bg-(--primary-color) flex items-center justify-center text-white text-xs font-bold shrink-0 overflow-hidden">
-                                            {user?.image
-                                                ? <img src={user.image} alt={user?.name ?? ""} className="w-full h-full object-cover" />
-                                                : <span>{authenticatedUserName?.charAt(0).toUpperCase() ?? "U"}</span>
-                                            }
+                                        <div className="relative">
+                                            {user?.image && <div className='w-7 h-7 rounded-full bg-(--primary-color) flex items-center justify-center text-white text-xs font-bold shrink-0 overflow-hidden'>
+                                                {<Image className='rounded-full ' fill src={user?.image} alt={user?.name ?? "User Name"} />}
+                                            </div>}
                                         </div>
                                         <span className="hidden sm:block text-sm font-semibold max-w-24 truncate text-foreground">
                                             {user?.name ?? "User"}

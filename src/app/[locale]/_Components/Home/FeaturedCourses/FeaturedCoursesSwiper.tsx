@@ -53,8 +53,8 @@ export default function FeaturedCoursesSwiper({
                     });
                 }}
                 breakpoints={{
-                    0:    { slidesPerView: 1 },
-                    640:  { slidesPerView: 2 },
+                    0: { slidesPerView: 1 },
+                    640: { slidesPerView: 2 },
                     1024: { slidesPerView: 3 },
                     1280: { slidesPerView: 4 },
                 }}
@@ -90,9 +90,11 @@ export default function FeaturedCoursesSwiper({
                 className="absolute top-1/2 -translate-y-1/2 right-0 z-10
                             w-10 h-10 md:w-12 md:h-12 rounded-full
                             flex items-center justify-center
-                            bg-(--primary-color) border-2
-                            border-(--primary-color) text-white
-                            hover:bg-(--primary-hover)
+                           bg-white border-2 border-border
+                            text-foreground
+                            hover:bg-(--primary-light)
+                            hover:border-(--primary-color)
+                            hover:text-(--primary-color)
                             transition-all duration-200
                             disabled:opacity-30 disabled:cursor-not-allowed
                             cursor-pointer"

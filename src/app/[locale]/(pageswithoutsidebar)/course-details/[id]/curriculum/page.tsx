@@ -3,6 +3,7 @@ import CourseDetailsCurriculum from "@/app/[locale]/_Components/Courses/CourseDe
 type layoutProps = {
     params: Promise<{ id: string }>
 }
+
 export default async function page({params}:layoutProps) {
     const {id}=await params;
     return (
