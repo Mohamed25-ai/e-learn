@@ -8,12 +8,19 @@ import toast from 'react-hot-toast'
 import { ButtonLoader } from '../Loaders/ButtonLoader/ButtonLoader'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import { setAddedCourseToCart, setNumberOfCartItems } from '@/store/redux/cart/cart.slice'
+import { useSession } from 'next-auth/react'
 
 export default function AddToCartBtn({ courseId }: AddToCartBtnProps) {
     const { numberOfCartItems,addedCourses } = useAppSelector((state) => state.userCartSlice);
+    const userSession=useSession();
+    console.log(userSession)
     const dispatch = useAppDispatch();
     const [isLoading, setisLoading] = useState(false);
     async function handleAddCourseToCart() {
+        if(userSession.status=="unauthenticated"){
+            toast.error("Login First To Add This Course");
+            return;
+        }
         if(addedCourses.includes(courseId)){
             toast.error("Course Is Already in Cart");
             return;
