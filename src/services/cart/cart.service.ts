@@ -19,3 +19,57 @@ export async function addCourseToCart(courseId: string) {
         throw error;
     }
 }
+export async function removeCourseFromCart(courseId: string) {
+    const api = await privateServerApi();
+    try {
+        const res = await api.delete(`/Basket/Delete/${courseId}`);
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return {
+                status: error.response?.status,
+                data: error.response?.data,
+            };
+        };
+        throw error;
+    }
+}
+export async function payUserCart(basketId: string) {
+    const api = await privateServerApi();
+    try {
+        const res = await api.delete(`/Payment/CreatePaymentIntent/${basketId}`);
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return {
+                status: error.response?.status,
+                data: error.response?.data,
+            };
+        };
+        throw error;
+    }
+}
+export async function getUserCart() {
+    const api = await privateServerApi();
+    try {
+        const res = await api.get(`/Basket/List`);
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return {
+                status: error.response?.status,
+                data: error.response?.data,
+            };
+        };
+        throw error;
+    }
+}

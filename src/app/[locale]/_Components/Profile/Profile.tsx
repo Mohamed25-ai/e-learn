@@ -28,6 +28,7 @@ export default function Profile({ data }: ProfileProps) {
 
     const onSubmit = methods.handleSubmit(async (fieldsData) => {
         // call your update-profile mutation/action here
+
         const formData = new FormData();
         const defaultPhoneNum = methods.getValues("PhoneNumber")
         formData.append("Id", data.id);
@@ -44,10 +45,10 @@ export default function Profile({ data }: ProfileProps) {
         if (res.status == 200) {
             console.log("editProfileRes", res);
             dispatch(setEditUserProfileState(false));
-            router.refresh();
+            // router.refresh();
             toast.success("Profile Updated Successifuly");
-            const ress=await userSession.update();
-            console.log(ress)
+            await userSession.update();
+            
         } else {
             toast.error(res.data?.title);
         }

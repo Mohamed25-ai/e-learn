@@ -59,7 +59,7 @@ export default function TopCategoriesSwiper({ categories }: TopCategoriesSwiperP
             </Swiper>
             <div className=' hidden md:block'>
                 <Button
-                    className="swiper-button-prev absolute top-3/4 right-0  z-10 "
+                    className="swiper-button-prev absolute top-3/4 -translate-y-1/2 right-0  z-10 "
                 >
                     <FontAwesomeIcon size='sm' icon={faChevronLeft} />
 
@@ -67,7 +67,7 @@ export default function TopCategoriesSwiper({ categories }: TopCategoriesSwiperP
 
                 {/* Next */}
                 <Button
-                    className=" swiper-button-next absolute top-3/4 right-0  z-10 ">
+                    className=" swiper-button-next absolute top-3/4 -translate-y-1/2 right-0  z-10 ">
                     <FontAwesomeIcon size='sm' icon={faChevronRight} />
 
                 </Button>

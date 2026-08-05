@@ -21,10 +21,10 @@ export default function AddToCartBtn({ courseId }: AddToCartBtnProps) {
             toast.error("Login First To Add This Course");
             return;
         }
-        if(addedCourses.includes(courseId)){
-            toast.error("Course Is Already in Cart");
-            return;
-        }
+        // if(addedCourses.includes(courseId)){
+        //     toast.error("Course Is Already in Cart");
+        //     return;
+        // }
         setisLoading(true);
         const res = await addCourseToCartAction(courseId);
         if (res.status == 200) {

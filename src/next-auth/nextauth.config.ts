@@ -53,7 +53,7 @@ export const nextAuthConfig: NextAuthOptions = {
         signOut: '/login',
     },
     callbacks: {
-        async jwt({ token, user, account }) {
+        async jwt({ token, user, account, trigger }) {
             // 1) First login
             // console.log("user1", user)
             // // if(token.){
@@ -110,7 +110,40 @@ export const nextAuthConfig: NextAuthOptions = {
                 console.log("First Login User", token);
                 return token;
             }
-
+             if (trigger == "update") {
+                try {
+                    const refreshedToken = await refreshTokenAction(token.refreshToken as string);
+                    console.log("Token Refreshed Successifuly Triggered", refreshedToken.data)
+                    if (!refreshedToken.data) {
+                        token.error = true;
+                        token.tokenErrorMessage = "RefreshAccessTokenError";
+                        return token;
+                    }
+                    token.id = refreshedToken.data.id;
+                    token.email = refreshedToken.data.email;
+                    token.message = refreshedToken.data.message;
+                    token.fullName = refreshedToken.data.fullName;
+                    token.userName = refreshedToken.data.userName;
+                    token.roles = refreshedToken.data.roles;
+                    token.profilePictureUrl = refreshedToken.data.profilePictureUrl;
+                    token.token = refreshedToken.data.token;
+                    token.expiresAtFromBackend = refreshedToken.data.expiresAt;
+                    token.refreshToken = refreshedToken.data.refreshToken;
+                    token.refreshTokenExpirationFromBackend = refreshedToken.data.refreshTokenExpiration;
+                    token.currentTimeUserLogin = Date.now();
+                    token.expiresInStatically = Date.now() + 15 * 60 * 1000;
+                    token.error = false;
+                    token.tokenErrorMessage = undefined;
+                    if (token.isLoggedByGoogle) {
+                        token.isLoggedByGoogle = true;
+                    }
+                    return token;
+                } catch (error) {
+                    token.error = true;
+                    token.tokenErrorMessage = "RefreshAccessTokenError";
+                    return token;
+                }
+            }
             if (!token.token) {
                 token.error = true;
                 token.tokenErrorMessage = "MissingTokenData";
@@ -133,13 +166,14 @@ export const nextAuthConfig: NextAuthOptions = {
                     return token;
                 }
             }
+           
             try {
                 const refreshedToken = await refreshTokenAction(token.refreshToken as string);
                 console.log("Token Refreshed Successifuly", refreshedToken)
                 console.log("Token Refreshed Successifuly Data", refreshedToken.data)
                 if (!refreshedToken.data) {
                     token.error = true;
-                    token.tokenErrorMessage ="RefreshAccessTokenError";
+                    token.tokenErrorMessage = "RefreshAccessTokenError";
                     return token;
                 }
                 token.id = refreshedToken.data.id;
@@ -161,7 +195,7 @@ export const nextAuthConfig: NextAuthOptions = {
                     token.isLoggedByGoogle = true;
                 }
                 return token;
-                
+
             } catch (error) {
                 token.error = true;
                 token.tokenErrorMessage = "RefreshAccessTokenError";
