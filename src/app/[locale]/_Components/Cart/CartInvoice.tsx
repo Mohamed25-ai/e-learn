@@ -9,7 +9,7 @@ export default function CartInvoice({ cartData }: CartInvoiceProps) {
     const [coupon, setCoupon] = useState('');
 
     return (
-        <div className="w-full lg:w-1/4 shrink-0 mt-3 md:mt-0">
+        <div className="w-full lg:w-1/4 shrink-0 mt-3 lg:mt-0">
             <div className="bg-white border-2 border-border rounded-2xl p-5 flex flex-col gap-5">
                 {/* Title */}
                 <h3 className="text-foreground font-bold text-lg">
@@ -77,7 +77,7 @@ export default function CartInvoice({ cartData }: CartInvoiceProps) {
                 </div>
 
                 {/* Checkout */}
-                <PayUserCartInvoice baskedId={cartData.paymentIntentId!} />
+                <PayUserCartInvoice baskedId={cartData.id} />
 
                 {/* Trust badges */}
                 <div className="flex flex-col gap-2">

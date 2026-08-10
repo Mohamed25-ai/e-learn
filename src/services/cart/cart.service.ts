@@ -40,7 +40,7 @@ export async function removeCourseFromCart(courseId: string) {
 export async function payUserCart(basketId: string) {
     const api = await privateServerApi();
     try {
-        const res = await api.delete(`/Payment/CreatePaymentIntent/${basketId}`);
+        const res = await api.post(`/Payment/CreatePaymentIntent/${basketId}`);
         return {
             status: res.status,
             data: res.data
