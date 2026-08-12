@@ -22,6 +22,7 @@ export default function PayUserCartInvoice({
       setError(null);
 
       const res = await payUserCartAction(baskedId);
+      console.log("ER", res);
 
       if (res.status !== 200 || !res.data?.clientSecret) {
         setError("Unable to start payment. Please try again.");
@@ -44,11 +45,7 @@ export default function PayUserCartInvoice({
 
   return (
     <>
-      {error && (
-        <p className="mb-3 text-sm text-red-500">
-          {error}
-        </p>
-      )}
+      {error && <p className="mb-3 text-sm text-red-500">{error}</p>}
 
       <button
         type="button"
@@ -68,10 +65,7 @@ export default function PayUserCartInvoice({
       </button>
 
       {clientSecret && (
-        <PaymentUi
-          clientSecret={clientSecret}
-          onClose={handleClosePayment}
-        />
+        <PaymentUi clientSecret={clientSecret} onClose={handleClosePayment} />
       )}
     </>
   );

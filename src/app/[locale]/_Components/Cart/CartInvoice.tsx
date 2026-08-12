@@ -4,12 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CartInvoiceProps } from './cart.types'
 import { useState } from 'react';
 import PayUserCartInvoice from './PayUserCartInvoice';
+import RemoveAllCart from './RemoveAllCart';
 
 export default function CartInvoice({ cartData }: CartInvoiceProps) {
     const [coupon, setCoupon] = useState('');
 
     return (
         <div className="w-full lg:w-1/4 shrink-0 mt-3 lg:mt-0">
+            {cartData.basketItems.length>0&&<div className='mb-3 flex justify-end me-3'>
+                <RemoveAllCart  />
+            </div>}
+            
             <div className="bg-white border-2 border-border rounded-2xl p-5 flex flex-col gap-5">
                 {/* Title */}
                 <h3 className="text-foreground font-bold text-lg">

@@ -25,18 +25,18 @@ export default function PaymentForm({ onClose }: PaymentFormType) {
       setIsLoading(true);
       setErrorMessage(null);
 
-      const { error } = await stripe.confirmPayment({
+      const stripeRes = await stripe.confirmPayment({
         elements,
 
         confirmParams: {
           return_url: `${window.location.origin}/payment/success`,
         },
       });
+      console.log("StripeResult",stripeRes)
+      if (stripeRes.error) {
+        console.error("Stripe payment error:", stripeRes.error);
 
-      if (error) {
-        console.error("Stripe payment error:", error);
-
-        setErrorMessage(error.message || "Payment failed. Please try again.");
+        setErrorMessage(stripeRes.error.message || "Payment failed. Please try again.");
 
         setIsLoading(false);
       }

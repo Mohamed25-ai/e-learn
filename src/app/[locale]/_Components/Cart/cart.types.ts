@@ -7,7 +7,14 @@ export type BasketItemsType = {
     discount: number
     id: string
     totalPrice: number
-    updatedAt: string
+    updatedAt: string,
+    category:string,
+    courseThumbnailUrl:string,
+    instructorName:string,
+    instructorProfilePictureUrl:string,
+    noOfLectures:number,
+    totalHours:number,
+    averageRating:number
 }
 
 export interface CartDataTypes {
@@ -39,4 +46,7 @@ export type RemoveCourseBtnProps={
 }
 export type PayUserCartInvoiceProps={
     baskedId:string
+}
+export type RemoveAllCartProps={
+    // cartItemsLength:number
 }

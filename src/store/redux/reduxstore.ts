@@ -12,6 +12,7 @@ import { userCartSliceReducer } from "./cart/cart.slice";
 
 
 const rootReducer = combineReducers({
+    [createCourseApi.reducerPath]: createCourseApi.reducer,
     createCourse: createCourseReducer,
     courseLearning: courseLearningSliceReducer,
     navbarTogglerSlice: navbarTogglersStoreReducer,
@@ -20,7 +21,6 @@ const rootReducer = combineReducers({
     userProfileSlice: userProfileSliceReducer,
     changeUserProfilePasswordIconsTogglersSlice:changeUserProfilePasswordIconsTogglersReducer,
     userCartSlice:userCartSliceReducer,
-    [createCourseApi.reducerPath]: createCourseApi.reducer,
 });
 
 const persistConfig = {

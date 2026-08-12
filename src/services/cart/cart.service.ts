@@ -37,6 +37,24 @@ export async function removeCourseFromCart(courseId: string) {
         throw error;
     }
 }
+export async function removeAllItemsCart() {
+    const api = await privateServerApi();
+    try {
+        const res = await api.delete(`/Basket/Clear`);
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return {
+                status: error.response?.status,
+                data: error.response?.data,
+            };
+        };
+        throw error;
+    }
+}
 export async function payUserCart(basketId: string) {
     const api = await privateServerApi();
     try {
