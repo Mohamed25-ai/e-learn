@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import RemoveCourseBtn from "./RemoveCourseBtn";
 
 export default function CartItems({ BasketItems }: CartItemsProps) {
+  console.log("BasketItems",BasketItems)
   return (
     <div className="w-full lg:w-3/4 flex flex-col gap-3">
       <header className="flex  items-center gap-3">
@@ -18,7 +19,7 @@ export default function CartItems({ BasketItems }: CartItemsProps) {
           </p>
         )}
       </header>
-      {!BasketItems.length ? (
+      {BasketItems.length==0 ? (
         <div>
           <h2 className="text-foreground text-2xl font-bold flex items-center justify-center">
             Your Cart Is Empty
@@ -26,7 +27,7 @@ export default function CartItems({ BasketItems }: CartItemsProps) {
         </div>
       ) : (
         <>
-          {BasketItems.map((item) => (
+          {BasketItems?.map((item) => (
             <Card
               key={item.courseId}
               className="border-2 border-border shadow-none

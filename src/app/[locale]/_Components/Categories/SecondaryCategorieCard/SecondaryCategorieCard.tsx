@@ -14,7 +14,7 @@ function splitCategoryName(name: string) {
     }
     return [name.slice(0, index).trim(), name.slice(index).trim()]
 }
-export default function CategorieCard({ categorie, fromSwiper }: CategorieCardProps) {
+export default function SecondaryCategorieCard({ categorie, fromSwiper }: CategorieCardProps) {
     const [firstLine, secondLine] = splitCategoryName(categorie.name);
 
     return (
@@ -38,8 +38,6 @@ export default function CategorieCard({ categorie, fromSwiper }: CategorieCardPr
                         </span>
                     }
                 </div>
-
-                {/* Name + Hot badge */}
                 <div className='flex items-start justify-between gap-2'>
                     <h3 className='text-foreground font-bold text-base leading-snug flex-1'>
                         {firstLine}

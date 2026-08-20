@@ -6,7 +6,7 @@ import { routing } from "./i18n/routing";
 const intlMiddleware = createMiddleware(routing);
 
 const PROTECTED = ["/cart", "/courses", "/settings", "/createcourse", "/categories",
-    "/createcourse", "/profile", "/edit-password", "/categorized-course", "/course-details"
+    "/createcourse", "/profile", "/edit-password", "/categorized-course"
     ,"/course-learn", "/become-instructor"];
 const AUTH_PAGES = ["/login", "/confirmemail", "/forgot-password"];
 

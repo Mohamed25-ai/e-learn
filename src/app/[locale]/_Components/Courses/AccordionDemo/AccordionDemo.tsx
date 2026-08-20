@@ -42,7 +42,7 @@ export function AccordionDemo({ contentData, section, inPlay }: AccordionDemoPro
     const locale = useLocale();
     const isOpen = accordionValue === sectionId;
 
-    function handleSelectedLesson(sectionId: string, lessionId: string, lessionUrl: string) {
+    function handleSelectedLessonInViewOnly(sectionId: string, lessionId: string, lessionUrl: string) {
         dispatch(setSelectedLesson({ sectionId: sectionId, lessionId: lessionId }));
         dispatch(setSelectedLessonUrl({ lessionId: lessionId, lessionUrl: lessionUrl }))
         dispatch(setSelectedLessonSection(section.id))
@@ -107,7 +107,7 @@ export function AccordionDemo({ contentData, section, inPlay }: AccordionDemoPro
 
                             return (
                                 <div key={content.id}>
-                                    <Link onClick={() => handleSelectedLesson(section.id, content.id, content.url)}
+                                    <Link onClick={() => handleSelectedLessonInViewOnly(section.id, content.id, content.url)}
                                         href={`/course-learn/${section.courseId}/play?lessonId=${content.id}`}>
                                         <AccordionContent
                                             className="p-0 bg-white"

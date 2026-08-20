@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { PayUserCartInvoiceProps } from "./cart.types";
 import { payUserCartAction } from "@/actions/cart/cart.actions";
 import { ButtonLoader } from "../Loaders/ButtonLoader/ButtonLoader";
-import Payment from "../payment/Payment";
 import PaymentUi from "../payment/PaymentUi";
 
 export default function PayUserCartInvoice({
@@ -15,7 +14,7 @@ export default function PayUserCartInvoice({
   const [error, setError] = useState<string | null>(null);
 
   const isPaymentOpen = !!clientSecret;
-
+  console.log(baskedId,clientSecret)
   async function handleCheckoutPayment() {
     try {
       setIsLoading(true);
@@ -26,6 +25,7 @@ export default function PayUserCartInvoice({
 
       if (res.status !== 200 || !res.data?.clientSecret) {
         setError("Unable to start payment. Please try again.");
+        setClientSecret(null)
         return;
       }
 

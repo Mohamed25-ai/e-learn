@@ -8,8 +8,7 @@ import { Link } from '@/i18n/navigation'
 export default function CourseDetails({ data }: CourseDetailsProps) {
     return (
         <>
-            <div className='bg-(--primary-color) md:flex justify-between md:p-5'>
-
+            <div className='bg-(--primary-color) lg:flex justify-between md:p-5'>
                 <CourseDetailsHeader data={data} />
                 <CourseDetailsCard data={data} />
             </div>

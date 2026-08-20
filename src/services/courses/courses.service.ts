@@ -147,7 +147,7 @@ export async function editCourseContent(data: FormData) {
         throw error;
     }
 }
-export async function getCreatedCourseByCourseId(courseId: string) {
+export async function getPaidCreatedCourseByCourseId(courseId: string) {
     const api = await publicApi;
     try {
         const res = await api.get(`/Course/GetById/${courseId}`);

@@ -1,5 +1,5 @@
 import React from 'react'
-import { getCreatedCourseByCourseIdAction } from '@/actions/courses/courses.actions';
+import { getPaidCreatedCourseByCourseIdAction } from '@/actions/courses/courses.actions';
 import CourseDetails from '@/app/[locale]/_Components/Courses/CourseDetails/CourseDetails';
 type layoutProps = {
     children: React.ReactNode,
@@ -7,7 +7,7 @@ type layoutProps = {
 }
 export default async function Layout({ children, params }: layoutProps) {
     const { id } = await params;
-    const courseDeatils = await getCreatedCourseByCourseIdAction(id);
+    const courseDeatils = await getPaidCreatedCourseByCourseIdAction(id);
     return (
         <>
             <section>

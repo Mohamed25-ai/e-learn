@@ -88,7 +88,7 @@ export default function FeaturedCoursesSwiper({
             <button
                 ref={nextNavigationElement}
                 className="absolute top-1/2 -translate-y-1/2 right-0 z-10
-                            w-10 h-10 md:w-12 md:h-12 rounded-full
+                            w-10 h-10 md:w-12 md:h-12 rounded-full 
                             flex items-center justify-center
                            bg-white border-2 border-border
                             text-foreground

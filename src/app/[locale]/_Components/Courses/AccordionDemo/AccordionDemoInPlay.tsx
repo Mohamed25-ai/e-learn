@@ -35,7 +35,7 @@ export default function AccordionDemoInPlay({ contentData, section, inPlay }: Ac
     const searchParams = useSearchParams();
     const [accordionValue, setAccordionValue] = useState("");
     const isOpen = accordionValue === section.id;
-    function setSelectedContent(sectionId: string, lessonId: string, lessionUrl: string) {
+    function setSelectedContentInPlay(sectionId: string, lessonId: string, lessionUrl: string) {
         if (searchParams.get("lessonId") == lessonId) {
             return
         }
@@ -109,7 +109,7 @@ export default function AccordionDemoInPlay({ contentData, section, inPlay }: Ac
                                 <div key={content.id || ""}>
                                     <AccordionContent
                                         className={`p-0 ${openContent ? " bg-(--primary-color) " : "bg-white "} `}
-                                        onClick={() => setSelectedContent(section.id, content.id, content.url)}
+                                        onClick={() => setSelectedContentInPlay(section.id, content.id, content.url)}
                                     >
                                         <div className="flex items-center justify-between gap-3 px-4 py-3
                                                     hover:bg-(--primary-light) group/item

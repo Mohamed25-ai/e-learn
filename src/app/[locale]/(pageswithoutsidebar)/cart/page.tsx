@@ -4,6 +4,7 @@ import Cart from "../../_Components/Cart/Cart";
 
 export default async function page() {
   const cartItems = await getUserCartAction();
+  console.log("ASdasd",cartItems)
   return (
     <>
       <Cart cartData={cartItems?.data} />

@@ -1,11 +1,19 @@
-import { getCreatedCourseByCourseIdAction } from '@/actions/courses/courses.actions';
+import dynamic from 'next/dynamic';
+import { getLocale } from 'next-intl/server';
+import {getPaidCreatedCourseByCourseIdAction } from '@/actions/courses/courses.actions';
 import CourseDeatils3Buttons from '@/app/[locale]/_Components/Courses/CourseDeatils3Buttons/CourseDeatils3Buttons';
 import CourseLearningSidebar from '@/app/[locale]/_Components/Courses/CourseLearning/CourseLearningSidebar/CourseLearningSidebar';
 import CourseLearningSidebarToggler from '@/app/[locale]/_Components/Courses/CourseLearning/CourseLearningSidebarToggler/CourseLearningSidebarToggler';
 import CourseLearningSidebarWrapper from '@/app/[locale]/_Components/Courses/CourseLearning/CourseLearningSidebarWrapper/CourseLearningSidebarWrapper';
 import VideoLearningWrapper from '@/app/[locale]/_Components/Courses/CourseLearning/VideoLearningWrapper/VideoLearningWrapper';
 import CourseLearningVideoScreen from '@/app/[locale]/_Components/Courses/CourseLearningVideoScreen/CourseLearningVideoScreen';
-import { getLocale } from 'next-intl/server';
+import FormLoader from '@/app/[locale]/_Components/Loaders/FormLoader/FormLoader';
+const CourseLearningVideoScreenComponent = dynamic(
+    () => import('@/app/[locale]/_Components/Courses/CourseLearningVideoScreen/CourseLearningVideoScreen'),
+{
+    loading:()=><FormLoader />
+}
+)
 
 type layoutProps = {
     children: React.ReactNode,
@@ -15,7 +23,7 @@ type layoutProps = {
 export default async function Layout({ children, params }: layoutProps) {
     const { id } = await params;
     const locale = await getLocale();
-    const courseDeatils = await getCreatedCourseByCourseIdAction(id);
+    const courseDeatils = await getPaidCreatedCourseByCourseIdAction(id);
 
     // Define your RTL locales here
     const isRtl = locale === 'ar';
@@ -29,7 +37,7 @@ export default async function Layout({ children, params }: layoutProps) {
             */}
             <div className='flex flex-row'>
                 <VideoLearningWrapper>
-                    <CourseLearningVideoScreen />
+                    <CourseLearningVideoScreenComponent />
                 </VideoLearningWrapper>
 
                 <CourseLearningSidebarWrapper>

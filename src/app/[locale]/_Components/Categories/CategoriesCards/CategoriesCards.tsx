@@ -12,7 +12,7 @@ import { getCoursesByCategorieIdAction } from "@/actions/courses/courses.actions
 import { useLocale } from 'next-intl';
 import CoursesByCategoryId from "../../Courses/CoursesByCategoryId/CoursesByCategoryId";
 import CategorieHeader from "../CategorieHeader/CategorieHeader";
-export default function CategoriesCards({ categorie }: CategorieCardsProps) {
+export default function CategoriesCards({ categorie,inCoursesPage }: CategorieCardsProps) {
     const [pageNum, setpageNum] = useState(1);
     const [pageSize, setPageSize] = useState(4);
     const queryClient = useQueryClient();
@@ -54,7 +54,7 @@ export default function CategoriesCards({ categorie }: CategorieCardsProps) {
     }, [pageSize]);
     return (
         <section dir={isRtl ? "rtl" : "ltr"} id={categorie.id} className="w-full px-5 my-2">
-            <CategorieHeader categorie={categorie} inCategoriesPage />
+            <CategorieHeader inCoursesPage={inCoursesPage}  categorie={categorie}  />
             <section className="py-3">
                 <CoursesByCategoryId isLoading={isLoading} courseData={courses?.data} pageNum={pageNum}
                     handleNextPagination={handleNextPagination} handlePreviousPagination={handlePreviousPagination} key={categorie.id} categoryid={categorie.id} />

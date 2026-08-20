@@ -38,12 +38,11 @@ export default function FeaturedCourses({ categories }: FeaturedCoursesProps) {
             <div className="md:px-5 mt-8 flex flex-col gap-10">
                 {data?.data?.map((categorie) => (
                     <div key={categorie.id} className="flex flex-col gap-4">
-                        <CategorieHeader categorie={categorie} />
+                        <CategorieHeader inHomePage categorie={categorie} />
                         <FeaturedCategoryCourses categorie={categorie} />
                     </div>
                 ))}
             </div>
-
         </section>
     )
 }

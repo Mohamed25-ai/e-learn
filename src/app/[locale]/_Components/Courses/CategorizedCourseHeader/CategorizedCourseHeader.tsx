@@ -5,13 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CategorizedCourseProps } from './categorizedcourse.types'
 
 
-export default function CategorizedCourse({meta,totalCount}:CategorizedCourseProps) {
+export default function CategorizedCourseHeader({meta,totalCount}:CategorizedCourseProps) {
     return (
         <header>
             <div className='bg-(--primary-color) dark:bg-foreground p-5'>
                 <div className='my-3 p-1'>
                     <FontAwesomeIcon className='text-(--text-secondary) ' icon={faAngleLeft} />
-                    <Link className='text-(--text-secondary) mb-4' href={'/categories'}>All Categories</Link>
+                    <Link className='text-(--text-secondary) mb-4' href={'/courses'}>All Courses</Link>
                 </div>
                 <div className='flex gap-2.5 '>
                     <div>

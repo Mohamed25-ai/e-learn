@@ -6,11 +6,16 @@ import {
 } from "@stripe/react-stripe-js";
 import { PaymentFormType } from "./payment.types";
 import { useState } from "react";
+import { useRouter } from "@/i18n/navigation";
+import { removeAllItemsCartAction } from "@/actions/cart/cart.actions";
+import { useAppDispatch } from "@/hooks/hooks";
+import { setNumberOfCartItems } from "@/store/redux/cart/cart.slice";
 
 export default function PaymentForm({ onClose }: PaymentFormType) {
   const stripe = useStripe();
   const elements = useElements();
-
+  const router = useRouter();
+  const dispatch = useAppDispatch()
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -27,24 +32,35 @@ export default function PaymentForm({ onClose }: PaymentFormType) {
 
       const stripeRes = await stripe.confirmPayment({
         elements,
-
         confirmParams: {
-          return_url: `${window.location.origin}/payment/success`,
+          return_url: `${window.location.origin}/en/payment/return`, // or your locale-aware equivalent
         },
+        redirect: "if_required",
       });
-      console.log("StripeResult",stripeRes)
+
+      console.log("StripeResult:", stripeRes);
+
       if (stripeRes.error) {
         console.error("Stripe payment error:", stripeRes.error);
-
-        setErrorMessage(stripeRes.error.message || "Payment failed. Please try again.");
-
+        setErrorMessage(
+          stripeRes.error.message || "Payment failed. Please try again."
+        );
         setIsLoading(false);
+        return;
       }
+      if (stripeRes.paymentIntent?.status === "succeeded") {
+        onClose();
+        dispatch(setNumberOfCartItems(0));
+        router.push("/courses");
+        return;
+      }
+
+      setIsLoading(false);
+
+
     } catch (error) {
       console.error("Payment error:", error);
-
       setErrorMessage("Something went wrong. Please try again.");
-
       setIsLoading(false);
     }
   }

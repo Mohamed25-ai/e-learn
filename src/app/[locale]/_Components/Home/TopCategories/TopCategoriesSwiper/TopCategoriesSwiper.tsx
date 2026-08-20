@@ -5,11 +5,10 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { TopCategoriesSwiperProps } from '../../home.types';
 import { Swiper, SwiperSlide, useSwiper, useSwiperSlide } from 'swiper/react';
-import CategorieCard from '../../../Categories/CategorieCard/CategorieCard';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import SecondaryCategorieCard from '../../../Categories/SecondaryCategorieCard/SecondaryCategorieCard';
 
 export default function TopCategoriesSwiper({ categories }: TopCategoriesSwiperProps) {
     return (
@@ -53,7 +52,7 @@ export default function TopCategoriesSwiper({ categories }: TopCategoriesSwiperP
             >
                 {categories?.data?.map((categorie) => (
                     <SwiperSlide key={categorie.id} className="h-auto">
-                        <CategorieCard fromSwiper categorie={categorie} />
+                        <SecondaryCategorieCard fromSwiper categorie={categorie} />
                     </SwiperSlide>
                 ))}
             </Swiper>

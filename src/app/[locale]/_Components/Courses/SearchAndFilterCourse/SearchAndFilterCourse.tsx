@@ -38,9 +38,9 @@ export function SearchAndFilterCourse({
                             className="INPUT_STYLE bg-white py-5 pr-10"
                             placeholder="Search Courses..."
                         />
-                        {isPending && (
-                            <Loader2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin" />
-                        )}
+                        {/* {isPending && (
+                            <Loader2 className="absolute text-foreground bg-amber-900 top-1/2 right-5 h-4 w-4 -translate-y-1/2 animate-spin" />
+                        )} */}
                     </ButtonGroup>
                 </Field>
             </div>

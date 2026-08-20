@@ -76,7 +76,7 @@ export default function CoursesByCategoryId({ courseData, categoryid, handleNext
             {courseData?.hasPreviousPage && (
                 <Button
                     className="absolute top-1/2 -translate-y-1/2 -start-3 md:-start-6
-                                z-30 w-11 h-11 rounded-full flex items-center justify-center bg-white border-2 border-border text-foreground hover:bg-(--primary-light) hover:border-(--primary-color) hover:text-(--primary-color) transition-all duration-200 shadow-sm cursor-pointer"
+                                z-10 w-11 h-11 rounded-full flex items-center justify-center bg-white border-2 border-border text-foreground hover:bg-(--primary-light) hover:border-(--primary-color) hover:text-(--primary-color) transition-all duration-200 shadow-sm cursor-pointer"
                     onClick={handlePreviousPagination}
                 >
                     {/* Flip icon horizontally in RTL */}
@@ -85,7 +85,7 @@ export default function CoursesByCategoryId({ courseData, categoryid, handleNext
             )}
             {courseData?.hasNextPage && (
                 <Button
-                    className="absolute top-1/2 -translate-y-1/2 -end-4 z-30 w-11 h-11 rounded-full 
+                    className="absolute top-1/2 -translate-y-1/2 -end-4 z-10 w-11 h-11 rounded-full 
                     flex items-center justify-center bg-white border-2 border-border text-foreground hover:bg-(--primary-light) hover:border-(--primary-color) hover:text-(--primary-color) transition-all duration-200 shadow-sm cursor-pointer"
                     onClick={handleNextPagination}
                 >

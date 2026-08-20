@@ -3,4 +3,6 @@ import { CategoriesDataType } from "@/app/[locale]/(main)/(Categories)/categorie
 export type CategorieHeaderProps={
     categorie:CategoriesDataType,
     inCategoriesPage?:boolean
+    inCoursesPage?:boolean,
+    inHomePage?:boolean
 }

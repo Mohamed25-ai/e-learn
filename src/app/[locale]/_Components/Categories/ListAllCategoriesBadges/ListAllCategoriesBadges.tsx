@@ -1,7 +1,7 @@
 import { ListAllCategoriesProps } from './listallcategories.types'
-import CategorieCard from '../CategorieCard/CategorieCard'
+import SecondaryCategorieCard from '../SecondaryCategorieCard/SecondaryCategorieCard'
 
-export default function ListAllCategories({ categories, inLandingPage }: ListAllCategoriesProps) {
+export default function ListAllCategoriesBadges({ categories, inLandingPage }: ListAllCategoriesProps) {
 
     return (
         <>
@@ -10,7 +10,7 @@ export default function ListAllCategories({ categories, inLandingPage }: ListAll
             </header>
             {!inLandingPage&&<div className='grid grid-cols-2 md:grid-cols-4 py-3 gap-4'>
                 {categories?.data?.map((categorie) => {
-                    return <CategorieCard key={categorie.id} categorie={categorie} />
+                    return <SecondaryCategorieCard key={categorie.id} categorie={categorie} />
                 })}
             </div>}
         </>)

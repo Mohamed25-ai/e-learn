@@ -1,4 +1,4 @@
-import { getCreatedCourseByCourseIdAction } from '@/actions/courses/courses.actions';
+import { getPaidCreatedCourseByCourseIdAction } from '@/actions/courses/courses.actions';
 import CourseDetailsOverview from '@/app/[locale]/_Components/Courses/CourseDetailsOverview/CourseDetailsOverview';
 
 type layoutProps = {
@@ -6,7 +6,7 @@ type layoutProps = {
 }
 export default async function page({params}:layoutProps) {
       const { id } = await params;
-      const courseDeatils = await getCreatedCourseByCourseIdAction(id);
+      const courseDeatils = await getPaidCreatedCourseByCourseIdAction(id);
   return (
     <div>
       {<CourseDetailsOverview data={courseDeatils?.data}  />}

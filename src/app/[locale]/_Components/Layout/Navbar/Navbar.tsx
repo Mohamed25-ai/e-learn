@@ -28,8 +28,8 @@ const LINKS = [
     { href: "/createcourse", label: "Create Course" },
 ];
 
-const PAGES_WITHOUT_NAVBAR = ["/", "/cart", "/become-instructor", "/courselearn",
-    "categorizedcourse", "/coursedetails", "/categorizedcourse"]
+const PAGES_WITHOUT_NAVBAR = ["/", "/cart", "/become-instructor", "/course-learn",
+    "categorized-course", "/course-details", "/categorized-course"]
 export default function Navbar() {
     const navbarTogglerStore = useAppSelector((state) => state.navbarTogglerSlice);
     const sidebarTogglerStore = useAppSelector((state) => state.sidebarTogglerSlice);
@@ -69,14 +69,16 @@ export default function Navbar() {
 
     return (
         <nav className="relative mt-12 border-0">
-            <div className="fixed top-0 left-0 z-40 w-full h-12 bg-(--primary-light)  border-b border-border shadow-sm">
+            <div className="fixed top-0 left-0 z-40 w-full h-12 bg-(--primary-light)
+              border-b border-border shadow-sm">
                 <div className="flex items-center gap-3 h-full px-4 md:px-6">
 
                     {/* Mobile toggler */}
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="md:hidden w-8 h-8 rounded-lg text-(--primary-color) hover:bg-(--primary-light) shrink-0"
+                        className="xl:hidden w-8 h-8 rounded-lg text-(--primary-color)
+                         hover:bg-(--primary-light) shrink-0"
                         onClick={() => { toggleSide(); navtoggle(); }}
                     >
                         <FontAwesomeIcon icon={faBars} />
@@ -114,7 +116,7 @@ export default function Navbar() {
 
                     {/* Search */}
                     {isAuth && (
-                        <div className="flex-1 max-w-sm mx-auto hidden md:block">
+                        <div className="flex-1 max-w-sm mx-auto hidden lg:block">
                             <div className="relative">
                                 <FontAwesomeIcon
                                     icon={faMagnifyingGlass}

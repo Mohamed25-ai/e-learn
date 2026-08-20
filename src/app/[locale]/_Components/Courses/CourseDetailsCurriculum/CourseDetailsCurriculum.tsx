@@ -14,7 +14,7 @@ export default async function CourseDetailsCurriculum({ courdeId, withHeader, in
         <h2 className='text-foreground text-3xl font-bold'>
           Course Curriculum
         </h2>
-        <p>5 sections • 114 lectures • 30 hours total length</p>
+        <p>{`${sections.data.totalCount} sections • 114 lectures • 30 hours total length"`}</p>
       </header>}
       {sections?.data?.data.map((section: SectionData) => (<CoursesAccordionWrapper
         inPlayPage={inPlay} key={section.id} data={section} />))}

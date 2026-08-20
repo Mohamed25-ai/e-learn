@@ -1,13 +1,13 @@
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 import { CategorizedCourseProps } from '../categorizedcourse.types'
 import { getCoursesByCategorieId } from '@/services/courses/courses.service';
 import CategorizedCoursePagination from '../CategorizedCoursePagination';
 import FadeUp from '@/app/[locale]/_Components/Animation/FadeUp';
 import { getLocale } from 'next-intl/server'; // Import this
-import CategorizedCourse from '@/app/[locale]/_Components/Courses/CategorizedCourse/CategorizedCourse';
 import { SearchAndFilterCourse } from '@/app/[locale]/_Components/Courses/SearchAndFilterCourse/SearchAndFilterCourse';
 import CourseCard from '@/app/[locale]/_Components/Courses/CourseCard/CourseCard';
 import { CourseData } from '@/app/[locale]/_Components/Courses/CoursesByCategoryId/coursebycategoryId.types';
+import CategorizedCourseHeader from '@/app/[locale]/_Components/Courses/CategorizedCourseHeader/CategorizedCourseHeader';
 export default async function page({ params, searchParams }: CategorizedCourseProps) {
     const param = await params;
     const { pageSize, pageNumber, searchCourse, filter } = await searchParams;
@@ -21,7 +21,7 @@ export default async function page({ params, searchParams }: CategorizedCoursePr
     return (
         <section dir={isRtl ? 'rtl' : 'ltr'}>
             <FadeUp>
-                <CategorizedCourse
+                <CategorizedCourseHeader
                     meta={courses?.data?.meta}
                     totalCount={courses?.data?.totalCount}
                 />

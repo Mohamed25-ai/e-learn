@@ -5,7 +5,11 @@ import { CategorieHeaderProps } from "./categorie.header.types"
 import { faArrowRight, faCode, faUserGroup } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "@/i18n/navigation"
 
-export default function CategorieHeader({ categorie, inCategoriesPage }: CategorieHeaderProps) {
+export default function CategorieHeader({ categorie, inCategoriesPage,inCoursesPage,inHomePage }: CategorieHeaderProps) {
+    
+    
+    const seeAllBtn=inCoursesPage||inHomePage
+    
     return (
         <header className="flex justify-between items-center gap-4">
 
@@ -41,7 +45,7 @@ export default function CategorieHeader({ categorie, inCategoriesPage }: Categor
             </div>
 
             {/* See all */}
-            {inCategoriesPage && (
+            {seeAllBtn && (
                 <Link
                     href={`/categorized-course/${categorie.id}?pageNumber=1`}
                     className="MAIN_BUTTON text-nowrap shrink-0"

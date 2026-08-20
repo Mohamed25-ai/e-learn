@@ -18,7 +18,7 @@ export default function BecomeInstructorShareKnowledge() {
         const res = await applyToBecomeInstructorAction();
         if (res.status == 200) {
             toast.success("Welcome, You are now an instructor");
-            await userSession.update();
+            // await userSession.update();
         } else {
             toast.error(res.data?.error?.description);
         }
