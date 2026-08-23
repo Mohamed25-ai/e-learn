@@ -18,8 +18,8 @@ export default function Payment({
       stripe={stripePromise}
       options={{
         clientSecret,
-        
-      }}
+      }
+    }
     >
       <PaymentForm onClose={onClose} />
     </Elements>

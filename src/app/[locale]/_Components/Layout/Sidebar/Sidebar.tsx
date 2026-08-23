@@ -1,16 +1,16 @@
 'use client'
 import { Link, usePathname, useRouter } from '@/i18n/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faCartPlus, faGraduationCap, faLayerGroup, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faBookOpen, faCartPlus, faGraduationCap, faLayerGroup, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 import { setSidebarState } from '@/store/redux/togglers/togglers.slice';
 import { useEffect, useRef } from 'react';
-import { Button } from '@/components/ui/button';
 import { useSession } from 'next-auth/react';
-
+import { Button } from '@/components/ui/button';
 
 const SIDEBAR_LINKS = [
     { href: "/courses", label: "Courses", icon: faBook },
+    { href: "/my-learning", label: "My Learning", icon: faBookOpen },
     { href: "/categories", label: "Categories", icon: faLayerGroup },
     { href: "/createcourse", label: "Create Course", icon: faPlus },
 ];
@@ -28,7 +28,6 @@ export default function Sidebar() {
     function handleBecomeInstructor() {
         router.push("/become-instructor")
     }
-
     useEffect(() => {
         function handleOutsideClick(e: MouseEvent) {
             e.preventDefault()
@@ -45,17 +44,24 @@ export default function Sidebar() {
             }
         };
     }, []);
-
     return (
         <aside>
-            <div className=''>
-                <div className={`fixed top-12 ltr:left-0 rtl:right-0 z-50 h-[calc(100dvh-3rem)] 
-                                left-0 right-[50%] lg:right-[75%] xl:right-[80%] 
-                                bg-sidebar border-e border-border
-                                flex flex-col gap-1 pt-4 px-3 pb-6
-                                transition-transform duration-300 ease-in-out shadow-xl 
-                                ${sidebarTogglersStore.isOpen ? "block " : "hidden xl:block"} `}>
-                    <nav className="flex flex-col  gap-1">
+            <div>
+                <div className={`
+                        fixed top-12
+                        ltr:left-0 rtl:right-0
+                        ltr:right-[50%] rtl:left-[50%]
+                        lg:ltr:right-[75%] lg:rtl:left-[75%]
+                        xl:ltr:right-[80%] xl:rtl:left-[80%]
+                                    
+                        z-50 h-[calc(100dvh-3rem)]
+                        bg-sidebar border-e border-border
+                        flex flex-col gap-1 pt-4 px-3 pb-6
+                        transition-transform duration-700 ease-in-out shadow-xl 
+                                    
+                        ${sidebarTogglersStore.isOpen ? "block" : "hidden xl:block"}`}>
+                   <div className='flex flex-col justify-between h-full'>
+                     <nav className="flex flex-col  gap-1">
                         {SIDEBAR_LINKS.map(({ href, label, icon }) => {
                             const isActive = path === href;
                             return (
@@ -86,46 +92,43 @@ export default function Sidebar() {
                             );
                         })}
                     </nav>
-                    {/* Bottom divider + version */}
+                    {/* apply instructor Bottom divider + version */}
+                   <>
                     {!userSession.data?.userRole.includes('Instructor') && <div className="mt-auto ">
                         <div className="bg-foreground rounded-2xl p-5 flex flex-col gap-4">
-
                             <div className="w-12 h-12 rounded-xl bg-(--primary-light) flex items-center justify-center">
                                 <FontAwesomeIcon icon={faGraduationCap} className="text-(--primary-color) text-xl" />
                             </div>
-
                             <h4 className="text-white font-semibold">
                                 Become an Instructor
                             </h4>
-
                             <p className="text-white/60 text-sm leading-relaxed">
                                 Share your knowledge and earn revenue
                             </p>
-
                             <button onClick={handleBecomeInstructor} className="BUTTON_STYLE w-full justify-center">
                                 Apply Now
                             </button>
-
-                        </div>                    <div className='pt-4 mt-5 border-t border-border'>
+                        </div>
+                    </div>}
+                    <div className='pt-4 mt-5 border-t border-border'>
                             <p className="text-xs text-center text-(--text-muted) " >
                                 EduCore v1.0
                             </p>
                         </div>
-                    </div>}
+                   </>
+                   </div>
                 </div>
                 {/* Backdrop */}
                 <div ref={sidebarRef}
                     className={`fixed inset-0 z-20 bg-black/30
-                                backdrop-blur-sm transition-opacity 
-                duration-300 xl:hidden
+                                transition-transform duration-700 ease-in-out shadow-xl 
+                 xl:hidden
                 ${sidebarTogglersStore.isOpen ? "opacity-100 pointer-events-auto" :
                             "opacity-0 pointer-events-none"}`}
                 >
                 </div>
             </div>
             {/* Links */}
-
-
         </aside>
     );
 }

@@ -111,23 +111,21 @@ export default function CourseContentForm({
           toast.success("Changes saved successfully");
           handleEditCardContent(false);
         }
-
         return;
       }
-
       // 4. Create
       if (!isAddedBefore) {
         const res = await createCourseContentAction(formData);
         dispatch(setAddedContent(fromOrder));
         handleAddedSuccessContent(fromOrder, true);
+        toast.success("Lesson added successfully");
+        console.log("ressss",res)
         dispatch(
           setCreatedContentId({
             key: fromOrder,
             value: res.data,
           })
         );
-        toast.success("Lesson added successfully");
-        console.log("ressss",res)
       }
     } catch (error) {
       console.error(error);

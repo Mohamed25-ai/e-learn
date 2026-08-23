@@ -6,24 +6,22 @@ import { signOut, useSession } from 'next-auth/react';
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import LanguageToggle from '../LanguageToggle/LanguageToggle';
 import { useLocale } from 'next-intl';
-import {
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 import { toggleNavbar, toggleSidebar } from '@/store/redux/togglers/togglers.slice';
 import CartInNavbar from '../../Cart/CartInNavbar';
-import Image from 'next/image';
+import UserDropdown from './UserDropdown';
+import NavbarSearchInput from './NavbarSearchInput';
+import NavbarInMobile from './NavbarInMobile';
+
 
 
 
 const LINKS = [
     { href: "/courses", label: "Courses" },
+    { href: "/my-learning", label: "My Learning" },
     { href: "/categories", label: "Categories" },
     { href: "/createcourse", label: "Create Course" },
 ];
@@ -32,14 +30,13 @@ const PAGES_WITHOUT_NAVBAR = ["/", "/cart", "/become-instructor", "/course-learn
     "categorized-course", "/course-details", "/categorized-course"]
 export default function Navbar() {
     const navbarTogglerStore = useAppSelector((state) => state.navbarTogglerSlice);
-    const sidebarTogglerStore = useAppSelector((state) => state.sidebarTogglerSlice);
     const dispatch = useAppDispatch();
     const path = usePathname();
-    const router = useRouter();
     const userSession = useSession();
+    const router = useRouter();
+    const locale = useLocale(); // Detect locale
     const [isOpen, setisOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
-    const locale = useLocale(); // Detect locale
     const isRtl = locale === 'ar'; // Adjust to your RTL language code
     function navtoggle() {
         if (navbarTogglerStore.isOpen) {
@@ -53,18 +50,16 @@ export default function Navbar() {
     function toggleSide() {
         dispatch(toggleSidebar())
     }
-    async function handleLogout() {
-        await signOut({ redirect: false });
-        router.replace(`/login`);
-        router.refresh();;
-    }
+
 
     const isAuth = userSession.status === "authenticated";
     const user = userSession.data?.user;
     const authenticatedUserName = userSession.data?.fullName || userSession.data?.user?.name;
-    const userRole = Array.isArray(userSession?.data?.userRole)
-        ? userSession.data.userRole
-        : [userSession?.data?.userRole || ""];
+    const userDataToDropdown = {
+        name: userSession.data?.fullName ?? "",
+        email: userSession.data?.email ?? "",
+        image: userSession.data?.profilePictureUrl,
+    }
 
 
     return (
@@ -101,7 +96,7 @@ export default function Navbar() {
                                 <li key={href}>
                                     <Link
                                         href={href}
-                                        className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200
+                                        className={`px-3 py-1.5 text-nowrap text-sm font-medium rounded-lg transition-all duration-200
                                             ${path === href
                                                 ? "text-(--primary-color) bg-(--primary-light)"
                                                 : "text-(--text-secondary) hover:text-(--primary-color) hover:bg-(--primary-light)"
@@ -113,26 +108,10 @@ export default function Navbar() {
                             ))}
                         </ul>
                     )}
-
                     {/* Search */}
                     {isAuth && (
-                        <div className="flex-1 max-w-sm mx-auto hidden lg:block">
-                            <div className="relative">
-                                <FontAwesomeIcon
-                                    icon={faMagnifyingGlass}
-                                    className="absolute top-1/2 -translate-y-1/2 ltr:left-3 rtl:right-3 text-xs pointer-events-none text-(--text-muted)"
-                                />
-                                <Input
-                                    type="text"
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    placeholder="Search courses..."
-                                    className="w-full h-8 rounded-lg border border-border bg-input text-foreground text-sm outline-none transition-all duration-200 ltr:pl-8 ltr:pr-3 rtl:pr-8 rtl:pl-3 focus-visible:border-(--primary-color) focus-visible:shadow-[0_0_0_3px_color-mix(in_srgb,var(--primary-color)_15%,transparent)] focus-visible:ring-0"
-                                />
-                            </div>
-                        </div>
+                        <NavbarSearchInput />
                     )}
-
                     {/* Right side */}
                     <div className="flex items-center gap-2 ms-auto">
                         {isAuth && <CartInNavbar />}
@@ -146,115 +125,18 @@ export default function Navbar() {
                             </Link>
                         )}
                         {/* {User Profile} */}
-                        {isAuth && (
-                            <DropdownMenu >
-                                <DropdownMenuTrigger asChild>
-                                    <button className="flex items-center gap-2 px-2 py-1 rounded-xl transition-all duration-200 hover:bg-(--primary-light) outline-none cursor-pointer">
-                                        {/* Avatar */}
-                                        <div className="relative">
-                                            {user?.image && <div className='w-7 h-7 rounded-full bg-(--primary-color) flex items-center justify-center text-white text-xs font-bold shrink-0 overflow-hidden'>
-                                                {<Image className='rounded-full ' fill src={user?.image} alt={user?.name ?? "User Name"} />}
-                                            </div>}
-                                        </div>
-                                        <span className="hidden sm:block text-sm font-semibold max-w-24 truncate text-foreground">
-                                            {user?.name ?? "User"}
-                                        </span>
-                                        <FontAwesomeIcon icon={faChevronDown} className="hidden sm:block text-[10px] text-(--text-muted)" />
-                                    </button>
-                                </DropdownMenuTrigger>
-
-                                <DropdownMenuContent align="end" className="w-56 rounded-xl border-border bg-card shadow-lg p-1.5">
-                                    {/* User info */}
-                                    <div className="px-3 py-2 mb-1 space-y-0.5">
-                                        <p className="text-sm font-bold truncate text-foreground">
-                                            {user?.name ?? "User"}
-                                        </p>
-                                        <p className="text-xs truncate text-(--text-muted)">
-                                            {user?.email ?? ""}
-                                        </p>
-                                        {/* Roles */}
-                                        <div className="flex flex-wrap gap-1 pt-1">
-                                            {userRole?.map((role: string) => (
-                                                <span
-                                                    key={role}
-                                                    className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold"
-                                                    style={{
-                                                        background: "color-mix(in srgb, var(--primary-color) 12%, transparent)",
-                                                        color: "var(--primary-color)",
-                                                    }}
-                                                >
-                                                    {role}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <DropdownMenuSeparator className="bg-border my-1" />
-                                    <DropdownMenuItem asChild>
-                                        <Link
-                                            href="/profile"
-                                            className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-(--text-secondary) cursor-pointer transition-colors hover:bg-(--primary-light) hover:text-(--primary-color)"
-                                        >
-                                            <FontAwesomeIcon icon={faUser} className="text-xs w-3.5" />
-                                            Profile
-                                        </Link>
-                                    </DropdownMenuItem>
-
-                                    <DropdownMenuSeparator className="bg-border my-1" />
-
-                                    <DropdownMenuItem asChild>
-                                        <Button
-                                            onClick={handleLogout}
-                                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-(--error) cursor-pointer transition-colors hover:bg-red-50"
-                                        >
-                                            <FontAwesomeIcon icon={faRightFromBracket} className="text-xs w-3.5" />
-                                            Log out
-                                        </Button>
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        )}
-
+                        <UserDropdown isUserAuthenticated={isAuth} userRoles={userSession.data?.userRole}
+                            user={userDataToDropdown} />
                     </div>
                 </div>
             </div>
-
             {/* Mobile dropdown menu */}
             {isAuth && navbarTogglerStore.isOpen && (
-                <div className="fixed top-12 left-0 bg-white z-30 w-full bg-navbar border-b border-border shadow-md md:hidden">
-                    <ul className="flex flex-col px-4 py-2 gap-1">
-                        {LINKS.map(({ href, label }) => (
-                            <li key={href}>
-                                <Link
-                                    href={href}
-                                    onClick={(e) => { e.stopPropagation(); toggleSide(); navtoggle() }}
-                                    className={`flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200
-                                        ${path === href
-                                            ? "text-(--primary-color) bg-(--primary-light)"
-                                            : "text-(--text-secondary) hover:text-(--primary-color) hover:bg-(--primary-light)"
-                                        }`}
-                                >
-                                    {label}
-                                </Link>
-                            </li>
-                        ))}
-                        {/* Mobile search */}
-                        <li className="pt-1 pb-2">
-                            <div className="relative">
-                                <FontAwesomeIcon
-                                    icon={faMagnifyingGlass}
-                                    className="absolute top-1/2 -translate-y-1/2 ltr:left-3 rtl:right-3 text-xs pointer-events-none text-(--text-muted)"
-                                />
-                                <Input
-                                    type="text"
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    placeholder="Search courses..."
-                                    className="w-full h-9 rounded-lg border border-border bg-input text-foreground text-sm outline-none ltr:pl-8 ltr:pr-3 rtl:pr-8 rtl:pl-3 focus-visible:border-(--primary-color) focus-visible:ring-0"
-                                />
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                <NavbarInMobile currentPath={path}
+                    navbarLinks={LINKS}
+                    toggleNavbar={navtoggle}
+                    toggleSidebar={toggleSide}
+                    />
             )}
         </nav>
     );

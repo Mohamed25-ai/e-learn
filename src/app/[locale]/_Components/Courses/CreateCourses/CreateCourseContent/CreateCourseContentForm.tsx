@@ -22,13 +22,6 @@ export default function CreateCourseContentForm({ contentData }: CreateCourseCon
     const [contentCards, setcontentCards] = useState<number[]>(createCourseSote.createdContentuccessifuly);
     const maxNumInStore = contentCards.length ? Math.max(...contentCards) : 0;
     const createdContentSorted = [...contentCards].sort((a, b) => a - b);
-    // const [addedContent, setaddedContent] = useState<boolean[]>(() => {
-    //     const arr: boolean[] = [];
-    //     contentCards.forEach((num) => {
-    //         arr[num] = true;
-    //     });
-    //     return arr;
-    // });
     const [addedContent, setaddedContent] = useState<Record<number, boolean>>(() => {
         const map: Record<number, boolean> = {};
         contentCards.forEach((num) => {

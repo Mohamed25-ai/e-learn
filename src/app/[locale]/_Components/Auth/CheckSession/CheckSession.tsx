@@ -25,7 +25,6 @@ export default function CheckSession({ children }: { children: React.ReactNode }
 
         if (tokenError) {
             sessionErrorHandled = true;
-
             let errorMessage = 'Session error. Please login again.';
             if (tokenErrorMessage === 'RefreshTokenExpired') {
                 errorMessage = '⏰ Your session has expired. Please login again.';
@@ -34,15 +33,12 @@ export default function CheckSession({ children }: { children: React.ReactNode }
             } else if (tokenErrorMessage === 'MissingTokenData') {
                 errorMessage = '⚠️ Invalid session data. Please login again.';
             }
-
             toast.error(errorMessage, {
                 duration: 3000,
                 position: 'top-center',
                 icon: '🔐',
             });
-
             logOutUser()
-
         }
     }, [session, status]);
 

@@ -50,3 +50,11 @@ export type PayUserCartInvoiceProps={
 export type RemoveAllCartProps={
     // cartItemsLength:number
 }
+export type PaymentModalDialogProps={
+    isDialogOpen:boolean,
+    setisDialogOpen:(dialogState:boolean)=>void,
+    isPaymentSucceeded?:boolean,
+    isPaymentFailed?:boolean,
+    paymentFailedMessage?:string,
+    closPayment:()=>void
+}
