@@ -1,7 +1,6 @@
 "use client"
 
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks"
-import { ProfileDetailsTogglerProps } from "./profile.details.types"
 import { setProfileDetailsView } from "@/store/redux/userprofile/userprofile.slice";
 import { useSession } from "next-auth/react";
 

@@ -4,6 +4,7 @@ import EnrolledCourseCard from "../../Courses/EnrolledCourses/EnrolledCourseCard
 import EnrolledCoursesPagination from "../../Courses/EnrolledCourses/EnrolledCoursesPagination"
 import { ProfileUserCoursesProps } from "./profile.details.types"
 
+
 export default function ProfileUserCourses({ enrolledCoursesWithMetaData }: ProfileUserCoursesProps) {
     return (
         <>
