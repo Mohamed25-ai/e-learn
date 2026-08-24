@@ -1,5 +1,4 @@
-import { listAllCategories } from "@/services/categories/categories.service"
-import CategoriesList from "../../../_Components/Categories/CategoriesList/CategoriesList";
+import { listAllCategories } from "@/services/categories/categories.service";
 import { CategoriesDataType, CategoriesType } from "./categories.type";
 import { getLocale } from "next-intl/server";
 import CategoriesPageHeader from "@/app/[locale]/_Components/Categories/CategoriesPageHeader/CategoriesPageHeader";
@@ -8,7 +7,6 @@ import MainCategoryCard from "@/app/[locale]/_Components/Categories/MainCategory
 export default async function page() {
     const locale = await getLocale();
     const categories = await listAllCategories(locale);
-    console.log("categories", categories)
     return (
         <>
             <CategoriesPageHeader categories={categories?.data} inCategoriesPage />

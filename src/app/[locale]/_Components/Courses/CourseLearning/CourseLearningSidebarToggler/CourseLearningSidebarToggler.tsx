@@ -11,22 +11,23 @@ import { toggleCourseLearningSidebar } from "@/store/redux/togglers/togglers.sli
 
 export default function CourseLearningSidebarToggler({ courseId }: CourseLearningSidebarTogglerProps) {
     const router = useRouter();
-    const searchParams=useSearchParams();
+    const searchParams = useSearchParams();
     const dispatch = useAppDispatch();
     function handleToggleSidebar() {
         dispatch(toggleCourseLearningSidebar());
     }
     function handleCloseCourseLesson() {
-        const params=new URLSearchParams(searchParams.toString());
+        const params = new URLSearchParams(searchParams.toString());
         params.delete("lessonID")
-        router.push(`/course-details/${courseId}/overview`,{
-            scroll:false
+        router.push(`/course-details/${courseId}/overview`, {
+            scroll: false
         });
         dispatch(steInitialState());
     }
 
     return (
-        <div className="flex justify-between  items-center fixed right-0 left-0 z-25 px-2 bg-(--primary-hover)">
+        <div className="flex justify-between  items-center fixed right-0 left-0 
+                    z-25 px-2 bg-(--primary-hover)">
             <div className="right">
                 <p>Completeness</p>
             </div>

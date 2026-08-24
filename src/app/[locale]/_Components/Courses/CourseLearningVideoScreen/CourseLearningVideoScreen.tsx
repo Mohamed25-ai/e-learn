@@ -20,10 +20,10 @@ export default function CourseLearningVideoScreen() {
     const pdfUrl = PDF_EXTENSIONS.includes(currentLessionExtension!);
 
     return (
-        <div dir={locale === "ar" && "rtl" || ""}>
+        <div className="" dir={locale === "ar" && "rtl" || ""}>
             {videaoUrl && (
                 <div
-                    className={`mt-11 md:mt-14 w-full px-3 sm:px-5 py-3 bg-(--primary-light) rounded-xl ${isOpen ? "" :
+                    className={`mt-15 md:mt-14 w-full px-3 sm:px-5 py-3 bg-(--primary-light) rounded-xl ${isOpen ? "" :
                         "flex items-center justify-center transition-all duration-300"
                         }`}
                 >
@@ -39,7 +39,7 @@ export default function CourseLearningVideoScreen() {
 
             {imageUrl && (
                 <div
-                    className={`mt-8 md:mt-14 w-full px-3 sm:px-5 py-3 bg-(--primary-light) rounded-xl ${isOpen ? "" :
+                    className={`mt-15 md:mt-14 w-full px-3 sm:px-5 py-3 bg-(--primary-light) rounded-xl ${isOpen ? "" :
                         "flex items-center justify-center transition-all duration-300"
                         }`}
                 >
@@ -56,7 +56,7 @@ export default function CourseLearningVideoScreen() {
             )}
 
             {pdfUrl && (
-                <div className="mt-8 md:mt-14 w-full px-3 sm:px-5 py-3 bg-(--primary-light) rounded-xl">
+                <div className="mt-15 md:mt-14 w-full px-3 sm:px-5 py-3 bg-(--primary-light) rounded-xl">
                     <iframe
                         src={lessonUrl}
                         className="w-full h-[70vh] max-h-187.5 min-h-100 rounded-xl border"

@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 import { setEditUserProfileState } from "@/store/redux/userprofile/userprofile.slice";
 import { useSession } from "next-auth/react";
 
-export default function Profile({ data }: ProfileProps) {
+export default function Profile({ data,enrolledCoursesWithMetaData }: ProfileProps) {
     const userProfileStore = useAppSelector((state) => state.userProfileSlice);
     const userSession=useSession();
     const dispatch = useAppDispatch();
@@ -27,8 +27,6 @@ export default function Profile({ data }: ProfileProps) {
     });
 
     const onSubmit = methods.handleSubmit(async (fieldsData) => {
-        // call your update-profile mutation/action here
-
         const formData = new FormData();
         const defaultPhoneNum = methods.getValues("PhoneNumber")
         formData.append("Id", data.id);
@@ -71,7 +69,7 @@ export default function Profile({ data }: ProfileProps) {
                 </header>
                 <div className="px-5 mt-5 md:flex gap-5">
                     <ProfileDataCard data={data} onSubmit={onSubmit} />
-                    <ProfileDetails userData={data} />
+                    <ProfileDetails userData={data} enrolledCoursesWithMetaData={enrolledCoursesWithMetaData}/>
                 </div>
             </section>
         </FormProvider>

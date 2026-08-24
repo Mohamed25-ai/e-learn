@@ -147,21 +147,7 @@ export async function editCourseContent(data: FormData) {
         throw error;
     }
 }
-export async function getPaidCreatedCourseByCourseId(courseId: string) {
-    const api = await publicApi;
-    try {
-        const res = await api.get(`/Course/GetById/${courseId}`);
-        return {
-            status: res.status,
-            data: res.data
-        }
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            return error?.response?.data;
-        }
-        throw error;
-    }
-}
+
 export async function getCourseSection(courseId: string) {
     const api = await publicApi;
     try {
@@ -177,7 +163,37 @@ export async function getCourseSection(courseId: string) {
         throw error;
     }
 }
-export async function getCourseContent(sectionId: string) {
+export async function getCourseContentById(contentId: string) {
+    const api = await privateServerApi();
+    try {
+        const res = await api.get(`/Content/GetById/${contentId}`);
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error?.response?.data;
+        }
+        throw error;
+    }
+}
+export async function getCreatedCourseByCourseId(courseId: string) {
+    const api = await publicApi;
+    try {
+        const res = await api.get(`/Course/GetById/${courseId}`);
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error?.response?.data;
+        }
+        throw error;
+    }
+}
+export async function getPaidCourseContentBySectionId(sectionId: string) {
     const api = await privateServerApi();
     try {
         const res = await api.get(`/Content/List?SectionId=${sectionId}`);
@@ -192,10 +208,10 @@ export async function getCourseContent(sectionId: string) {
         throw error;
     }
 }
-export async function getCourseContentById(contentId: string) {
+export async function getCourseContentBySectionIdForViewOnly(sectionId: string) {
     const api = await privateServerApi();
     try {
-        const res = await api.get(`/Content/GetById/${contentId}`);
+        const res = await api.get(`/Content/PreviewList?SectionId=${sectionId}`);
         return {
             status: res.status,
             data: res.data

@@ -7,7 +7,6 @@ import { SectionData } from '../CoursesByCategoryId/coursebycategoryId.types'
 
 export default async function CourseDetailsCurriculum({ courdeId, withHeader, inPlay }: CourseDetailsCurriculumProps) {
   const sections = await getCourseSectionAction(courdeId);
-  console.log("Sections ", sections)
   return (
     <section className={`${!inPlay && "mt-5 px-5 "} `}>
       {withHeader && <header className='my-4'>

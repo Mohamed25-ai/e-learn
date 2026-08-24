@@ -50,7 +50,7 @@ export default function Sidebar() {
                 <div className={`
                         fixed top-12
                         ltr:left-0 rtl:right-0
-                        ltr:right-[50%] rtl:left-[50%]
+                        ltr:right-[40%] rtl:left-[40%]
                         lg:ltr:right-[75%] lg:rtl:left-[75%]
                         xl:ltr:right-[80%] xl:rtl:left-[80%]
                                     

@@ -20,7 +20,6 @@ export default function ConfirmEmail({ email }: { email: string }) {
     async function handleResendCode() {
         if (email) {
             const res = await forgotPasswordAction(email.trim());
-            console.log("email", res?.data);
             if (res?.status===200) {
                 toast.success("Code resed successifuly");
                 setOtp(Array(LENGTH).fill(''));

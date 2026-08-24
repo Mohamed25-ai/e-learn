@@ -53,7 +53,6 @@ export default function CourseDetailsCard({ data }: CourseDetailsProps) {
                 </CardHeader>
 
                 <CardContent className="p-5 flex flex-col gap-5">
-
                     {/* Price */}
                     <div className="flex items-center gap-3">
                         <span className="text-4xl font-extrabold text-(--primary-color)">

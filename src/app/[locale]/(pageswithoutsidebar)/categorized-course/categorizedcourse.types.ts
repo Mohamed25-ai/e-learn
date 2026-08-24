@@ -14,10 +14,11 @@ export interface CategorizedCourseProps {
     searchParams:Promise<SearchParamsType>
 } 
 export type CategorizedCoursePaginationProps={
-    categoryId:string,
+    categoryId?:string,
     totalPages:number,
     currentPage:number,
     totalCount:number,
     hasPreviousPage:boolean,
-    hasNextPage:boolean
+    hasNextPage:boolean,
+    inMyLearningPage?:boolean
 }

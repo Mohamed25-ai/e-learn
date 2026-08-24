@@ -7,7 +7,7 @@ import { ProfileDetailsProps } from "./profile.details.types";
 import { useAppSelector } from "@/hooks/hooks";
 import ProfileSecurity from "./ProfileSecurity";
 
-export default function ProfileDetails({ userData }: ProfileDetailsProps) {
+export default function ProfileDetails({ userData,enrolledCoursesWithMetaData }: ProfileDetailsProps) {
     const userProfileStore = useAppSelector((state) => state.userProfileSlice);
 
 
@@ -15,7 +15,7 @@ export default function ProfileDetails({ userData }: ProfileDetailsProps) {
         <div className="md:w-3/4">
             <ProfileDetailsToggler />
             {userProfileStore.profileDetailsView == "overview" && <PersonalInformation userData={userData} />}
-            {userProfileStore.profileDetailsView == "mycourses" && <ProfileUserCourses />}
+            {userProfileStore.profileDetailsView == "mycourses" && <ProfileUserCourses enrolledCoursesWithMetaData={enrolledCoursesWithMetaData}/>}
             {userProfileStore.profileDetailsView == "certificates"}
             {userProfileStore.profileDetailsView == "security" &&< ProfileSecurity userData={userData} />}
         </div>

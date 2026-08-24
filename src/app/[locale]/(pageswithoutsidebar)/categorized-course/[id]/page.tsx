@@ -4,16 +4,16 @@ import { getCoursesByCategorieId } from '@/services/courses/courses.service';
 import CategorizedCoursePagination from '../CategorizedCoursePagination';
 import FadeUp from '@/app/[locale]/_Components/Animation/FadeUp';
 import { getLocale } from 'next-intl/server'; // Import this
-import { SearchAndFilterCourse } from '@/app/[locale]/_Components/Courses/SearchAndFilterCourse/SearchAndFilterCourse';
+import { SearchAndFilterCourse } from '../../../_Components/Courses/CategorizedCourseComponents/SearchAndFilterCourse/SearchAndFilterCourse';
 import CourseCard from '@/app/[locale]/_Components/Courses/CourseCard/CourseCard';
 import { CourseData } from '@/app/[locale]/_Components/Courses/CoursesByCategoryId/coursebycategoryId.types';
-import CategorizedCourseHeader from '@/app/[locale]/_Components/Courses/CategorizedCourseHeader/CategorizedCourseHeader';
+import CategorizedCourseHeader from '@/app/[locale]/_Components/Courses/CategorizedCourseComponents/CategorizedCourseHeader/CategorizedCourseHeader';
 export default async function page({ params, searchParams }: CategorizedCourseProps) {
     const param = await params;
     const { pageSize, pageNumber, searchCourse, filter } = await searchParams;
     const locale = await getLocale();
     const isRtl = locale === 'ar'; // Adjust to your RTL language code
-    const pgSize = pageSize || 8;
+    const pgSize = pageSize || 2;
     const pgNumber = pageNumber || 1
     const searchData = searchCourse || undefined
     const FilterData = filter || undefined

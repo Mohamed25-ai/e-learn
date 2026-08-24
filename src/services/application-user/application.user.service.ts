@@ -89,3 +89,26 @@ export async function applyToBecomeInstructor() {
         throw error;
     }
 }
+
+export async function getEnrolledCourses(pageNumber?:number,pageSize?:number,orderBy?:string,search?:string) {
+    const api = await privateServerApi();
+    try {
+        const res = await api.get(`/Enrollment/Paginated`,{
+            params:{
+                PageNumber:pageNumber,
+                PageSize:pageSize,
+                OrderBy:orderBy,
+                Search:search
+            }
+        });
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error?.response?.data;
+        }
+        throw error;
+    }
+}

@@ -1,10 +1,13 @@
+import { EnrolledCoursesDataType } from "../../Courses/EnrolledCourses/enrolled.courses.types"
 import { UserProfileData } from "../profile.types"
 
-export type ProfileDetailsTogglerProps = {
+export type ProfileUserCoursesProps = {
+    enrolledCoursesWithMetaData:EnrolledCoursesDataType
 
 }
 export type ProfileDetailsProps = {
-    userData: UserProfileData
+    userData: UserProfileData,
+    enrolledCoursesWithMetaData:EnrolledCoursesDataType
 }
 export type PersonalInformationProps = {
     userData: UserProfileData

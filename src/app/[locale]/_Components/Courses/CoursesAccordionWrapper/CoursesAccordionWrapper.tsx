@@ -1,21 +1,17 @@
-import { getCourseContentAction } from "@/actions/courses/courses.actions";
+import { getCourseContentBySectionIdForViewOnlyAction, getPaidCourseContentBySectionIdAction } from "@/actions/courses/courses.actions";
 import { AccordionDemo } from "../AccordionDemo/AccordionDemo";
 import { CoursesAccordionWrapperProps } from "./Courses.accordionwrapper.types";
 
 
+
 export default async function CoursesAccordionWrapper({ data,inPlayPage }: CoursesAccordionWrapperProps) {
-    const contents = await getCourseContentAction(data.id);
-    console.log("Content",contents)
-    if (contents?.error?.id == "NotEnrolledInCourse") {
-        return (
-            <div>
-                <AccordionDemo section={data} contentData={[]} inPlay={inPlayPage} />
-            </div>
-        )
-    }
+    const paidContent = await getPaidCourseContentBySectionIdAction(data.id);
+    // const viewOnlyCourseContent=await getCourseContentBySectionIdForViewOnlyAction(data?.id);
+
+
     return (
         <div>
-            <AccordionDemo section={data} contentData={contents?.data} inPlay={inPlayPage} />
+            <AccordionDemo section={data} contentData={paidContent?.data} inPlay={inPlayPage} />
         </div>
     )
 }

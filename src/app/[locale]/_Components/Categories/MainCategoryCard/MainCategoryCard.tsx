@@ -1,8 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { MainCategoryCardProps } from "./main.category.card.types";
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCode } from "@fortawesome/free-solid-svg-icons";
 import CATRGORY_STATIC_IMAGE from '@/assets/images/Static course image.jpg'
 import { Link } from "@/i18n/navigation";
 

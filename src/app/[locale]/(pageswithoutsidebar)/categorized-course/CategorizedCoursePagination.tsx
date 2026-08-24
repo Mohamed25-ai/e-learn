@@ -11,20 +11,19 @@ import {
 import { useSearchParams } from "next/navigation"
 import { CategorizedCoursePaginationProps } from "./categorizedcourse.types"
 import { useRouter } from "@/i18n/navigation"
-import { useTransition } from "react"
+import { useEffect, useTransition } from "react"
 import { ButtonLoader } from "../../_Components/Loaders/ButtonLoader/ButtonLoader"
 import { useLocale } from "next-intl"
 
 export default function CategorizedCoursePagination({ currentPage, hasNextPage, hasPreviousPage,
-    totalCount, totalPages, categoryId
+    totalCount, totalPages, categoryId, inMyLearningPage
 }: CategorizedCoursePaginationProps) {
     const [isPending, startTransition] = useTransition();
-    console.log("isPending", isPending)
     const router = useRouter()
     const hasPagination = hasNextPage || hasPreviousPage;
     const allPages = Array.from({ length: totalPages }, (_, i) => i + 1)
     const searchParams = useSearchParams();
-    const currentPg = Number(searchParams.get("pageNumber"));
+    const currentPg = Number(searchParams.get("pageNumber")) || 1;
     const locale = useLocale();
     const isRtl = locale === 'ar';
     function handlePagination(page: number) {
@@ -61,9 +60,23 @@ export default function CategorizedCoursePagination({ currentPage, hasNextPage, 
             });
         }
     }
+    useEffect(() => {
+        const currentPage = Number(searchParams.get("pageNumber"))
+        if (currentPage == 0) {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set("pageNumber", String( 1));
+            router.push(`?${params.toString()}`);
+        }
+        return () => {
+            const params = new URLSearchParams(searchParams.toString());
+            params.delete("pageNumber");
+            router.push(`?${params.toString()}`);
+        }
+    }, [])
     return (
         <>
-            {hasPagination && <Pagination dir={isRtl?"rtl":"ltr"}>
+            {hasPagination && <Pagination
+                dir={isRtl ? "rtl" : "ltr"}>
                 {isPending && <ButtonLoader size={20} />}
                 {!isPending && <PaginationContent >
                     <PaginationItem >
@@ -75,7 +88,7 @@ export default function CategorizedCoursePagination({ currentPage, hasNextPage, 
                         </PaginationLink>
                     ))}
                     <PaginationItem >
-                        <PaginationNext  className="cursor-pointer" onClick={handleNextPage} />
+                        <PaginationNext className="cursor-pointer" onClick={handleNextPage} />
                     </PaginationItem>
                 </PaginationContent>}
             </Pagination>}

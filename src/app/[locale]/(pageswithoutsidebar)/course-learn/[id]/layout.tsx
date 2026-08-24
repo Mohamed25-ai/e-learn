@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import { getLocale } from 'next-intl/server';
-import {getPaidCreatedCourseByCourseIdAction } from '@/actions/courses/courses.actions';
+import {getCreatedCourseByCourseIdAction } from '@/actions/courses/courses.actions';
 import CourseDeatils3Buttons from '@/app/[locale]/_Components/Courses/CourseDeatils3Buttons/CourseDeatils3Buttons';
 import CourseLearningSidebar from '@/app/[locale]/_Components/Courses/CourseLearning/CourseLearningSidebar/CourseLearningSidebar';
 import CourseLearningSidebarToggler from '@/app/[locale]/_Components/Courses/CourseLearning/CourseLearningSidebarToggler/CourseLearningSidebarToggler';
@@ -23,7 +23,7 @@ type layoutProps = {
 export default async function Layout({ children, params }: layoutProps) {
     const { id } = await params;
     const locale = await getLocale();
-    const courseDeatils = await getPaidCreatedCourseByCourseIdAction(id);
+    const courseDeatils = await getCreatedCourseByCourseIdAction(id);
 
     // Define your RTL locales here
     const isRtl = locale === 'ar';

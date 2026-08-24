@@ -8,13 +8,13 @@ export default function CourseLearningSidebarWrapper({
     children: React.ReactNode;
 }) {
     const {isOpen} = useAppSelector((state) => state.courseLearningSidebarSlice);
-
-
     return (
         <div
-            className={`transition-all duration-300 overflow-hidden 
-                ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
-                md:${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+            className={`transition-all duration-300 ease-in-out overflow-hidden 
+                ${isOpen ? "max-h-250 opacity-100"
+            : "max-h-0 opacity-0"}
+               `
+            }
         >
             {children}
         </div>

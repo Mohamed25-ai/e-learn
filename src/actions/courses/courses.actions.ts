@@ -1,10 +1,12 @@
 'use server'
 import {
     addCourseSection, createCourseBasicInformation, createCourseContent,
-    editCourseContent, editCourseSection, getCourseContent, getCourseContentById,
+    editCourseContent, editCourseSection, getCourseContentById,
+    getCourseContentBySectionIdForViewOnly,
     getCoursesByCategorieId, getCourseSection, 
+    getCreatedCourseByCourseId, 
     getCreatedSectionByCourseId,
-    getPaidCreatedCourseByCourseId,
+    getPaidCourseContentBySectionId,
     } from "@/services/courses/courses.service";
 import { CreateSectionType } from "@/services/courses/coursesapi.types";
 import { CreateCourseContentInputsData } from "@/app/[locale]/_Components/Courses/CreateCourses/CreateCourseContent/createcoursecontent.types";
@@ -30,15 +32,19 @@ export async function editCourseSectionAction(data: CreateSectionType) {
 export async function getCreatedSectionByCourseIdAction(courseId: string) {
     return await getCreatedSectionByCourseId(courseId);
 }
-export async function getPaidCreatedCourseByCourseIdAction(courseId: string) {
-    return await getPaidCreatedCourseByCourseId(courseId);
-}
+
 export async function getCourseSectionAction(courseId: string) {
     return await getCourseSection(courseId);
 }
-export async function getCourseContentAction(sectionId: string) {
-    return await getCourseContent(sectionId);
+export async function getPaidCourseContentBySectionIdAction(sectionId: string) {
+    return await getPaidCourseContentBySectionId(sectionId);
+}
+export async function getCourseContentBySectionIdForViewOnlyAction(sectionId: string) {
+    return await getCourseContentBySectionIdForViewOnly(sectionId);
 }
 export async function getCourseContentByIdAction(contentId: string) {
     return await getCourseContentById(contentId);
+}
+export async function getCreatedCourseByCourseIdAction(courseId: string) {
+    return await getCreatedCourseByCourseId(courseId);
 }

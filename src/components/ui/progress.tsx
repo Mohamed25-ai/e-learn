@@ -28,7 +28,7 @@ function Progress({
           transform:
             locale=="ar"
               ? `translateX(${100 - (value || 0)}%)`
-              : `translateX(-${100 - (value || 0)}%)`,
+              : `translateX(-${100 - (value || 0)}%)`
         }}
       />
     </ProgressPrimitive.Root>

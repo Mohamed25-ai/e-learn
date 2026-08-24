@@ -47,7 +47,7 @@ export default function CategorieHeader({ categorie, inCategoriesPage,inCoursesP
             {/* See all */}
             {seeAllBtn && (
                 <Link
-                    href={`/categorized-course/${categorie.id}?pageNumber=1`}
+                    href={`/categorized-course/${categorie.id}`}
                     className="MAIN_BUTTON text-nowrap shrink-0"
                 >
                     See All

@@ -1,6 +1,6 @@
 "use server"
 
-import { applyToBecomeInstructor, changeProfileUserPassword, editProfileUserData, getProfileUserData } from "@/services/application-user/application.user.service"
+import { applyToBecomeInstructor, changeProfileUserPassword, editProfileUserData, getEnrolledCourses, getProfileUserData } from "@/services/application-user/application.user.service"
 
 export async function getProfileUserDataAction(userId:string) {
     return await getProfileUserData(userId);
@@ -13,4 +13,8 @@ export async function changeProfileUserPasswordAction(userData:FormData) {
 }
 export async function applyToBecomeInstructorAction() {
     return await applyToBecomeInstructor();
+}
+
+export async function getEnrolledCoursesAction(pageNumber?:number,pageSize?:number,orderBy?:string,search?:string) {
+    return await getEnrolledCourses(pageNumber,pageSize,orderBy,search);
 }

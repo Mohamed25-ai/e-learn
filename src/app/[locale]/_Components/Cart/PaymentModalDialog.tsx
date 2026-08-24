@@ -1,17 +1,9 @@
 "use client"
-
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
-import { useEffect, useState } from "react";
 import { PaymentModalDialogProps } from "./cart.types";
-import { Link } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/navigation";
 export function PaymentModalDialog({ isDialogOpen, setisDialogOpen,
     isPaymentFailed, isPaymentSucceeded, paymentFailedMessage,closPayment }: PaymentModalDialogProps) {
@@ -19,7 +11,9 @@ export function PaymentModalDialog({ isDialogOpen, setisDialogOpen,
     function handleSuccessPayment() {
         setisDialogOpen(false);
         closPayment()
-        router.push('/courses')
+        router.push('/my-learning',{
+            scroll:false,
+        })
     }
     function handleFailedPayment() {
         setisDialogOpen(false);
@@ -38,7 +32,6 @@ return (
         <DialogContent showCloseButton={isPaymentSucceeded?false:true} className="sm:max-w-md">
             {isPaymentSucceeded && (
                 <div className="flex flex-col items-center justify-center gap-5 text-center py-4">
-
                     <div className="w-16 h-16 rounded-full bg-(--primary-light)
                                 flex items-center justify-center text-3xl">
                         🎉

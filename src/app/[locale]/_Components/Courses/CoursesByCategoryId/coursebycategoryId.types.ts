@@ -27,14 +27,14 @@ export interface CourseByCategoryIdProps{
 };
 export interface CoursesType{
     data:CourseData[],
-    currentPage:number,
+   currentPage:number,
     hasNextPage:boolean,
     hasPreviousPage:boolean,
     pageSize:number,
     succeeded:boolean,
     totalCount:number,
     totalPages:number,
-    message:string
+    message:string 
 }
 export interface SectionData{
     courseId:string,
