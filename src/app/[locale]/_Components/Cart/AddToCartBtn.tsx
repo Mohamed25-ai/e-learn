@@ -9,16 +9,18 @@ import { ButtonLoader } from '../Loaders/ButtonLoader/ButtonLoader'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import { setAddedCourseToCart, setNumberOfCartItems } from '@/store/redux/cart/cart.slice'
 import { useSession } from 'next-auth/react'
+import { useTranslations } from 'next-intl'
 
 export default function AddToCartBtn({ courseId }: AddToCartBtnProps) {
-    const { numberOfCartItems,addedCourses } = useAppSelector((state) => state.userCartSlice);
-    const userSession=useSession();
+    const t = useTranslations();
+    const { numberOfCartItems, addedCourses } = useAppSelector((state) => state.userCartSlice);
+    const userSession = useSession();
     console.log(userSession)
     const dispatch = useAppDispatch();
     const [isLoading, setisLoading] = useState(false);
     async function handleAddCourseToCart() {
-        if(userSession.status=="unauthenticated"){
-            toast.error("Login First To Add This Course");
+        if (userSession.status == "unauthenticated") {
+            toast.error(t('Cart.loginFirst'));
             return;
         }
         // if(addedCourses.includes(courseId)){
@@ -28,7 +30,7 @@ export default function AddToCartBtn({ courseId }: AddToCartBtnProps) {
         setisLoading(true);
         const res = await addCourseToCartAction(courseId);
         if (res.status == 200) {
-            toast.success("Course is Added Successifuly");
+            toast.success(t('Cart.addSuccess'));
             dispatch(setAddedCourseToCart(courseId));
             dispatch(setNumberOfCartItems(numberOfCartItems + 1));
         } else {
@@ -41,7 +43,7 @@ export default function AddToCartBtn({ courseId }: AddToCartBtnProps) {
         <>
             {!isLoading && <button onClick={handleAddCourseToCart} className="MAIN_BUTTON text-xs px-3  shrink-0">
                 <FontAwesomeIcon icon={faCartShopping} />
-                Add
+                {t('Cart.addButton')}
             </button>}
             {isLoading && <ButtonLoader size={25} />}
         </>

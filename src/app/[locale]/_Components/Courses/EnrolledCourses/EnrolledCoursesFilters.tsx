@@ -4,6 +4,7 @@ import { EnrolledCoursesFiltersProps } from './enrolled.courses.types'
 import { FilterEnrolledCourses } from './FilterEnrolledCourses';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { useTranslations } from 'next-intl';
 
 
 
@@ -11,12 +12,13 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 export default function EnrolledCoursesFilters({ certificates, completed,
     enrolledCourses, inProgress }: EnrolledCoursesFiltersProps) {
+    const t = useTranslations();
 
     const STATS = [
-        { label: "All Courses", changeValue: "enrolledCourses", value: enrolledCourses },
-        { label: "In Progress", changeValue: "inProgress", value: inProgress },
-        { label: "Completed", changeValue: "completed", value: completed },
-        { label: "Certificates", changeValue: "certificates", value: certificates },
+        { label: t('EnrolledCourses.filters.allCourses'), changeValue: "enrolledCourses", value: enrolledCourses },
+        { label: t('EnrolledCourses.filters.inProgress'), changeValue: "inProgress", value: inProgress },
+        { label: t('EnrolledCourses.filters.completed'), changeValue: "completed", value: completed },
+        { label: t('EnrolledCourses.filters.certificates'), changeValue: "certificates", value: certificates },
     ]
 
     const [currentShow, setCurrentShow] = useState("enrolledCourses");
@@ -28,8 +30,8 @@ export default function EnrolledCoursesFilters({ certificates, completed,
     return (
         <div className="px-5 lg:flex items-center justify-between md:gap-4">
 
-            <div className="bg-white border border-border rounded-2xl
-                    flex items-center justify-between gap-1 p-1.5 mt-5 
+            <div className="bg-white border border-border rounded-2xl 
+                    flex items-center justify-between gap-1 py-1.5 px-2.5 lg:pz-1.5  mt-5 
                         w-full lg:w-3/4">
 
                 {STATS.map((stat) => {
@@ -62,8 +64,8 @@ export default function EnrolledCoursesFilters({ certificates, completed,
             </div>
             <div className="mt-5 flex items-center gap-2  w-full lg:w-1/4">
                 <FontAwesomeIcon
-                className='text-(--primary-color)'
-                icon={faFilter} />
+                    className='text-(--primary-color)'
+                    icon={faFilter} />
                 <FilterEnrolledCourses />
             </div>
         </div>

@@ -5,8 +5,10 @@ import PROFILEIMAGE from '@/assets/images/blank-profile-picture-973460_960_720.p
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar, faUsers, faClock, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { Link } from '@/i18n/navigation'
+import { getTranslations } from 'next-intl/server'
 
-export default function CourseDetailsHeader({ data }: CourseDetailsHeaderProps) {
+export default async function CourseDetailsHeader({ data }: CourseDetailsHeaderProps) {
+    const t = await getTranslations();
     return (
         <>
 
@@ -15,7 +17,7 @@ export default function CourseDetailsHeader({ data }: CourseDetailsHeaderProps) 
 
                     <Link href={`/courses`} className='text-foreground hover:text-white'>
                         <FontAwesomeIcon className='me-1 ' icon={faArrowLeft} />
-                        Back to courses</Link>
+                        {t('CourseDetails.backToCourses')}</Link>
                 </div>
                 {/* Title */}
                 <h1 className='text-white font-extrabold text-3xl leading-snug max-w-3xl'>
@@ -35,7 +37,7 @@ export default function CourseDetailsHeader({ data }: CourseDetailsHeaderProps) 
                             </span>
                             {data?.ratingCount != null && (
                                 <span className='text-white/60'>
-                                    ({data?.ratingCount.toLocaleString()} ratings)
+                                    {t('CourseDetails.ratingsCount', { count: data?.ratingCount.toLocaleString() })}
                                 </span>
                             )}
                         </div>
@@ -44,7 +46,7 @@ export default function CourseDetailsHeader({ data }: CourseDetailsHeaderProps) 
                     {data?.noOfStudents != null && (
                         <div className='flex items-center gap-1.5 text-sm text-white/80'>
                             <FontAwesomeIcon icon={faUsers} className='text-white/60' />
-                            <span>{data.noOfStudents.toLocaleString()} students</span>
+                            <span>{t('CourseDetails.studentsCount', { count: data.noOfStudents.toLocaleString() })}</span>
                         </div>
                     )}
 
@@ -68,7 +70,7 @@ export default function CourseDetailsHeader({ data }: CourseDetailsHeaderProps) 
                         />
                     </div>
                     <div className='flex flex-col gap-0.5'>
-                        <span className='text-white/60 text-xs'>Instructor</span>
+                        <span className='text-white/60 text-xs'>{t('CourseDetails.instructor')}</span>
                         <span className='text-white font-semibold text-sm'>
                             {data?.instructorName}
                         </span>

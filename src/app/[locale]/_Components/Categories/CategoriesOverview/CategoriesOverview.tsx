@@ -1,13 +1,18 @@
+import React from 'react'
 import { faAward, faBookOpen, faGlobe, faUserGroup } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
-const stats = [
-    { icon: faGlobe, value: '8', label: 'Total Categories' },
-    { icon: faBookOpen, value: '124', label: 'Total Courses' },
-    { icon: faUserGroup, value: '3.2k', label: 'Active Students' },
-    { icon: faAward, value: '48', label: 'Expert Instructors' },
-];
-export default function CategoriesOverview() {
+import { getTranslations } from 'next-intl/server'
+
+export default async function CategoriesOverview() {
+    const t = await getTranslations();
+
+    const stats = [
+        { icon: faGlobe, value: '8', label: t('Categories.overview.totalCategories') },
+        { icon: faBookOpen, value: '124', label: t('Categories.overview.totalCourses') },
+        { icon: faUserGroup, value: '3.2k', label: t('Categories.overview.activeStudents') },
+        { icon: faAward, value: '48', label: t('Categories.overview.expertInstructors') },
+    ];
+
     return (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {stats.map(({ icon, value, label }) => (

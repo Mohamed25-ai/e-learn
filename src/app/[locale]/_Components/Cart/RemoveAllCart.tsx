@@ -11,10 +11,12 @@ import FormLoader from "../Loaders/FormLoader/FormLoader";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { setNumberOfCartItems } from "@/store/redux/cart/cart.slice";
 import WallpaperLoader from "../Loaders/WallpaperLoader/WallpaperLoader";
+import { useTranslations } from "next-intl";
 
-export default function RemoveAllCart({}: RemoveAllCartProps) {
+export default function RemoveAllCart({ }: RemoveAllCartProps) {
+  const t = useTranslations();
   const cartStore = useAppSelector((state) => state.userCartSlice);
-  const dispatch=useAppDispatch();
+  const dispatch = useAppDispatch();
   const [isLoading, setisLoading] = useState(false);
   const router = useRouter();
   async function removeAllCart() {
@@ -22,7 +24,7 @@ export default function RemoveAllCart({}: RemoveAllCartProps) {
     const res = await removeAllItemsCartAction();
     console.log("All delted", res);
     if (res.status == 200) {
-      toast.success("Cart is empty");
+      toast.success(t('Cart.cartEmpty'));
       dispatch(setNumberOfCartItems(0));
       router.refresh();
     } else {
@@ -40,7 +42,7 @@ export default function RemoveAllCart({}: RemoveAllCartProps) {
       px-3 hover:bg-red-100 rounded-2xl"
         >
           <FontAwesomeIcon icon={faTrashCan} className="text-sm me-1" />
-          Remove All
+          {t('Cart.removeAll')}
         </button>
       )}
     </>

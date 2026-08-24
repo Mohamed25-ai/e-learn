@@ -16,6 +16,7 @@ import PROFILEIMAGE from '@/assets/images/blank-profile-picture-973460_960_720.p
 import { Link } from "@/i18n/navigation"
 import AddToCartBtn from "../../Cart/AddToCartBtn"
 import { useSession } from "next-auth/react"
+import { useTranslations, useLocale } from "next-intl"
 // import { Link } from "@/i18n/navigation"
 function StarRating({ rating }: { rating: number }) {
     return (
@@ -38,15 +39,17 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export default function CourseCard({ course }: CourseCardProps) {
+    const t = useTranslations();
+    const locale = useLocale();
     const userSession = useSession();
-    const title = course?.title ?? "Untitled Course";
+    const title = course?.title ?? t('CourseCard.untitledCourse');
     const id = course?.id ?? "";
     const price = course?.price ?? 0;
     const discountPercentage = course?.discountPercentage ?? 0;
     const hasDiscount = discountPercentage > 0;
     const discountedPrice = hasDiscount
         ? price - (price * discountPercentage) / 100 : price;
-    const instructorName = course?.instructorName ?? "Unknown Instructor";
+    const instructorName = course?.instructorName ?? t('CourseCard.unknownInstructor');
     const instructorImage = course?.instructorProfilePictureUrl ?? PROFILEIMAGE;
     const courseImage = course?.thumbnailUrl ?? COURSEIMAGE;
     const courseDescripition = course.description ?? ""
@@ -107,7 +110,7 @@ export default function CourseCard({ course }: CourseCardProps) {
                         </div>
                         {hasDiscount && <div>
                             <span className="text-xs font-semibold text-(--success)">
-                                {discountPercentage}% off
+                                {t('CourseCard.discountOff', { percent: discountPercentage })}
                             </span>
                         </div>}
                     </div>
@@ -192,7 +195,7 @@ export default function CourseCard({ course }: CourseCardProps) {
                             ? <AddToCartBtn courseId={course.id!} />
                             : <span className="text-xs font-medium text-(--primary-color)
                                    bg-(--primary-light) px-2.5 py-1 rounded-full whitespace-nowrap">
-                                Your Course
+                                {t('CourseCard.yourCourse')}
                             </span>
                         }
                     </div>
@@ -202,7 +205,9 @@ export default function CourseCard({ course }: CourseCardProps) {
                 {updatedAt && (
                     <p className="text-[10px] text-(--text-muted) flex items-center gap-1">
                         <FontAwesomeIcon icon={faSignal} className="text-[10px]" />
-                        Updated {new Date(updatedAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                        {t('CourseCard.updatedOn', {
+                            date: new Date(updatedAt).toLocaleDateString(locale === 'ar' ? 'ar-EG' : 'en-US', { month: 'long', year: 'numeric' })
+                        })}
                     </p>
                 )}
             </CardFooter>

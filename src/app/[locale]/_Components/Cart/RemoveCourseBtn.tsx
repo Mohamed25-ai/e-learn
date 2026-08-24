@@ -12,8 +12,10 @@ import {
 } from "@/store/redux/cart/cart.slice";
 import { useState } from "react";
 import { ButtonLoader } from "../Loaders/ButtonLoader/ButtonLoader";
+import { useTranslations } from "next-intl";
 
 export default function RemoveCourseBtn({ courseId }: RemoveCourseBtnProps) {
+  const t = useTranslations();
   const { numberOfCartItems, addedCourses } = useAppSelector(
     (state) => state.userCartSlice,
   );
@@ -25,12 +27,12 @@ export default function RemoveCourseBtn({ courseId }: RemoveCourseBtnProps) {
     const res = await removeCourseFromCartAction(courseId);
     console.log("remove Course res", res);
     if (res.status == 200) {
-      toast.success("Course removed Successifuly");
+      toast.success(t('Cart.removeSuccess'));
       dispatch(setNumberOfCartItems(numberOfCartItems - 1));
       // dispatch(setAddedCourseToCart(addedCourses.filter((course)=>course!=courseId)))
       router.refresh();
     } else {
-      toast.error("Error happen");
+      toast.error(t('Cart.genericError'));
     }
     setisLoading(false);
   }

@@ -9,7 +9,7 @@ import EnrolledCoursesPagination from "./EnrolledCoursesPagination";
 
 export default function EnrolledCourses({ enrolledCoursesData }: EnrolledCoursesProps) {
     return (
-        <section className="px-5 mt-5">
+        <section className="lg:px-5 mt-5">
             <EnrolledCoursesHeader enrolledCoursesOverviewData={enrolledCoursesData?.data} />
             <EnrolledCoursesFilters 
                 enrolledCourses={enrolledCoursesData?.data.length}

@@ -7,10 +7,12 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "@/i18n/navigation";
 import { toggleNavbar, toggleSidebar } from '@/store/redux/togglers/togglers.slice';
 import NavbarSearchInput from "./NavbarSearchInput";
+import { useTranslations } from "next-intl";
 
 
 
-export default function NavbarInMobile({ navbarLinks,currentPath,toggleNavbar,toggleSidebar }: NavbarInMobileProps) {
+export default function NavbarInMobile({ navbarLinks, currentPath, toggleNavbar, toggleSidebar }: NavbarInMobileProps) {
+    const t = useTranslations('Navbar');
     return (
         <div className="fixed top-12 left-0 bg-white z-30 w-full bg-navbar border-b border-border shadow-md md:hidden">
             <ul className="flex flex-col px-4 py-2 gap-1">
@@ -40,7 +42,7 @@ export default function NavbarInMobile({ navbarLinks,currentPath,toggleNavbar,to
                             type="text"
                             // value={searchQuery}
                             // onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Search courses..."
+                            placeholder={t('searchPlaceholder')}
                             className="w-full h-9 rounded-lg border border-border bg-input text-foreground text-sm outline-none ltr:pl-8 ltr:pr-3 rtl:pr-8 rtl:pl-3 focus-visible:border-(--primary-color) focus-visible:ring-0"
                         />
                     </div>

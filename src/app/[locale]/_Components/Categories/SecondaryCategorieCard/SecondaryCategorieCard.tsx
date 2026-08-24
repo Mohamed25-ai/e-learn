@@ -1,7 +1,10 @@
+"use client"
+
 import { CategoriesDataType } from '@/app/[locale]/(main)/(Categories)/categories/categories.type'
 import { faCode, faUserGroup } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
+import { useTranslations } from 'next-intl'
 
 type CategorieCardProps = {
     categorie: CategoriesDataType
@@ -15,6 +18,7 @@ function splitCategoryName(name: string) {
     return [name.slice(0, index).trim(), name.slice(index).trim()]
 }
 export default function SecondaryCategorieCard({ categorie, fromSwiper }: CategorieCardProps) {
+    const t = useTranslations();
     const [firstLine, secondLine] = splitCategoryName(categorie.name);
 
     return (
@@ -58,11 +62,11 @@ export default function SecondaryCategorieCard({ categorie, fromSwiper }: Catego
                 {/* Stats */}
                 <div className='flex flex-col gap-1.5'>
                     <span className='text-sm text-(--text-secondary)'>
-                        courses
+                        {t('Categories.card.courses')}
                     </span>
                     <span className='text-sm text-(--text-secondary) flex items-center gap-1.5'>
                         <FontAwesomeIcon icon={faUserGroup} className='text-xs' />
-                        students
+                        {t('Categories.card.students')}
                     </span>
                 </div>
             </div>

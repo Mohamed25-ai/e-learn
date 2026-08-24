@@ -12,7 +12,7 @@ export default function ProfileDetails({ userData,enrolledCoursesWithMetaData }:
 
 
     return (
-        <div className="md:w-3/4">
+        <div className="lg:w-3/4">
             <ProfileDetailsToggler />
             {userProfileStore.profileDetailsView == "overview" && <PersonalInformation userData={userData} />}
             {userProfileStore.profileDetailsView == "mycourses" && <ProfileUserCourses enrolledCoursesWithMetaData={enrolledCoursesWithMetaData}/>}

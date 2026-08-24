@@ -1,8 +1,254 @@
 {
   "Navbar": {
-    "getStarted": "ابدأ الآن"
+    "getStarted": "ابدأ الآن",
+    "searchPlaceholder": "ابحث عن الكورسات...",
+    "links": {
+      "courses": "الكورسات",
+      "myLearning": "تعلمي",
+      "categories": "التصنيفات",
+      "createCourse": "إنشاء كورس"
+    },
+    "userDropdown": {
+      "defaultName": "مستخدم",
+      "profile": "الملف الشخصي",
+      "logout": "تسجيل الخروج"
+    }
   },
-  "Home": {},
+  "Sidebar": {
+    "becomeInstructor": {
+      "title": "كن مدرباً",
+      "description": "شارك معرفتك واكسب دخلاً",
+      "applyButton": "قدّم الآن"
+    },
+    "version": "إيديوكور v{version}"
+  },
+  "Home": {
+    "hero": {
+      "badge": "انضم إلى أكثر من 50,000 طالب يتعلمون عبر الإنترنت",
+      "headingPart1": "طوّر",
+      "headingHighlight": "مهاراتك",
+      "headingPart2": "أونلاين",
+      "description": "تعلم من خبراء الصناعة من خلال دوراتنا الشاملة. ابدأ رحلتك نحو النجاح اليوم بتعليم مرن وبأسعار مناسبة وجودة عالية.",
+      "exploreCourses": "استكشف الكورسات",
+      "learnMore": "اعرف المزيد",
+      "stats": {
+        "students": "طالب",
+        "courses": "كورس",
+        "rating": "تقييم"
+      }
+    }
+  },
+  "Categories": {
+    "pageHeader": {
+      "title": "استكشف التصنيفات",
+      "subtitle": "اكتشف الكورسات في كل مجالات الخبرة",
+      "browseAll": "تصفح كل التصنيفات"
+    },
+    "overview": {
+      "totalCategories": "إجمالي التصنيفات",
+      "totalCourses": "إجمالي الكورسات",
+      "activeStudents": "طلاب نشطون",
+      "expertInstructors": "مدربون خبراء"
+    },
+    "allCategories": "كل التصنيفات",
+    "card": {
+      "courses": "كورسات",
+      "students": "طلاب"
+    }
+  },
+  "FeaturedCourses": {
+    "title": "الكورسات المميزة",
+    "subtitle": "كورسات مختارة بعناية لمساعدتك على تحقيق أهدافك",
+    "browseAll": "تصفح كل الكورسات"
+  },
+  "CategorieHeader": {
+    "students": "طلاب",
+    "seeAll": "عرض الكل"
+  },
+  "CourseCard": {
+    "untitledCourse": "كورس بدون عنوان",
+    "unknownInstructor": "مدرب غير معروف",
+    "discountOff": "خصم {percent}%",
+    "yourCourse": "كورسك",
+    "updatedOn": "آخر تحديث {date}"
+  },
+  "Cart": {
+    "loginFirst": "سجل الدخول أولاً لإضافة هذا الكورس",
+    "addSuccess": "تمت إضافة الكورس بنجاح",
+    "addButton": "إضافة",
+    "shoppingCart": "سلة التسوق",
+    "coursesCount": "{count} كورسات",
+    "emptyCart": "سلتك فارغة",
+    "webDevelopment": "تطوير الويب",
+    "discount": "خصم",
+    "discountPercent": "نسبة الخصم %",
+    "removeSuccess": "تم حذف الكورس بنجاح",
+    "genericError": "حدث خطأ",
+    "checkoutNow": "إتمام الشراء",
+    "paymentStartError": "تعذّر بدء عملية الدفع. حاول مرة أخرى.",
+    "paymentGenericError": "حدث خطأ ما. حاول مرة أخرى.",
+    "cartEmpty": "السلة فارغة",
+    "removeAll": "إزالة الكل"
+  },
+  "CartInvoice": {
+    "orderSummary": "ملخص الطلب",
+    "subtotal": "المجموع الفرعي",
+    "discount": "الخصم",
+    "total": "الإجمالي",
+    "couponPlaceholder": "كود الخصم",
+    "apply": "تطبيق",
+    "couponHint": "جرّب: {code} للحصول على خصم 10%",
+    "moneyBackGuarantee": "ضمان استرداد الأموال خلال 30 يومًا",
+    "lifetimeAccess": "وصول مدى الحياة بعد الشراء"
+  },
+  "Payment": {
+    "completePayment": "إتمام الدفع",
+    "testingWarning": "للاختبار فقط — لا تستخدم بطاقة حقيقية.",
+    "cancel": "إلغاء",
+    "payNow": "ادفع الآن",
+    "processing": "جاري المعالجة...",
+    "paymentFailedDefault": "فشلت عملية الدفع. حاول مرة أخرى.",
+    "genericError": "حدث خطأ ما. حاول مرة أخرى.",
+    "successTitle": "تم الدفع بنجاح",
+    "successMessage": "جاري إعداد وصولك للكورس — يستغرق هذا عادةً بضع ثوانٍ.",
+    "goToMyCourses": "الذهاب إلى كورساتي",
+    "failedTitle": "لم تكتمل عملية الدفع",
+    "backToCart": "العودة إلى السلة"
+  },
+  "EnrolledCourses": {
+    "title": "تعلمي",
+    "subtitle": "تابع تقدمك واستكمل من حيث توقفت",
+    "stats": {
+      "enrolledCourses": "الكورسات المسجلة",
+      "inProgress": "قيد التقدم",
+      "completed": "مكتملة",
+      "certificates": "الشهادات"
+    },
+    "card": {
+      "defaultTitle": "اسم الكورس",
+      "webDevelopment": "تطوير الويب",
+      "inProgress": "قيد التقدم"
+    },
+    "filters": {
+      "allCourses": "كل الكورسات",
+      "inProgress": "قيد التقدم",
+      "completed": "مكتملة",
+      "certificates": "الشهادات"
+    }
+  },
+  "Profile": {
+    "title": "ملفي الشخصي",
+    "subtitle": "أدر حسابك وتابع تقدمك",
+    "backToCourses": "العودة إلى الكورسات",
+    "updateSuccess": "تم تحديث الملف الشخصي بنجاح",
+    "personalInformation": "المعلومات الشخصية",
+    "card": {
+      "softwareDeveloper": "مطور برمجيات",
+      "joinedDate": "انضم في يناير 2024",
+      "coursesEnrolled": "الكورسات المسجلة",
+      "completed": "مكتملة",
+      "inProgress": "قيد التقدم",
+      "certificates": "الشهادات",
+      "editProfile": "تعديل الملف الشخصي",
+      "cancel": "إلغاء",
+      "saveChanges": "حفظ التغييرات"
+    },
+    "tabs": {
+      "overview": "نظرة عامة",
+      "myCourses": "كورساتي",
+      "certificates": "الشهادات",
+      "security": "الأمان"
+    },
+    "form": {
+      "fullNameLabel": "الاسم الكامل",
+      "userNameLabel": "اسم المستخدم",
+      "phoneNumberLabel": "رقم الهاتف",
+      "emailLabel": "البريد الإلكتروني",
+      "placeholder": "زر تسجيل الدخول لا يعمل على الموبايل",
+      "errors": {
+        "fullNameMin": "الحد الأدنى للطول هو 3 أحرف",
+        "fullNameMax": "الحد الأقصى للطول هو 20 حرفًا",
+        "userNameMin": "الحد الأدنى للطول هو 5 أحرف",
+        "userNameMax": "الحد الأقصى للطول هو 20 حرفًا",
+        "phoneNumberLength": "يجب أن يتكون رقم الهاتف من 11 رقمًا"
+      }
+    },
+    "security": {
+      "currentPasswordLabel": "كلمة المرور الحالية",
+      "currentPasswordPlaceholder": "أدخل كلمة المرور الحالية",
+      "newPasswordLabel": "كلمة المرور الجديدة",
+      "newPasswordPlaceholder": "أدخل كلمة مرور جديدة",
+      "confirmNewPasswordLabel": "تأكيد كلمة المرور الجديدة",
+      "confirmNewPasswordPlaceholder": "أكد كلمة المرور",
+      "updateButton": "تحديث كلمة المرور",
+      "updateSuccess": "تم تغيير كلمة المرور بنجاح",
+      "errors": {
+        "currentPasswordRequired": "كلمة المرور الحالية مطلوبة",
+        "newPasswordRequired": "كلمة المرور مطلوبة",
+        "newPasswordPattern": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل وتحتوي على حرف كبير وحرف صغير ورقم ورمز خاص.",
+        "newPasswordSameAsOld": "يجب أن تكون كلمة المرور الجديدة مختلفة عن القديمة",
+        "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
+        "passwordsMismatch": "كلمتا المرور غير متطابقتين"
+      }
+    }
+  },
+  "CourseDetails": {
+    "backToCourses": "العودة إلى الكورسات",
+    "ratingsCount": "({count} تقييم)",
+    "studentsCount": "{count} طالب",
+    "totalHours": "{hours} ساعة إجمالاً",
+    "instructor": "المدرب",
+    "certificateOfCompletion": "شهادة إتمام",
+    "downloadableResources": "موارد قابلة للتحميل",
+    "enrollNow": "سجّل الآن",
+    "addToWishlist": "أضف إلى المفضلة",
+    "discountOff": "خصم {percent}%",
+    "tabs": {
+      "overview": "نظرة عامة",
+      "curriculum": "المنهج",
+      "notes": "الملاحظات",
+      "reviews": "التقييمات"
+    }
+  },
+  "Testimonial": {
+    "title": "ماذا يقول طلابنا",
+    "subtitle": "قصص حقيقية من متعلمين حقيقيين",
+    "quote": "غيّرت هذه المنصة مسيرتي المهنية. الكورسات عملية ومنظمة جيدًا، والمدربون على مستوى عالٍ من الاحترافية. اكتسبت مهارات أطبقها مباشرة في عملي.",
+    "personName": "اسم الشخص",
+    "personPosition": "منصب الشخص"
+  },
+  "StartLearning": {
+    "title": "هل أنت مستعد لبدء التعلم؟",
+    "subtitle": "انضم إلى آلاف الطلاب وغيّر مسيرتك المهنية اليوم",
+    "cta": "ابدأ مجاناً"
+  },
+  "Footer": {
+    "tagline": "نمكّن المتعلمين حول العالم بتعليم عالي الجودة.",
+    "copyright": "© {year} إيديوبرو. جميع الحقوق محفوظة.",
+    "sections": {
+      "company": {
+        "title": "الشركة",
+        "aboutUs": "من نحن",
+        "careers": "الوظائف",
+        "press": "الصحافة",
+        "contact": "تواصل معنا"
+      },
+      "resources": {
+        "title": "الموارد",
+        "blog": "المدونة",
+        "helpCenter": "مركز المساعدة",
+        "community": "المجتمع",
+        "support": "الدعم"
+      },
+      "legal": {
+        "title": "قانوني",
+        "termsOfService": "شروط الخدمة",
+        "privacyPolicy": "سياسة الخصوصية",
+        "cookiePolicy": "سياسة ملفات تعريف الارتباط",
+        "gdpr": "اللائحة العامة لحماية البيانات"
+      }
+    }
+  },
   "Auth": {
     "common": {
       "login": "تسجيل الدخول",

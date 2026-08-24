@@ -10,12 +10,14 @@ import { useRef, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { ButtonLoader } from '../Loaders/ButtonLoader/ButtonLoader'
 import { useSession } from 'next-auth/react'
+import { useTranslations } from 'next-intl'
 
 
 export default function ProfileDataCard({ data, onSubmit }: ProfileDataCardProps) {
+    const t = useTranslations();
     const { isUserEditNow, temporaryProfileImageForEditUrl, temporaryProfileImageForEdit } = useAppSelector((state) => state.userProfileSlice);
     const temporayProfileImageEdited = useRef<HTMLInputElement | null>(null);
-    const userSession=useSession();
+    const userSession = useSession();
     const { formState } = useFormContext();
     const [imageUrl, setimageUrl] = useState<string | null>("")
     const dispatch = useAppDispatch();
@@ -38,7 +40,7 @@ export default function ProfileDataCard({ data, onSubmit }: ProfileDataCardProps
         onSubmit();
     }
     return (
-        <div className=' md:w-1/4  bg-white rounded-2xl'>
+        <div className=' lg:w-1/4  bg-white rounded-2xl'>
             <div className="userBackground relative h-30 bg-(--primary-color) rounded-tl-2xl rounded-tr-2xl  ">
                 <div className="userImage ">
                     {!data.profilePictureUrl && <span className='absolute rounded-full w-30 h-30 flex justify-center items-center
@@ -62,7 +64,7 @@ export default function ProfileDataCard({ data, onSubmit }: ProfileDataCardProps
                                 {imageUrl && <Image className='rounded-full ' fill src={imageUrl!} alt={data.fullName} />}
                             </div>
                         </div>}
-                        {isUserEditNow&&!userSession.data?.isLoggedByGoogle && (
+                        {isUserEditNow && !userSession.data?.isLoggedByGoogle && (
                             <label
                                 htmlFor="profile-image"
                                 className="bg-(--primary-color) mt-5 w-10 h-10
@@ -90,8 +92,8 @@ export default function ProfileDataCard({ data, onSubmit }: ProfileDataCardProps
             <div className="userDetails  mt-12 ">
                 <div className='flex items-center py-5 justify-center flex-col'>
                     <h3 className='text-foreground text-xl font-bold'>{data.fullName}</h3>
-                    <span className='text-(--text-secondary)'>Software Developer</span>
-                    <span className='text-(--text-secondary)'>Joined January 2024</span>
+                    <span className='text-(--text-secondary)'>{t('Profile.card.softwareDeveloper')}</span>
+                    <span className='text-(--text-secondary)'>{t('Profile.card.joinedDate')}</span>
                 </div>
                 <div className='grid grid-cols-2 mx-2 gap-3 mt-2'>
                     <div className='bg-[#FAFBFC] rounded-xl px-2 py-4 flex 
@@ -100,7 +102,7 @@ export default function ProfileDataCard({ data, onSubmit }: ProfileDataCardProps
                             <FontAwesomeIcon className='text-(--primary-color)' icon={faBookOpen} />
                         </span>
                         <span className='text-foreground font-bold text-xl'>12</span>
-                        <span>Courses Enrolled</span>
+                        <span>{t('Profile.card.coursesEnrolled')}</span>
                     </div>
                     <div className='bg-[#FAFBFC] rounded-xl px-2 py-4 flex 
                     flex-col items-center justify-center'>
@@ -108,7 +110,7 @@ export default function ProfileDataCard({ data, onSubmit }: ProfileDataCardProps
                             <FontAwesomeIcon className='text-(--primary-color)' icon={faCircleCheck} />
                         </span>
                         <span className='text-foreground font-bold text-xl'>8</span>
-                        <span>Completed</span>
+                        <span>{t('Profile.card.completed')}</span>
                     </div>
                     <div className='bg-[#FAFBFC] rounded-xl px-2 py-4 flex 
                     flex-col items-center justify-center'>
@@ -116,7 +118,7 @@ export default function ProfileDataCard({ data, onSubmit }: ProfileDataCardProps
                             <FontAwesomeIcon className='text-(--primary-color)' icon={faClock} />
                         </span>
                         <span className='text-foreground font-bold text-xl'>4</span>
-                        <span>In Progress</span>
+                        <span>{t('Profile.card.inProgress')}</span>
                     </div>
                     <div className='bg-[#FAFBFC] rounded-xl px-2 py-4 flex 
                     flex-col items-center justify-center'>
@@ -124,14 +126,14 @@ export default function ProfileDataCard({ data, onSubmit }: ProfileDataCardProps
                             <FontAwesomeIcon className='text-(--primary-color)' icon={faAward} />
                         </span>
                         <span className='text-foreground font-bold text-xl'>12</span>
-                        <span>Certificates</span>
+                        <span>{t('Profile.card.certificates')}</span>
                     </div>
                 </div>
                 {!isUserEditNow && <div className="edit-btn my-5 p-2">
                     <button onClick={handleEnableEditUserProfile} className='p-4 cursor-pointer bg-(--primary-color)
                      text-white font-bold w-full rounded-2xl '>
                         <FontAwesomeIcon className='me-2' icon={faPenToSquare} />
-                        Edit Profile
+                        {t('Profile.card.editProfile')}
                     </button>
                 </div>}
                 {isUserEditNow && <div className="edit-btn flex gap-2 my-5 p-2">
@@ -139,12 +141,12 @@ export default function ProfileDataCard({ data, onSubmit }: ProfileDataCardProps
                         text-(--text-secondary) font-bold w-full rounded-2xl
                         hover:border-(--primary-color) hover:text-(--primary-color)'>
                         <FontAwesomeIcon icon={faXmark} />
-                        Cancel
+                        {t('Profile.card.cancel')}
                     </button>
                     <button onClick={handleSaveEditUserProfile} className='p-4 cursor-pointer bg-(--primary-color)
                      text-white font-bold w-full rounded-2xl '>
                         {formState.isSubmitting ? <ButtonLoader /> : <>
-                            <FontAwesomeIcon className='me-1' icon={faFloppyDisk} />save changes
+                            <FontAwesomeIcon className='me-1' icon={faFloppyDisk} />{t('Profile.card.saveChanges')}
                         </>
                         }
                     </button>

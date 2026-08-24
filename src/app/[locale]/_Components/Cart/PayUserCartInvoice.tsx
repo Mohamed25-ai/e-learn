@@ -1,3 +1,4 @@
+"use client"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
@@ -5,16 +6,18 @@ import { PayUserCartInvoiceProps } from "./cart.types";
 import { payUserCartAction } from "@/actions/cart/cart.actions";
 import { ButtonLoader } from "../Loaders/ButtonLoader/ButtonLoader";
 import PaymentUi from "../payment/PaymentUi";
+import { useTranslations } from "next-intl";
 
 export default function PayUserCartInvoice({
   baskedId,
 }: PayUserCartInvoiceProps) {
+  const t = useTranslations();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const isPaymentOpen = !!clientSecret;
-  console.log(baskedId,clientSecret)
+  console.log(baskedId, clientSecret)
   async function handleCheckoutPayment() {
     try {
       setIsLoading(true);
@@ -24,7 +27,7 @@ export default function PayUserCartInvoice({
       console.log("ER", res);
 
       if (res.status !== 200 || !res.data?.clientSecret) {
-        setError("Unable to start payment. Please try again.");
+        setError(t('Cart.paymentStartError'));
         setClientSecret(null)
         return;
       }
@@ -33,7 +36,7 @@ export default function PayUserCartInvoice({
     } catch (error) {
       console.error("Create payment error:", error);
 
-      setError("Something went wrong. Please try again.");
+      setError(t('Cart.paymentGenericError'));
     } finally {
       setIsLoading(false);
     }
@@ -57,7 +60,7 @@ export default function PayUserCartInvoice({
           <ButtonLoader size={30} />
         ) : (
           <>
-            <span>Checkout Now</span>
+            <span>{t('Cart.checkoutNow')}</span>
 
             <FontAwesomeIcon icon={faArrowRight} />
           </>

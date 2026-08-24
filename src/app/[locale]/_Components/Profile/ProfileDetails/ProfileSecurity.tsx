@@ -10,8 +10,10 @@ import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import { toggleUserChangeConfirmPassword, toggleUserChangePassword, toggleUserCurrentPassword } from '@/store/redux/togglers/togglers.slice'
 import { changeProfileUserPasswordAction } from '@/actions/application-user/application-user.actions'
 import toast from 'react-hot-toast'
+import { useTranslations } from 'next-intl'
 
 export default function ProfileSecurity({ userData }: ProfileSecurityProps) {
+    const t = useTranslations();
     const { isUserChangeConfirmPasswordShown, isUserChangeCurrentPasswordShown
         , isUserChangePasswordShown } =
         useAppSelector((state) => state.changeUserProfilePasswordIconsTogglersSlice);
@@ -36,7 +38,7 @@ export default function ProfileSecurity({ userData }: ProfileSecurityProps) {
             console.log(res);
         if (res.status==200) {
             console.log("res from success",res);
-            toast.success("Password Changed Successifuly");
+            toast.success(t('Profile.security.updateSuccess'));
             changePasswordForm.reset();
         }else{
             toast.error(res.data.error.description);
@@ -52,7 +54,7 @@ export default function ProfileSecurity({ userData }: ProfileSecurityProps) {
                         rules={{
                             required: {
                                 value: true,
-                                message: "Current Password is required",
+                                message: t('Profile.security.errors.currentPasswordRequired'),
                             },
                         }}
                         render={({ field, fieldState }) => (
@@ -60,7 +62,7 @@ export default function ProfileSecurity({ userData }: ProfileSecurityProps) {
                                 <FieldLabel htmlFor="form-rhf-demo-CurrentPassword">
                                     <FontAwesomeIcon className='text-(--text-secondary)'
                                         icon={faKey} />
-                                    <span className='text-(--text-secondary)'>Current Password</span>
+                                    <span className='text-(--text-secondary)'>{t('Profile.security.currentPasswordLabel')}</span>
                                 </FieldLabel>
                                 {<div className='flex relative justify-between'>
                                     <Input
@@ -68,14 +70,14 @@ export default function ProfileSecurity({ userData }: ProfileSecurityProps) {
                                         className='p-5 ps-2 bg-gray-50'
                                         id="form-rhf-demo-CurrentPassword"
                                         aria-invalid={fieldState.invalid}
-                                        placeholder="Enter your current password"
+                                        placeholder={t('Profile.security.currentPasswordPlaceholder')}
                                         autoComplete="off"
                                         type={isUserChangeCurrentPasswordShown ? 'text' : 'password'}
                                     />
                                     <FontAwesomeIcon
                                         onClick={() => dispatch(toggleUserCurrentPassword())}
                                         className={` text-(--primary-color) 
-                                            absolute right-0 top-1/2 -translate-y-1/2 me-2
+                                            absolute ltr:right-0 rtl:left-0 top-1/2 -translate-y-1/2 me-2
                                             hover:text-(--primary-hover) `}
                                         icon={isUserChangeCurrentPasswordShown ? faEyeSlash : faEye}
                                     />
@@ -96,17 +98,17 @@ export default function ProfileSecurity({ userData }: ProfileSecurityProps) {
                         rules={{
                             required: {
                                 value: true,
-                                message: "Password is required",
+                                message: t('Profile.security.errors.newPasswordRequired'),
                             },
                             pattern: {
                                 value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^#()_+\-=\[\]{};':"\\|,.<>\/~`]).{8,}$/,
                                 message:
-                                    "Password must be at least 8 characters and include an uppercase letter, a lowercase letter, a number, and a special character.",
+                                    t('Profile.security.errors.newPasswordPattern'),
                             },
                             validate: (value) => {
                                 return (
                                     value != getValues("CurrentPassword") ||
-                                    "New Password Must be different from old password"
+                                    t('Profile.security.errors.newPasswordSameAsOld')
                                 )
                             }
                         }}
@@ -115,7 +117,7 @@ export default function ProfileSecurity({ userData }: ProfileSecurityProps) {
                                 <FieldLabel htmlFor="form-rhf-demo-NewPassword">
                                     <FontAwesomeIcon className='text-(--text-secondary)'
                                         icon={faLock} />
-                                    <span className='text-(--text-secondary)'>New Password</span>
+                                    <span className='text-(--text-secondary)'>{t('Profile.security.newPasswordLabel')}</span>
                                 </FieldLabel>
                                 {<div className='relative flex justify-between'>
                                     <Input
@@ -123,14 +125,14 @@ export default function ProfileSecurity({ userData }: ProfileSecurityProps) {
                                         className='p-5 ps-2 bg-gray-50'
                                         id="form-rhf-demo-NewPassword"
                                         aria-invalid={fieldState.invalid}
-                                        placeholder="Enter a new password"
+                                        placeholder={t('Profile.security.newPasswordPlaceholder')}
                                         autoComplete="off"
                                         type={isUserChangePasswordShown ? 'text' : 'password'}
                                     />
                                     <FontAwesomeIcon
                                         onClick={() => dispatch(toggleUserChangePassword())}
                                         className={` text-(--primary-color) 
-                                            absolute right-0 top-1/2 -translate-y-1/2 me-2
+                                            absolute ltr:right-0 rtl:left-0 top-1/2 -translate-y-1/2 me-2
                                             hover:text-(--primary-hover) `}
                                         icon={isUserChangePasswordShown ? faEyeSlash : faEye}
                                     />
@@ -150,12 +152,12 @@ export default function ProfileSecurity({ userData }: ProfileSecurityProps) {
                         rules={{
                             required: {
                                 value: true,
-                                message: "Confirm Password is required",
+                                message: t('Profile.security.errors.confirmPasswordRequired'),
                             },
                             validate: (value) => {
                                 return (
                                     value === getValues("NewPassword") ||
-                                    "Passwords do not match"
+                                    t('Profile.security.errors.passwordsMismatch')
                                 );
                             },
                         }}
@@ -165,7 +167,7 @@ export default function ProfileSecurity({ userData }: ProfileSecurityProps) {
                                     <FontAwesomeIcon
                                         className='text-(--text-secondary)'
                                         icon={faLock} />
-                                    <span className='text-(--text-secondary)'>Confirm New Password</span>
+                                    <span className='text-(--text-secondary)'>{t('Profile.security.confirmNewPasswordLabel')}</span>
                                 </FieldLabel>
                                 {<div className='relative flex justify-between'>
                                     <Input
@@ -173,14 +175,14 @@ export default function ProfileSecurity({ userData }: ProfileSecurityProps) {
                                         className='p-5 ps-2 bg-gray-50'
                                         id="form-rhf-demo-ConfirmNewPassword"
                                         aria-invalid={fieldState.invalid}
-                                        placeholder="Confirm your password"
+                                        placeholder={t('Profile.security.confirmNewPasswordPlaceholder')}
                                         autoComplete="off"
                                         type={isUserChangeConfirmPasswordShown ? 'text' : 'password'}
                                     />
                                     <FontAwesomeIcon
                                         onClick={() => dispatch(toggleUserChangeConfirmPassword())}
                                         className={` text-(--primary-color) 
-                                            absolute right-0 top-1/2 -translate-y-1/2 me-2
+                                            absolute ltr:right-0 rtl:left-0 top-1/2 -translate-y-1/2 me-2
                                             hover:text-(--primary-hover) `}
                                         icon={isUserChangeConfirmPasswordShown ? faEyeSlash : faEye}
                                     />
@@ -198,7 +200,7 @@ export default function ProfileSecurity({ userData }: ProfileSecurityProps) {
                     hover:shadow hover:bg-(--primary-color)
                     text-white font-bold w-full py-6 cursor-pointer rounded-2xl'>
                         <FontAwesomeIcon icon={faCircleCheck} />
-                        Update Password
+                        {t('Profile.security.updateButton')}
                     </Button>
                 </div>
             </FieldGroup>

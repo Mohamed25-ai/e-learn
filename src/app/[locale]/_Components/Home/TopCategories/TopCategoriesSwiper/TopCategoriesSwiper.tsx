@@ -12,7 +12,7 @@ import SecondaryCategorieCard from '../../../Categories/SecondaryCategorieCard/S
 
 export default function TopCategoriesSwiper({ categories }: TopCategoriesSwiperProps) {
     return (
-        <div className="px-10! relative mt-5 pb-10!">
+        <div className=" px-5 lg:px-10! relative mt-5 lg:pb-10!">
             <Swiper
                 className='group'
                 spaceBetween={24}

@@ -7,21 +7,25 @@ import { setSidebarState } from '@/store/redux/togglers/togglers.slice';
 import { useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
-
-const SIDEBAR_LINKS = [
-    { href: "/courses", label: "Courses", icon: faBook },
-    { href: "/my-learning", label: "My Learning", icon: faBookOpen },
-    { href: "/categories", label: "Categories", icon: faLayerGroup },
-    { href: "/createcourse", label: "Create Course", icon: faPlus },
-];
+import { useTranslations } from 'next-intl';
 
 export default function Sidebar() {
+    const t = useTranslations('Navbar.links');
+    const tSidebar = useTranslations('Sidebar');
     const sidebarTogglersStore = useAppSelector((state) => state.sidebarTogglerSlice);
     const sidebarRef = useRef<HTMLDivElement>(null);
     const userSession = useSession();
     const router = useRouter();
     const dispatch = useAppDispatch();
     const path = usePathname();
+
+    const SIDEBAR_LINKS = [
+        { href: "/courses", label: t('courses'), icon: faBook },
+        { href: "/my-learning", label: t('myLearning'), icon: faBookOpen },
+        { href: "/categories", label: t('categories'), icon: faLayerGroup },
+        { href: "/createcourse", label: t('createCourse'), icon: faPlus },
+    ];
+
     function toggleSidebar() {
         dispatch(setSidebarState({ val: false }));
     }
@@ -100,19 +104,19 @@ export default function Sidebar() {
                                 <FontAwesomeIcon icon={faGraduationCap} className="text-(--primary-color) text-xl" />
                             </div>
                             <h4 className="text-white font-semibold">
-                                Become an Instructor
+                                {tSidebar('becomeInstructor.title')}
                             </h4>
                             <p className="text-white/60 text-sm leading-relaxed">
-                                Share your knowledge and earn revenue
+                                {tSidebar('becomeInstructor.description')}
                             </p>
                             <button onClick={handleBecomeInstructor} className="BUTTON_STYLE w-full justify-center">
-                                Apply Now
+                                {tSidebar('becomeInstructor.applyButton')}
                             </button>
                         </div>
                     </div>}
                     <div className='pt-4 mt-5 border-t border-border'>
                             <p className="text-xs text-center text-(--text-muted) " >
-                                EduCore v1.0
+                                {tSidebar('version', { version: '1.0' })}
                             </p>
                         </div>
                    </>

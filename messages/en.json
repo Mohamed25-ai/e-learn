@@ -1,8 +1,254 @@
 {
   "Navbar": {
-    "getStarted": "Get Started"
+    "getStarted": "Get Started",
+    "searchPlaceholder": "Search courses...",
+    "links": {
+      "courses": "Courses",
+      "myLearning": "My Learning",
+      "categories": "Categories",
+      "createCourse": "Create Course"
+    },
+    "userDropdown": {
+      "defaultName": "User",
+      "profile": "Profile",
+      "logout": "Log out"
+    }
   },
-  "Home": {},
+  "Sidebar": {
+    "becomeInstructor": {
+      "title": "Become an Instructor",
+      "description": "Share your knowledge and earn revenue",
+      "applyButton": "Apply Now"
+    },
+    "version": "EduCore v{version}"
+  },
+  "Home": {
+    "hero": {
+      "badge": "Join 50,000+ Students Learning Online",
+      "headingPart1": "Upgrade Your",
+      "headingHighlight": "Skills",
+      "headingPart2": "Online",
+      "description": "Learn from industry experts with our comprehensive courses. Start your journey to success today with flexible, affordable, and quality education.",
+      "exploreCourses": "Explore Courses",
+      "learnMore": "Learn More",
+      "stats": {
+        "students": "Students",
+        "courses": "Courses",
+        "rating": "Rating"
+      }
+    }
+  },
+  "Categories": {
+    "pageHeader": {
+      "title": "Explore Categories",
+      "subtitle": "Discover courses across every field of expertise",
+      "browseAll": "Browse All Categories"
+    },
+    "overview": {
+      "totalCategories": "Total Categories",
+      "totalCourses": "Total Courses",
+      "activeStudents": "Active Students",
+      "expertInstructors": "Expert Instructors"
+    },
+    "allCategories": "All Categories",
+    "card": {
+      "courses": "courses",
+      "students": "students"
+    }
+  },
+  "FeaturedCourses": {
+    "title": "Featured Courses",
+    "subtitle": "Handpicked courses to help you reach your goals",
+    "browseAll": "Browse All Courses"
+  },
+  "CategorieHeader": {
+    "students": "students",
+    "seeAll": "See All"
+  },
+  "CourseCard": {
+    "untitledCourse": "Untitled Course",
+    "unknownInstructor": "Unknown Instructor",
+    "discountOff": "{percent}% off",
+    "yourCourse": "Your Course",
+    "updatedOn": "Updated {date}"
+  },
+  "Cart": {
+    "loginFirst": "Login First To Add This Course",
+    "addSuccess": "Course is Added Successfully",
+    "addButton": "Add",
+    "shoppingCart": "Shopping Cart",
+    "coursesCount": "{count} Courses",
+    "emptyCart": "Your Cart Is Empty",
+    "webDevelopment": "Web Development",
+    "discount": "discount",
+    "discountPercent": "discount %",
+    "removeSuccess": "Course removed Successfully",
+    "genericError": "Error happened",
+    "checkoutNow": "Checkout Now",
+    "paymentStartError": "Unable to start payment. Please try again.",
+    "paymentGenericError": "Something went wrong. Please try again.",
+    "cartEmpty": "Cart is empty",
+    "removeAll": "Remove All"
+  },
+  "CartInvoice": {
+    "orderSummary": "Order Summary",
+    "subtotal": "Subtotal",
+    "discount": "Discount",
+    "total": "Total",
+    "couponPlaceholder": "Coupon code",
+    "apply": "Apply",
+    "couponHint": "Try: {code} for 10% off",
+    "moneyBackGuarantee": "30-Day Money-Back Guarantee",
+    "lifetimeAccess": "Full lifetime access after purchase"
+  },
+  "Payment": {
+    "completePayment": "Complete Payment",
+    "testingWarning": "Testing only — do not use a real card.",
+    "cancel": "Cancel",
+    "payNow": "Pay Now",
+    "processing": "Processing...",
+    "paymentFailedDefault": "Payment failed. Please try again.",
+    "genericError": "Something went wrong. Please try again.",
+    "successTitle": "Payment Successful",
+    "successMessage": "Your course access is being set up — this usually takes a few seconds.",
+    "goToMyCourses": "Go to My Courses",
+    "failedTitle": "Payment Not Completed",
+    "backToCart": "Back to Cart"
+  },
+  "EnrolledCourses": {
+    "title": "My Learning",
+    "subtitle": "Track your progress and continue where you left off",
+    "stats": {
+      "enrolledCourses": "Enrolled Courses",
+      "inProgress": "In Progress",
+      "completed": "Completed",
+      "certificates": "Certificates"
+    },
+    "card": {
+      "defaultTitle": "Course Name",
+      "webDevelopment": "Web Development",
+      "inProgress": "In Progress"
+    },
+    "filters": {
+      "allCourses": "All Courses",
+      "inProgress": "In Progress",
+      "completed": "Completed",
+      "certificates": "Certificates"
+    }
+  },
+  "Profile": {
+    "title": "My Profile",
+    "subtitle": "Manage your account and track your progress",
+    "backToCourses": "Back to Courses",
+    "updateSuccess": "Profile Updated Successfully",
+    "personalInformation": "Personal Information",
+    "card": {
+      "softwareDeveloper": "Software Developer",
+      "joinedDate": "Joined January 2024",
+      "coursesEnrolled": "Courses Enrolled",
+      "completed": "Completed",
+      "inProgress": "In Progress",
+      "certificates": "Certificates",
+      "editProfile": "Edit Profile",
+      "cancel": "Cancel",
+      "saveChanges": "save changes"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "myCourses": "My Courses",
+      "certificates": "Certificates",
+      "security": "Security"
+    },
+    "form": {
+      "fullNameLabel": "Full Name",
+      "userNameLabel": "User Name",
+      "phoneNumberLabel": "Phone Number",
+      "emailLabel": "Email",
+      "placeholder": "Login button not working on mobile",
+      "errors": {
+        "fullNameMin": "Minimum Length is 3 Characters",
+        "fullNameMax": "Max Length is 20 Characters",
+        "userNameMin": "Minimum Length is 5 Characters",
+        "userNameMax": "Max Length is 20 Characters",
+        "phoneNumberLength": "Phone Number must be 11 Characters"
+      }
+    },
+    "security": {
+      "currentPasswordLabel": "Current Password",
+      "currentPasswordPlaceholder": "Enter your current password",
+      "newPasswordLabel": "New Password",
+      "newPasswordPlaceholder": "Enter a new password",
+      "confirmNewPasswordLabel": "Confirm New Password",
+      "confirmNewPasswordPlaceholder": "Confirm your password",
+      "updateButton": "Update Password",
+      "updateSuccess": "Password Changed Successfully",
+      "errors": {
+        "currentPasswordRequired": "Current Password is required",
+        "newPasswordRequired": "Password is required",
+        "newPasswordPattern": "Password must be at least 8 characters and include an uppercase letter, a lowercase letter, a number, and a special character.",
+        "newPasswordSameAsOld": "New Password Must be different from old password",
+        "confirmPasswordRequired": "Confirm Password is required",
+        "passwordsMismatch": "Passwords do not match"
+      }
+    }
+  },
+  "CourseDetails": {
+    "backToCourses": "Back to courses",
+    "ratingsCount": "({count} ratings)",
+    "studentsCount": "{count} students",
+    "totalHours": "{hours} total hours",
+    "instructor": "Instructor",
+    "certificateOfCompletion": "Certificate of completion",
+    "downloadableResources": "Downloadable resources",
+    "enrollNow": "Enroll Now",
+    "addToWishlist": "Add to Wishlist",
+    "discountOff": "{percent}% off",
+    "tabs": {
+      "overview": "Overview",
+      "curriculum": "Curriculum",
+      "notes": "Notes",
+      "reviews": "Reviews"
+    }
+  },
+  "Testimonial": {
+    "title": "What Our Students Say",
+    "subtitle": "Real stories from real learners",
+    "quote": "This platform transformed my career. The courses are practical, well-structured, and the instructors are top-notch. I've gained skills that directly apply to my job.",
+    "personName": "Person Name",
+    "personPosition": "Person Position"
+  },
+  "StartLearning": {
+    "title": "Ready to Start Learning?",
+    "subtitle": "Join thousands of students and transform your career today",
+    "cta": "Get Started for Free"
+  },
+  "Footer": {
+    "tagline": "Empowering learners worldwide with quality education.",
+    "copyright": "© {year} EduPro. All rights reserved.",
+    "sections": {
+      "company": {
+        "title": "Company",
+        "aboutUs": "About Us",
+        "careers": "Careers",
+        "press": "Press",
+        "contact": "Contact"
+      },
+      "resources": {
+        "title": "Resources",
+        "blog": "Blog",
+        "helpCenter": "Help Center",
+        "community": "Community",
+        "support": "Support"
+      },
+      "legal": {
+        "title": "Legal",
+        "termsOfService": "Terms of Service",
+        "privacyPolicy": "Privacy Policy",
+        "cookiePolicy": "Cookie Policy",
+        "gdpr": "GDPR"
+      }
+    }
+  },
   "Auth": {
     "common": {
       "login": "Login",
@@ -167,14 +413,14 @@
         "min": "Total hours must be greater than 0"
       },
       "objectives": {
-    "label": "Objectives",
-    "description": "List what students will be able to do after completing this course",
-    "required": "Objectives are required",
-    "minCount": "Minimum Objectives is 3",
-    "minLength": "Minimum Objective Length must be more than 15 characters",
-    "addButton": "+ Add Objective",
-    "placeholder": "e.g. Build a REST API from scratch"
-},
+        "label": "Objectives",
+        "description": "List what students will be able to do after completing this course",
+        "required": "Objectives are required",
+        "minCount": "Minimum Objectives is 3",
+        "minLength": "Minimum Objective Length must be more than 15 characters",
+        "addButton": "+ Add Objective",
+        "placeholder": "e.g. Build a REST API from scratch"
+      },
       "steps": {
         "basicInformation": {
           "title": "Basic Information",

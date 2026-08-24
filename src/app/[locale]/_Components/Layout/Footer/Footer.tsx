@@ -3,36 +3,7 @@ import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookOpen, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
-
-const footerLinks = [
-    {
-        title: 'Company',
-        links: [
-            { label: 'About Us', href: '' },
-            { label: 'Careers', href: '' },
-            { label: 'Press', href: '' },
-            { label: 'Contact', href: '' },
-        ],
-    },
-    {
-        title: 'Resources',
-        links: [
-            { label: 'Blog', href: '' },
-            { label: 'Help Center', href: '' },
-            { label: 'Community', href: '' },
-            { label: 'Support', href: '' },
-        ],
-    },
-    {
-        title: 'Legal',
-        links: [
-            { label: 'Terms of Service', href: '' },
-            { label: 'Privacy Policy', href: '' },
-            { label: 'Cookie Policy', href: '' },
-            { label: 'GDPR', href: '' },
-        ],
-    },
-]
+import { useTranslations } from 'next-intl'
 
 function FooterAccordion({ title, links }: { title: string; links: { label: string; href: string }[] }) {
     const [open, setOpen] = useState(false);
@@ -74,6 +45,38 @@ function FooterAccordion({ title, links }: { title: string; links: { label: stri
 }
 
 export default function Footer() {
+    const t = useTranslations();
+
+    const footerLinks = [
+        {
+            title: t('Footer.sections.company.title'),
+            links: [
+                { label: t('Footer.sections.company.aboutUs'), href: '' },
+                { label: t('Footer.sections.company.careers'), href: '' },
+                { label: t('Footer.sections.company.press'), href: '' },
+                { label: t('Footer.sections.company.contact'), href: '' },
+            ],
+        },
+        {
+            title: t('Footer.sections.resources.title'),
+            links: [
+                { label: t('Footer.sections.resources.blog'), href: '' },
+                { label: t('Footer.sections.resources.helpCenter'), href: '' },
+                { label: t('Footer.sections.resources.community'), href: '' },
+                { label: t('Footer.sections.resources.support'), href: '' },
+            ],
+        },
+        {
+            title: t('Footer.sections.legal.title'),
+            links: [
+                { label: t('Footer.sections.legal.termsOfService'), href: '' },
+                { label: t('Footer.sections.legal.privacyPolicy'), href: '' },
+                { label: t('Footer.sections.legal.cookiePolicy'), href: '' },
+                { label: t('Footer.sections.legal.gdpr'), href: '' },
+            ],
+        },
+    ]
+
     return (
         <footer className="border-t border-border mt-10">
 
@@ -94,7 +97,7 @@ export default function Footer() {
                         </span>
                     </div>
                     <p className="text-sm text-(--text-secondary) leading-relaxed max-w-50">
-                        Empowering learners worldwide with quality education.
+                        {t('Footer.tagline')}
                     </p>
                 </div>
 
@@ -134,7 +137,7 @@ export default function Footer() {
             {/* Bottom bar */}
             <div className="border-t border-border px-5 md:px-8 py-5">
                 <p className="text-center text-sm text-(--text-secondary)">
-                    © {new Date().getFullYear()} EduPro. All rights reserved.
+                    {t('Footer.copyright', { year: new Date().getFullYear() })}
                 </p>
             </div>
 

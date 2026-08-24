@@ -5,7 +5,7 @@ import { faBars, faChevronDown, faMagnifyingGlass, faRightFromBracket, faUser } 
 import { signOut, useSession } from 'next-auth/react';
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import LanguageToggle from '../LanguageToggle/LanguageToggle';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,16 +19,10 @@ import NavbarInMobile from './NavbarInMobile';
 
 
 
-const LINKS = [
-    { href: "/courses", label: "Courses" },
-    { href: "/my-learning", label: "My Learning" },
-    { href: "/categories", label: "Categories" },
-    { href: "/createcourse", label: "Create Course" },
-];
-
 const PAGES_WITHOUT_NAVBAR = ["/", "/cart", "/become-instructor", "/course-learn",
     "categorized-course", "/course-details", "/categorized-course"]
 export default function Navbar() {
+    const t = useTranslations('Navbar');
     const navbarTogglerStore = useAppSelector((state) => state.navbarTogglerSlice);
     const dispatch = useAppDispatch();
     const path = usePathname();
@@ -38,6 +32,14 @@ export default function Navbar() {
     const [isOpen, setisOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const isRtl = locale === 'ar'; // Adjust to your RTL language code
+
+    const LINKS = [
+        { href: "/courses", label: t('links.courses') },
+        { href: "/my-learning", label: t('links.myLearning') },
+        { href: "/categories", label: t('links.categories') },
+        { href: "/createcourse", label: t('links.createCourse') },
+    ];
+
     function navtoggle() {
         if (navbarTogglerStore.isOpen) {
             if (path === '/' && userSession.status === "unauthenticated") { return; }
@@ -121,7 +123,7 @@ export default function Navbar() {
                                 href="/login"
                                 className="MAIN_BUTTON px-4 py-1.5 text-sm font-semibold rounded-lg transition-all hover:-translate-y-0.5"
                             >
-                                Get Started
+                                {t('getStarted')}
                             </Link>
                         )}
                         {/* {User Profile} */}
@@ -136,7 +138,7 @@ export default function Navbar() {
                     navbarLinks={LINKS}
                     toggleNavbar={navtoggle}
                     toggleSidebar={toggleSide}
-                    />
+                />
             )}
         </nav>
     );

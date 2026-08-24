@@ -6,23 +6,25 @@ import Image from "next/image";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import RemoveCourseBtn from "./RemoveCourseBtn";
+import { getTranslations } from "next-intl/server";
 
-export default function CartItems({ BasketItems }: CartItemsProps) {
+export default async function CartItems({ BasketItems }: CartItemsProps) {
+  const t = await getTranslations();
   console.log("BasketItems",BasketItems)
   return (
     <div className="w-full lg:w-3/4 flex flex-col gap-3">
       <header className="flex  items-center gap-3">
-        <h3 className="text-foreground font-semibold">Shopping Cart</h3>
+        <h3 className="text-foreground font-semibold">{t('Cart.shoppingCart')}</h3>
         {BasketItems.length>0 && (
           <p className="bg-gray-200 text-(--text-secondary) px-3 rounded-full ">
-            {BasketItems.length } Courses
+            {t('Cart.coursesCount', { count: BasketItems.length })}
           </p>
         )}
       </header>
       {BasketItems.length==0 ? (
         <div>
           <h2 className="text-foreground text-2xl font-bold flex items-center justify-center">
-            Your Cart Is Empty
+            {t('Cart.emptyCart')}
           </h2>
         </div>
       ) : (
@@ -56,7 +58,7 @@ export default function CartItems({ BasketItems }: CartItemsProps) {
                       className="bg-(--primary-light) text-nowrap text-(--primary-color)
                                                  text-xs font-medium px-3 py-0.5 rounded-full w-fit"
                     >
-                      Web Development
+                      {t('Cart.webDevelopment')}
                     </span>
                     <h3
                       className="text-foreground font-semibold text-base
@@ -91,10 +93,10 @@ export default function CartItems({ BasketItems }: CartItemsProps) {
                       ${item.basePrice}
                     </span>
                     <span className="text-xs text-(--text-muted) line-through">
-                      discount
+                      {t('Cart.discount')}
                     </span>
                     <span className="text-xs font-semibold text-(--success)">
-                      discount %
+                      {t('Cart.discountPercent')}
                     </span>
                   </div>
 

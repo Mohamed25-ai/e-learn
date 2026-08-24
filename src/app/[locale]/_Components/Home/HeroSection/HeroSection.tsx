@@ -1,14 +1,18 @@
+'use client'
 import { faArrowRight, faPlay, faUserGraduate, faBookOpen, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LANDING_IMAGE from "@/assets/images/photo-1771408427146-09be9a1d4535.jpg"
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function HeroSection() {
+    const t = useTranslations("Home.hero");
+
     const stats = [
-        { icon: faUserGraduate, value: '50k+', label: 'Students' },
-        { icon: faBookOpen, value: '200+', label: 'Courses' },
-        { icon: faStar, value: '4.9', label: 'Rating' },
+        { icon: faUserGraduate, value: '50k+', label: t('stats.students') },
+        { icon: faBookOpen, value: '200+', label: t('stats.courses') },
+        { icon: faStar, value: '4.9', label: t('stats.rating') },
     ];
 
     return (
@@ -23,29 +27,28 @@ export default function HeroSection() {
                                 rounded-full px-4 py-2 w-fit shadow-sm">
                     <span className="text-lg">🎉</span>
                     <span className="text-xs md:text-sm font-medium text-(--text-secondary)">
-                        Join 50,000+ Students Learning Online
+                        {t('badge')}
                     </span>
                 </div>
 
                 {/* Heading */}
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold
                                text-foreground leading-tight">
-                    Upgrade Your{' '}
-                    <span className="text-(--primary-color)">Skills</span>{' '}
-                    Online
+                    {t('headingPart1')}{' '}
+                    <span className="text-(--primary-color)">{t('headingHighlight')}</span>{' '}
+                    {t('headingPart2')}
                 </h1>
 
                 {/* Description */}
                 <p className="text-(--text-secondary) text-sm md:text-base
                               leading-relaxed max-w-md">
-                    Learn from industry experts with our comprehensive courses. Start your
-                    journey to success today with flexible, affordable, and quality education.
+                    {t('description')}
                 </p>
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                     <Link href="/courses" className="BUTTON_STYLE w-full sm:w-auto justify-center">
-                        Explore Courses
+                        {t('exploreCourses')}
                         <FontAwesomeIcon icon={faArrowRight} />
                     </Link>
 
@@ -58,7 +61,7 @@ export default function HeroSection() {
                                          transition-all duration-200">
                             <FontAwesomeIcon icon={faPlay} className="text-xs ml-0.5" />
                         </span>
-                        Learn More
+                        {t('learnMore')}
                     </button>
                 </div>
 

@@ -31,7 +31,7 @@ const sidebarTogglersStore = createSlice({
 const courseLearningSidebarTogglerStore = createSlice({
     name: "courseLearningSidebarTogglerSlice",
     initialState: {
-        isOpen: true
+        isOpen: false
     },
     reducers: {
         toggleCourseLearningSidebar: (state) => {
@@ -74,13 +74,6 @@ const changeUserProfilePasswordIconsTogglers = createSlice({
         }
     }
 })
-
-
-
-
-
-
-
 
 
 export const navbarTogglersStoreReducer = navbarTogglersStore.reducer;

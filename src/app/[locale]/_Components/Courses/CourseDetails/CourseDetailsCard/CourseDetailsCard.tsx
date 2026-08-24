@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import Image from 'next/image'
 import COURSEIMAGE from '@/assets/images/Static course image.jpg'
-import { CourseDetailsProps } from '../CourseDetails/coursedetails.types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { CourseDetailsProps } from '../coursedetails.types'
 import {
     faVideo,
     faClock,
@@ -11,8 +11,10 @@ import {
     faHeart,
     faPlay
 } from '@fortawesome/free-solid-svg-icons'
+import { getTranslations } from 'next-intl/server'
 
-export default function CourseDetailsCard({ data }: CourseDetailsProps) {
+export default async function CourseDetailsCard({ data }: CourseDetailsProps) {
+    const t = await getTranslations();
     const price = data?.price ?? 0;
     const discountPercentage = data?.discountPercentage ?? 0;
     const hasDiscount = discountPercentage > 0;
@@ -23,8 +25,8 @@ export default function CourseDetailsCard({ data }: CourseDetailsProps) {
     const features = [
         // { icon: faVideo,       label: data?.lecturesCount ? `${data.lecturesCount} lectures`      : null },
         // { icon: faClock,       label: data?.duration      ? `${data.duration} hours total`        : null },
-        { icon: faCertificate, label: 'Certificate of completion' },
-        { icon: faDownload, label: 'Downloadable resources' },
+        { icon: faCertificate, label: t('CourseDetails.certificateOfCompletion') },
+        { icon: faDownload, label: t('CourseDetails.downloadableResources') },
     ]
 
     return (
@@ -58,19 +60,19 @@ export default function CourseDetailsCard({ data }: CourseDetailsProps) {
                         <span className="text-4xl font-extrabold text-(--primary-color)">
                             ${discountedPrice.toFixed(2)}
                         </span>
-                        {hasDiscount?<>
-                                <span className="text-lg text-(--text-muted) line-through">
-                                    ${price.toFixed(2)}
-                                </span>
+                        {hasDiscount ? <>
+                            <span className="text-lg text-(--text-muted) line-through">
+                                ${price.toFixed(2)}
+                            </span>
+                            <span className="text-sm font-semibold text-(--success) bg-(--primary-light) px-2 py-0.5 rounded-full">
+                                {t('CourseDetails.discountOff', { percent: discountPercentage })}
+                            </span>
+                        </>
+                            : <>  <span className="text-lg text-(--text-muted) line-through">
+                                ${0}
+                            </span>
                                 <span className="text-sm font-semibold text-(--success) bg-(--primary-light) px-2 py-0.5 rounded-full">
-                                    {discountPercentage}% off
-                                </span>
-                            </>
-                            :<>  <span className="text-lg text-(--text-muted) line-through">
-                                    ${0}
-                                </span>
-                                <span className="text-sm font-semibold text-(--success) bg-(--primary-light) px-2 py-0.5 rounded-full">
-                                    {discountPercentage}% off
+                                    {t('CourseDetails.discountOff', { percent: discountPercentage })}
                                 </span>
                             </>}
                     </div>
@@ -78,11 +80,11 @@ export default function CourseDetailsCard({ data }: CourseDetailsProps) {
                     {/* Buttons */}
                     <div className="flex flex-col gap-3">
                         <button className="BUTTON_STYLE w-full justify-center text-base">
-                            Enroll Now
+                            {t('CourseDetails.enrollNow')}
                         </button>
                         <button className="MAIN_BUTTON w-full justify-center py-3 text-base">
                             <FontAwesomeIcon icon={faHeart} />
-                            Add to Wishlist
+                            {t('CourseDetails.addToWishlist')}
                         </button>
                     </div>
 

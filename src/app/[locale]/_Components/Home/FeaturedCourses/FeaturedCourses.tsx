@@ -4,20 +4,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { FeaturedCoursesProps } from './featuredcourses.types'
 import CategorieHeader from '../../Categories/CategorieHeader/CategorieHeader'
 import FeaturedCategoryCourses from './FeaturedCategoryCourses/FeaturedCategoryCourses'
+import { getTranslations } from 'next-intl/server'
 
-export default function FeaturedCourses({ categories }: FeaturedCoursesProps) {
+export default async function FeaturedCourses({ categories }: FeaturedCoursesProps) {
+    const t = await getTranslations();
     const { data } = categories;
     return (
-        <section className="px-5 py-10">
+        <section className="px-2 lg:px-5 py-10">
             {/* Header */}
             <header className="p-5 flex justify-between items-center">
                 <div>
                     <h2 className="text-2xl sm:text-xl md:text-4xl font-bold
                                    leading-tight text-foreground">
-                        Featured Courses
+                        {t('FeaturedCourses.title')}
                     </h2>
                     <p className="mt-1.5 text-sm text-(--text-secondary)">
-                        Handpicked courses to help you reach your goals
+                        {t('FeaturedCourses.subtitle')}
                     </p>
                 </div>
 
@@ -25,15 +27,13 @@ export default function FeaturedCourses({ categories }: FeaturedCoursesProps) {
                     href={"/courses"}
                     className="MAIN_BUTTON gap-2 whitespace-nowrap group"
                 >
-                    {"Browse All Courses"}
+                    {t('FeaturedCourses.browseAll')}
                     <FontAwesomeIcon
                         icon={faArrowRight}
                         className="transition-transform duration-200 group-hover:translate-x-1"
                     />
                 </Link>
             </header>
-
-
             {/* Categories */}
             <div className="md:px-5 mt-8 flex flex-col gap-10">
                 {data?.data?.map((categorie) => (

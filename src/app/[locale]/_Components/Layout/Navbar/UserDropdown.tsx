@@ -13,7 +13,9 @@ import { faChevronDown, faRightFromBracket, faUser } from '@fortawesome/free-sol
 import { Link, useRouter } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { signOut } from 'next-auth/react';
-export default function UserDropdown({ isUserAuthenticated, user,userRoles }: UserDropdownProps) {
+import { useTranslations } from 'next-intl';
+export default function UserDropdown({ isUserAuthenticated, user, userRoles }: UserDropdownProps) {
+  const t = useTranslations('Navbar.userDropdown');
   const router = useRouter();
 
   async function handleLogout() {
@@ -21,9 +23,9 @@ export default function UserDropdown({ isUserAuthenticated, user,userRoles }: Us
     router.replace(`/login`);
     router.refresh();;
   }
-   const userRole = Array.isArray(userRoles)
-        ? userRoles
-        : [userRoles|| ""];
+  const userRole = Array.isArray(userRoles)
+    ? userRoles
+    : [userRoles || ""];
   return (
     <div>
       {isUserAuthenticated && (
@@ -33,11 +35,11 @@ export default function UserDropdown({ isUserAuthenticated, user,userRoles }: Us
               {/* Avatar */}
               <div className="relative">
                 {user?.image && <div className='w-7 h-7 rounded-full bg-(--primary-color) flex items-center justify-center text-white text-xs font-bold shrink-0 overflow-hidden'>
-                  {<Image className='rounded-full ' fill src={user?.image} alt={user?.name ?? "User Name"} />}
+                  {<Image className='rounded-full ' fill src={user?.image} alt={user?.name ?? t('defaultName')} />}
                 </div>}
               </div>
               <span className="hidden sm:block text-sm font-semibold max-w-24 truncate text-foreground">
-                {user?.name ?? "User"}
+                {user?.name ?? t('defaultName')}
               </span>
               <FontAwesomeIcon icon={faChevronDown} className="hidden sm:block text-[10px] text-(--text-muted)" />
             </button>
@@ -47,7 +49,7 @@ export default function UserDropdown({ isUserAuthenticated, user,userRoles }: Us
             {/* User info */}
             <div className="px-3 py-2 mb-1 space-y-0.5">
               <p className="text-sm font-bold truncate text-foreground">
-                {user?.name ?? "User"}
+                {user?.name ?? t('defaultName')}
               </p>
               <p className="text-xs truncate text-(--text-muted)">
                 {user.email ?? ""}
@@ -75,7 +77,7 @@ export default function UserDropdown({ isUserAuthenticated, user,userRoles }: Us
                 className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-(--text-secondary) cursor-pointer transition-colors hover:bg-(--primary-light) hover:text-(--primary-color)"
               >
                 <FontAwesomeIcon icon={faUser} className="text-xs w-3.5" />
-                Profile
+                {t('profile')}
               </Link>
             </DropdownMenuItem>
 
@@ -87,7 +89,7 @@ export default function UserDropdown({ isUserAuthenticated, user,userRoles }: Us
                 className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-(--error) cursor-pointer transition-colors hover:bg-red-50"
               >
                 <FontAwesomeIcon icon={faRightFromBracket} className="text-xs w-3.5" />
-                Log out
+                {t('logout')}
               </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>

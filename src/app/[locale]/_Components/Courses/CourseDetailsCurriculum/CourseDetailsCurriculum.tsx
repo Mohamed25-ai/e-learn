@@ -7,6 +7,7 @@ import { SectionData } from '../CoursesByCategoryId/coursebycategoryId.types'
 
 export default async function CourseDetailsCurriculum({ courdeId, withHeader, inPlay }: CourseDetailsCurriculumProps) {
   const sections = await getCourseSectionAction(courdeId);
+  console.log("sections",sections)
   return (
     <section className={`${!inPlay && "mt-5 px-5 "} `}>
       {withHeader && <header className='my-4'>
@@ -15,8 +16,12 @@ export default async function CourseDetailsCurriculum({ courdeId, withHeader, in
         </h2>
         <p>{`${sections.data.totalCount} sections • 114 lectures • 30 hours total length"`}</p>
       </header>}
-      {sections?.data?.data.map((section: SectionData) => (<CoursesAccordionWrapper
-        inPlayPage={inPlay} key={section.id} data={section} />))}
+      <>
+        {sections?.data?.data.length==0 ? <div>
+          <h1>No Created Sections</h1>
+        </div>:sections?.data?.data.map((section: SectionData) => (<CoursesAccordionWrapper
+          inPlayPage={inPlay} key={section.id} data={section} />))}
+      </>
     </section>
   )
 }

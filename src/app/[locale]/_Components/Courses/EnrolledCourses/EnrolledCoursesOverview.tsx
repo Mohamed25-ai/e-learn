@@ -1,20 +1,21 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { EnrolledCoursesOverviewProps } from "./enrolled.courses.types"
 import { faAward, faBookOpen, faFireFlameCurved, faTrophy } from "@fortawesome/free-solid-svg-icons"
+import { getTranslations } from "next-intl/server"
 
 
 
 
 
 {/* <FontAwesomeIcon icon={faBookOpen} /> */ }
-export default function EnrolledCoursesOverview({ certificates, completed,
+export default async function EnrolledCoursesOverview({ certificates, completed,
     enrolledCourses, inProgress }: EnrolledCoursesOverviewProps) {
-
+    const t = await getTranslations();
     const STATS = [
-        { icon: faBookOpen,        label: "Enrolled Courses", value: enrolledCourses },
-        { icon: faFireFlameCurved, label: "In Progress",      value: inProgress      },
-        { icon: faTrophy,          label: "Completed",        value: completed        },
-        { icon: faAward,           label: "Certificates",     value: certificates     },
+        { icon: faBookOpen, label: t('EnrolledCourses.stats.enrolledCourses'), value: enrolledCourses },
+        { icon: faFireFlameCurved, label: t('EnrolledCourses.stats.inProgress'), value: inProgress },
+        { icon: faTrophy, label: t('EnrolledCourses.stats.completed'), value: completed },
+        { icon: faAward, label: t('EnrolledCourses.stats.certificates'), value: certificates },
     ]
 
     return (

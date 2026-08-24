@@ -13,8 +13,10 @@ import { setNumberOfCartItems } from "@/store/redux/cart/cart.slice";
 import { PaymentModalDialog } from "../Cart/PaymentModalDialog";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTranslations } from "next-intl";
 
 export default function PaymentForm({ onClose }: PaymentFormType) {
+  const t = useTranslations();
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
@@ -42,7 +44,7 @@ export default function PaymentForm({ onClose }: PaymentFormType) {
       if (stripeRes.error) {
         console.error("Stripe payment error:", stripeRes.error);
         setErrorMessage(
-          stripeRes.error.message || "Payment failed. Please try again."
+          stripeRes.error.message || t('Payment.paymentFailedDefault')
         );
         setIsLoading(false);
         setisModalDialogOpen(true);
@@ -59,7 +61,7 @@ export default function PaymentForm({ onClose }: PaymentFormType) {
       }
     } catch (error) {
       console.error("Payment error:", error);
-      setErrorMessage("Something went wrong. Please try again.");
+      setErrorMessage(t('Payment.genericError'));
       setIsLoading(false);
     }
   }
@@ -69,14 +71,14 @@ export default function PaymentForm({ onClose }: PaymentFormType) {
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1.5">
           <h2 className="text-xl font-bold text-foreground">
-            Complete Payment
+            {t('Payment.completePayment')}
           </h2>
           <p className="text-sm text-(--text-secondary) font-bold
             leading-relaxed flex items-center gap-1.5">
             <span className="text-(--warning)">
               <FontAwesomeIcon size="xl" icon={faTriangleExclamation} />
             </span>
-            Testing only — do not use a real card.
+            {t('Payment.testingWarning')}
           </p>
         </div>
         <button
@@ -92,7 +94,7 @@ export default function PaymentForm({ onClose }: PaymentFormType) {
       {isPaymentSucceeded && <PaymentModalDialog closPayment={onClose} isDialogOpen={isModalDialogOpen}
         setisDialogOpen={setisModalDialogOpen} isPaymentSucceeded />}
       {!isPaymentSucceeded && <PaymentModalDialog closPayment={onClose} isDialogOpen={isModalDialogOpen}
-        setisDialogOpen={setisModalDialogOpen} paymentFailedMessage={errorMessage ?? "Payment failed. Please try again."} isPaymentFailed />}
+        setisDialogOpen={setisModalDialogOpen} paymentFailedMessage={errorMessage ?? t('Payment.paymentFailedDefault')} isPaymentFailed />}
       {errorMessage && (
         <p className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
           {errorMessage}
@@ -105,7 +107,7 @@ export default function PaymentForm({ onClose }: PaymentFormType) {
           disabled={isLoading}
           className="flex-1 rounded-2xl bg-(--primary-light) py-4 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          Cancel
+          {t('Payment.cancel')}
         </button>
 
         <button
@@ -113,7 +115,7 @@ export default function PaymentForm({ onClose }: PaymentFormType) {
           disabled={!stripe || !elements || isLoading}
           className="BUTTON_STYLE flex-1 rounded-2xl py-4 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {isLoading ? "Processing..." : "Pay Now"}
+          {isLoading ? t('Payment.processing') : t('Payment.payNow')}
         </button>
       </div>
     </form>

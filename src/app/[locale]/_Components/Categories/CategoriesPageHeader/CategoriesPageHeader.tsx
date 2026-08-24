@@ -5,17 +5,19 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { Link } from '@/i18n/navigation'
 import CategoriesOverview from '../CategoriesOverview/CategoriesOverview'
 import ListAllCategoriesBadges from '../ListAllCategoriesBadges/ListAllCategoriesBadges'
+import { getTranslations } from 'next-intl/server'
 
-export default function CategoriesPageHeader({categories,inCategoriesPage,inHomePage}: CategoriesPageHeaderProps) {
+export default async function CategoriesPageHeader({categories,inCategoriesPage,inHomePage}: CategoriesPageHeaderProps) {
+    const t = await getTranslations();
     return (
         <section>
             <header className="p-5 flex justify-between items-center">
                 <div>
                     <h2 className="text-4xl font-bold leading-tight text-foreground">
-                        Explore Categories
+                        {t('Categories.pageHeader.title')}
                     </h2>
                     <p className="mt-1.5 text-sm text-(--text-secondary)">
-                        Discover courses across every field of expertise
+                        {t('Categories.pageHeader.subtitle')}
                     </p>
                 </div>
 
@@ -23,7 +25,7 @@ export default function CategoriesPageHeader({categories,inCategoriesPage,inHome
                     href={"/categories"}
                     className="MAIN_BUTTON gap-2 whitespace-nowrap group"
                 >
-                    Browse All Categories
+                    {t('Categories.pageHeader.browseAll')}
                     <FontAwesomeIcon
                         icon={faArrowRight}
                         className="transition-transform duration-200 group-hover:translate-x-1"

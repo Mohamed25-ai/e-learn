@@ -7,11 +7,17 @@ import { CoursesAccordionWrapperProps } from "./Courses.accordionwrapper.types";
 export default async function CoursesAccordionWrapper({ data,inPlayPage }: CoursesAccordionWrapperProps) {
     const paidContent = await getPaidCourseContentBySectionIdAction(data.id);
     // const viewOnlyCourseContent=await getCourseContentBySectionIdForViewOnlyAction(data?.id);
-
+    console.log(paidContent)
 
     return (
-        <div>
+        <>
+        {paidContent?.error?.id=="NotEnrolledInCourse"?<div>
+            <h1>
+                No Content Created Content Will be addeed soon
+            </h1>
+        </div>:<div>
             <AccordionDemo section={data} contentData={paidContent?.data} inPlay={inPlayPage} />
-        </div>
+        </div>}
+        </>
     )
 }

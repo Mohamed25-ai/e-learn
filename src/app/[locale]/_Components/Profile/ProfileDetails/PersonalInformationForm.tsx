@@ -7,8 +7,10 @@ import { PersonalInformationFormProps } from './profile.details.types'
 import { useAppSelector } from '@/hooks/hooks'
 import { faCircleUser, faEnvelope, faMobileButton, faPhone, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useTranslations } from 'next-intl'
 
 export default function PersonalInformationForm({ userData }: PersonalInformationFormProps) {
+    const t = useTranslations();
     const userProfileStore = useAppSelector((state) => state.userProfileSlice);
     const { control, } = useFormContext();
     return (
@@ -19,21 +21,21 @@ export default function PersonalInformationForm({ userData }: PersonalInformatio
                         name="FullName"
                         control={control}
                         rules={{
-                            minLength: { value: 3, message: "Minimum Length is 3 Characters" },
-                            maxLength: { value: 20, message: "Max Length is 20 Characters" },
+                            minLength: { value: 3, message: t('Profile.form.errors.fullNameMin') },
+                            maxLength: { value: 20, message: t('Profile.form.errors.fullNameMax') },
                         }}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor="form-rhf-demo-fullName">
                                     <FontAwesomeIcon className='text-(--text-secondary)' icon={faUser} />
-                                    <span className='text-(--text-secondary)'>Full Name</span>
+                                    <span className='text-(--text-secondary)'>{t('Profile.form.fullNameLabel')}</span>
                                 </FieldLabel>
                                 {userProfileStore.isUserEditNow && <Input
                                     {...field}
                                     className='p-5 ps-2 bg-gray-50'
                                     id="form-rhf-demo-fullName"
                                     aria-invalid={fieldState.invalid}
-                                    placeholder="Login button not working on mobile"
+                                    placeholder={t('Profile.form.placeholder')}
                                     autoComplete="off"
                                 />}
                                 {userProfileStore.isUserEditNow && fieldState.invalid && (
@@ -51,22 +53,22 @@ export default function PersonalInformationForm({ userData }: PersonalInformatio
                         name="UserName"
                         control={control}
                         rules={{
-                            minLength: { value: 5, message: "Minimum Length is 5 Characters" },
-                            maxLength: { value: 20, message: "Max Length is 20 Characters" },
+                            minLength: { value: 5, message: t('Profile.form.errors.userNameMin') },
+                            maxLength: { value: 20, message: t('Profile.form.errors.userNameMax') },
                         }}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor="form-rhf-demo-userName">
                                     <FontAwesomeIcon className='text-(--text-secondary)'
                                         icon={faCircleUser} />
-                                    <span className='text-(--text-secondary)'>User Name</span>
+                                    <span className='text-(--text-secondary)'>{t('Profile.form.userNameLabel')}</span>
                                 </FieldLabel>
                                 {userProfileStore.isUserEditNow && <Input
                                     {...field}
                                     className='p-5 ps-2 bg-gray-50'
                                     id="form-rhf-demo-userName"
                                     aria-invalid={fieldState.invalid}
-                                    placeholder="Login button not working on mobile"
+                                    placeholder={t('Profile.form.placeholder')}
                                     autoComplete="off"
                                 />}
                                 {userProfileStore.isUserEditNow && fieldState.invalid && (
@@ -84,21 +86,21 @@ export default function PersonalInformationForm({ userData }: PersonalInformatio
                         name="PhoneNumber"
                         control={control}
                         rules={{
-                            minLength: { value: 11, message: "Phone Number must be 11 Characters" },
-                            maxLength: { value: 11, message: "Phone Number must be 11 Characters" },
+                            minLength: { value: 11, message: t('Profile.form.errors.phoneNumberLength') },
+                            maxLength: { value: 11, message: t('Profile.form.errors.phoneNumberLength') },
                         }}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor="form-rhf-demo-phoneNumber">
                                     <FontAwesomeIcon className='text-(--text-secondary)' icon={faPhone} />
-                                    <span className='text-(--text-secondary)'>Phone Number</span>
+                                    <span className='text-(--text-secondary)'>{t('Profile.form.phoneNumberLabel')}</span>
                                 </FieldLabel>
                                 {userProfileStore.isUserEditNow && <Input
                                     {...field}
                                     className='p-5 ps-2 bg-gray-50'
                                     id="form-rhf-demo-phoneNumber"
                                     aria-invalid={fieldState.invalid}
-                                    placeholder="Login button not working on mobile"
+                                    placeholder={t('Profile.form.placeholder')}
                                     autoComplete="off"
                                 />}
                                 {userProfileStore.isUserEditNow && fieldState.invalid && (
@@ -115,7 +117,7 @@ export default function PersonalInformationForm({ userData }: PersonalInformatio
                     <FieldLabel htmlFor="form-rhf-demo-Email">
                         <FontAwesomeIcon className='text-(--text-secondary)'
                             icon={faEnvelope} />
-                        <span className='text-(--text-secondary)'>Email</span>
+                        <span className='text-(--text-secondary)'>{t('Profile.form.emailLabel')}</span>
                     </FieldLabel>
                     <div className='mt-4'>
                         <p className='text-foreground font-bold '>{userData?.email}</p>

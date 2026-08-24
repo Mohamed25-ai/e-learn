@@ -1,9 +1,8 @@
 import React from 'react'
 import { CourseDetailsProps } from './coursedetails.types'
-import CourseDetailsHeader from '../CourseDetailsHeader/CourseDetailsHeader'
-import CourseDetailsCard from '../CourseDetailsCard/CourseDetailsCard'
-import CourseDetailsContent from '../CourseDetailsContent/CourseDetailsContent'
-import { Link } from '@/i18n/navigation'
+import CourseDetailsHeader from './CourseDetailsHeader/CourseDetailsHeader'
+import CourseDetailsContent from './CourseDetailsContent/CourseDetailsContent'
+import CourseDetailsCard from './CourseDetailsCard/CourseDetailsCard'
 
 export default function CourseDetails({ data }: CourseDetailsProps) {
     return (

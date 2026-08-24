@@ -1,10 +1,12 @@
 'use client'
 import { usePathname, useRouter } from '@/i18n/navigation';
-import { useState } from 'react'
-import { CourseDetailsProps } from '../CourseDetails/coursedetails.types';
+import { CourseDetailsProps } from '../coursedetails.types';
+import { useTranslations } from 'next-intl';
+
 
 
 export default function CourseDeatils3Buttons({ data, inPlayPage }: CourseDetailsProps) {
+    const t = useTranslations();
     const router = useRouter();
     const pathname = usePathname();
     const currentPath = pathname.split("/").at(-1);
@@ -40,16 +42,16 @@ export default function CourseDeatils3Buttons({ data, inPlayPage }: CourseDetail
             <div>
                 <div className='border-b'>
                     {!inPlayPage && <button onClick={() => handleDetailsButtons("overview")} className={`${currentPath == "overview" ? "font-bold border-b-2 border-(--primary-color) text-lg text-(--primary-color) p-3" :
-                        "font-bold p-3 text-(--text-secondary) text-lg"}  `}>Overview</button>}
+                        "font-bold p-3 text-(--text-secondary) text-lg"}  `}>{t('CourseDetails.tabs.overview')}</button>}
                     {!inPlayPage && <button onClick={() => handleDetailsButtons("curriculum")} className={`${currentPath == "curriculum" ? "font-bold border-b-2 border-(--primary-color) text-lg text-(--primary-color) p-3 " :
-                        "font-bold p-3 text-(--text-secondary) text-lg"}   `}>Curriculum</button>}
+                        "font-bold p-3 text-(--text-secondary) text-lg"}   `}>{t('CourseDetails.tabs.curriculum')}</button>}
                     {/* Reusable in play page and course Details page */}
                     {inPlayPage && <button onClick={() => handleDetailsButtons("play")} className={`${currentPath == "play" ? "font-bold border-b-2 border-(--primary-color) text-lg text-(--primary-color) p-3 " :
-                        "font-bold p-3 text-(--text-secondary) text-lg"}   `}>Overview</button>}
+                        "font-bold p-3 text-(--text-secondary) text-lg"}   `}>{t('CourseDetails.tabs.overview')}</button>}
                     {inPlayPage && <button onClick={() => handleDetailsButtons("notes")} className={`${currentPath == "notes" ? "font-bold border-b-2 border-(--primary-color) text-lg text-(--primary-color) p-3 " :
-                        "font-bold p-3 text-(--text-secondary) text-lg"}   `}>Notes</button>}
+                        "font-bold p-3 text-(--text-secondary) text-lg"}   `}>{t('CourseDetails.tabs.notes')}</button>}
                     <button onClick={() => handleDetailsButtons("reviews")} className={`${currentPath == "reviews" ? "font-bold border-b-2 border-(--primary-color) text-lg text-(--primary-color) p-3 " :
-                        "font-bold p-3 text-(--text-secondary) text-lg"}`}>Reviews</button>
+                        "font-bold p-3 text-(--text-secondary) text-lg"}`}>{t('CourseDetails.tabs.reviews')}</button>
                 </div>
             </div>
         </div>

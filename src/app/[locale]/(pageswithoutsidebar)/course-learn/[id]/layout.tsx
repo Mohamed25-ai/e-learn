@@ -1,13 +1,13 @@
 import dynamic from 'next/dynamic';
 import { getLocale } from 'next-intl/server';
 import {getCreatedCourseByCourseIdAction } from '@/actions/courses/courses.actions';
-import CourseDeatils3Buttons from '@/app/[locale]/_Components/Courses/CourseDeatils3Buttons/CourseDeatils3Buttons';
 import CourseLearningSidebar from '@/app/[locale]/_Components/Courses/CourseLearning/CourseLearningSidebar/CourseLearningSidebar';
 import CourseLearningSidebarToggler from '@/app/[locale]/_Components/Courses/CourseLearning/CourseLearningSidebarToggler/CourseLearningSidebarToggler';
 import CourseLearningSidebarWrapper from '@/app/[locale]/_Components/Courses/CourseLearning/CourseLearningSidebarWrapper/CourseLearningSidebarWrapper';
 import VideoLearningWrapper from '@/app/[locale]/_Components/Courses/CourseLearning/VideoLearningWrapper/VideoLearningWrapper';
 import CourseLearningVideoScreen from '@/app/[locale]/_Components/Courses/CourseLearningVideoScreen/CourseLearningVideoScreen';
 import FormLoader from '@/app/[locale]/_Components/Loaders/FormLoader/FormLoader';
+import CourseDeatils3Buttons from '@/app/[locale]/_Components/Courses/CourseDetails/CourseDeatils3Buttons/CourseDeatils3Buttons';
 const CourseLearningVideoScreenComponent = dynamic(
     () => import('@/app/[locale]/_Components/Courses/CourseLearningVideoScreen/CourseLearningVideoScreen'),
 {
