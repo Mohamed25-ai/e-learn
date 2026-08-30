@@ -1,0 +1,27 @@
+import React from 'react'
+import { AccordionDemo } from '../../CoursesAccordionWrapper/AccordionDemo/AccordionDemo'
+import { CourseDetailsCurriculumProps } from './coursedetailscurriculum.type'
+import { getCourseSectionAction } from '@/actions/courses/courses.actions'
+import { SectionData } from '../../CoursesByCategoryId/coursebycategoryId.types'
+import CoursesDetailsAccordionWrapper from '../../CoursesAccordionWrapper/CoursesDetailsAccordionWrapper'
+
+export default async function CourseDetailsCurriculum({ courdeId, withHeader, inPlay }: CourseDetailsCurriculumProps) {
+  const sections = await getCourseSectionAction(courdeId);
+  console.log("sections", sections)
+  return (
+    <section className={`${!inPlay && "mt-5 px-5 "} `}>
+      <header className='my-4'>
+        <h2 className='text-foreground text-3xl font-bold'>
+          Course Curriculum
+        </h2>
+        <p>{`${sections.data.totalCount} sections 114 lectures  30 hours `}</p>
+      </header>
+      <>
+        {sections?.data?.data.length == 0 ? <div>
+          <h1>No Created Sections</h1>
+        </div> : sections?.data?.data.map((section: SectionData) => (<CoursesDetailsAccordionWrapper
+          key={section.id} data={section} />))}
+      </>
+    </section>
+  )
+}

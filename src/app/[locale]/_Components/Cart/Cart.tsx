@@ -8,7 +8,7 @@ export default function Cart({ cartData }: CartProps) {
     return (
         <div className=' lg:flex p-5 gap-5'>
             <CartItems BasketItems={cartData.basketItems} />
-            <CartInvoice cartData={cartData} />
+            {cartData&&<CartInvoice cartData={cartData} />}
         </div>
     )
 }

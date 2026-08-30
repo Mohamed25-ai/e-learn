@@ -32,7 +32,6 @@ export function SectionCard() {
         return arr;
     }
     );
-    // console.log("object",createCorseStore.sectionByCourseIdData)
     const [isCurrentEdit, setisCurrentEdit] = useState(Array(Sections.length + 1).fill(false))
     const sectionData = useRef<(HTMLInputElement | null)[]>(Array(Sections.length + 1).fill(null));
     async function handleRemoveSection(value: number, idx: number) {
@@ -50,23 +49,34 @@ export function SectionCard() {
             return copy;
         });
     }
+    // function getSectionCardsDifference() {
+    //     const createdSectionsSorted = [...Sections].sort((a, b) => a - b);
+    //     const copy = [...createdSectionsSorted]
+    //     createdSectionsSorted.forEach((val, idx) => {
+    //         const next = createdSectionsSorted[idx + 1]
+    //         if (next !== undefined) {
+    //             for (let i = val + 1; i < next; i++) {
+    //                 copy.push(i)
+    //             }
+    //         }
+    //     })
+    //     return copy.sort((a, b) => a - b);
+    // }
+    // async function handleAddSection() {
+    //     const result = getSectionCardsDifference()
+    //     const max = result.length ? Math.max(...result) : 0;
+    //     setSections(() => [...result, max + 1]);
+    // }
     function getSectionCardsDifference() {
-        const createdSectionsSorted = [...Sections].sort((a, b) => a - b);
-        const copy = [...createdSectionsSorted]
-        createdSectionsSorted.forEach((val, idx) => {
-            const next = createdSectionsSorted[idx + 1]
-            if (next !== undefined) {
-                for (let i = val + 1; i < next; i++) {
-                    copy.push(i)
-                }
-            }
-        })
-        return copy.sort((a, b) => a - b);
+        const max = Sections.length ? Math.max(...Sections) : 0;
+        return Array.from(
+            { length: max + 1 },
+            (_, index) => index + 1
+        );
     }
     async function handleAddSection() {
-        const result = getSectionCardsDifference()
-        const max = result.length ? Math.max(...result) : 0;
-        setSections(() => [...result, max + 1]);
+        const result = getSectionCardsDifference();
+        setSections(result);
     }
     function setLoading(index: number, value: boolean) {
         setisLoading(prev => {

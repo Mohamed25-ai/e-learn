@@ -30,7 +30,7 @@ export default async function FeaturedCourses({ categories }: FeaturedCoursesPro
                     {t('FeaturedCourses.browseAll')}
                     <FontAwesomeIcon
                         icon={faArrowRight}
-                        className="transition-transform duration-200 group-hover:translate-x-1"
+                        className="rtl:rotate-180 transition-transform duration-200 group-hover:translate-x-1"
                     />
                 </Link>
             </header>

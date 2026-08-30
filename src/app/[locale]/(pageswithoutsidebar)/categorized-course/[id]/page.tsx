@@ -11,13 +11,13 @@ import CategorizedCourseHeader from '@/app/[locale]/_Components/Courses/Categori
 export default async function page({ params, searchParams }: CategorizedCourseProps) {
     const param = await params;
     const { pageSize, pageNumber, searchCourse, filter } = await searchParams;
-    const locale = await getLocale();
-    const isRtl = locale === 'ar'; // Adjust to your RTL language code
+    const isRtl = param.locale === 'ar'; // Adjust to your RTL language code
     const pgSize = pageSize || 2;
     const pgNumber = pageNumber || 1
     const searchData = searchCourse || undefined
     const FilterData = filter || undefined
     const courses = await getCoursesByCategorieId(param.id, Number(pgSize), Number(pgNumber), FilterData, searchData);
+    console.log("Categorized course",courses)
     return (
         <section dir={isRtl ? 'rtl' : 'ltr'}>
             <FadeUp>

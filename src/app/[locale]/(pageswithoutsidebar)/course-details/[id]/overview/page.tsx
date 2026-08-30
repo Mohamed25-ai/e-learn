@@ -1,5 +1,5 @@
 import { getCreatedCourseByCourseIdAction } from '@/actions/courses/courses.actions';
-import CourseDetailsOverview from '@/app/[locale]/_Components/Courses/CourseDetailsOverview/CourseDetailsOverview';
+import CourseDetailsOverview from '@/app/[locale]/_Components/Courses/CourseDetailsContent/CourseDetailsOverview/CourseDetailsOverview';
 
 type layoutProps = {
     params: Promise<{ id: string }>

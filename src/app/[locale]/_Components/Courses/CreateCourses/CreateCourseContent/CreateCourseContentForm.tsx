@@ -9,11 +9,6 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { resetCreateCourseState } from "@/store/redux/createcourse/createcourseslice";
 import { useRouter } from "@/i18n/navigation";
 
-// const safeContentCards = Array.isArray(createCourseSote.createdContentuccessifuly)
-//     ? createCourseSote.createdContentuccessifuly.filter(
-//         (num): num is number => Number.isFinite(num)
-//     )
-//     : [];
 
 export default function CreateCourseContentForm({ contentData }: CreateCourseContentFormPropsType) {
     const createCourseSote = useAppSelector((state) => state.createCourse);
@@ -29,24 +24,13 @@ export default function CreateCourseContentForm({ contentData }: CreateCourseCon
         });
         return map;
     });
-    // const [editCurrentCard, seteditCurrentCard] = useState(Array(maxNumInStore).fill(false));
     const [editCurrentCard, seteditCurrentCard] = useState<Record<number, boolean>>({});
-    // console.log("contentCards",contentCards)
-    // console.log("addedContent",addedContent)
-    // console.log("editCurrentCard",editCurrentCard)
-    // console.log("maxNumInStore",maxNumInStore)
     function getCardsDifference() {
-        const createdContentSorted = [...contentCards].sort((a, b) => a - b)
-        const copy = [...createdContentSorted]
-        createdContentSorted.forEach((val, idx) => {
-            const next = createdContentSorted[idx + 1]
-            if (next !== undefined) {
-                for (let i = val + 1; i < next; i++) {
-                    copy.push(i)
-                }
-            }
-        })
-        return copy.sort((a, b) => a - b);
+        const max = createdContentSorted.length ? Math.max(...contentCards) : 0;
+        return Array.from(
+            { length: max + 1 },
+            (_, index) => index + 1
+        );
     }
     function handleEndCreateCourse() {
         dispatch(resetCreateCourseState())
@@ -66,11 +50,9 @@ export default function CreateCourseContentForm({ contentData }: CreateCourseCon
     }
     function handleAddNewContent() {
         const currentCards = getCardsDifference()
-        const max = currentCards.length ? Math.max(...currentCards) : 0;
-        setcontentCards(() => [...currentCards, max + 1]);
-        handleAddedSuccessContent(maxNumInStore + 1, false)
-        handleSetEditCard(maxNumInStore + 1, false)
-
+        setcontentCards(() => [...currentCards]);
+        // handleAddedSuccessContent(maxNumInStore + 1, false)
+        // handleSetEditCard(maxNumInStore + 1, false)
     }
     function handleRemoveContentCard(idx: number) {
         setcontentCards((prev) =>

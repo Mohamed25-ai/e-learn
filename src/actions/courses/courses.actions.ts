@@ -1,6 +1,6 @@
 'use server'
 import {
-    addCourseSection, createCourseBasicInformation, createCourseContent,
+    addCourseSection, checkIsUserEnrolledInCourseByCourseId, createCourseBasicInformation, createCourseContent,
     editCourseContent, editCourseSection, getCourseContentById,
     getCourseContentBySectionIdForViewOnly,
     getCoursesByCategorieId, getCourseSection, 
@@ -47,4 +47,7 @@ export async function getCourseContentByIdAction(contentId: string) {
 }
 export async function getCreatedCourseByCourseIdAction(courseId: string) {
     return await getCreatedCourseByCourseId(courseId);
+}
+export async function checkIsUserEnrolledInCourseByCourseIdAction(courseId: string) {
+    return await checkIsUserEnrolledInCourseByCourseId(courseId);
 }

@@ -15,7 +15,7 @@ import { useTranslations } from 'next-intl'
 
 export default function ProfileDataCard({ data, onSubmit }: ProfileDataCardProps) {
     const t = useTranslations();
-    const { isUserEditNow, temporaryProfileImageForEditUrl, temporaryProfileImageForEdit } = useAppSelector((state) => state.userProfileSlice);
+    const { isUserEditNow,temporaryProfileImageForEdit } = useAppSelector((state) => state.userProfileSlice);
     const temporayProfileImageEdited = useRef<HTMLInputElement | null>(null);
     const userSession = useSession();
     const { formState } = useFormContext();

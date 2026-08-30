@@ -6,9 +6,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import LanguageToggle from '../LanguageToggle/LanguageToggle';
 import { useLocale, useTranslations } from 'next-intl';
-
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 import { toggleNavbar, toggleSidebar } from '@/store/redux/togglers/togglers.slice';
 import CartInNavbar from '../../Cart/CartInNavbar';
@@ -27,11 +25,7 @@ export default function Navbar() {
     const dispatch = useAppDispatch();
     const path = usePathname();
     const userSession = useSession();
-    const router = useRouter();
     const locale = useLocale(); // Detect locale
-    const [isOpen, setisOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
-    const isRtl = locale === 'ar'; // Adjust to your RTL language code
 
     const LINKS = [
         { href: "/courses", label: t('links.courses') },
@@ -52,11 +46,7 @@ export default function Navbar() {
     function toggleSide() {
         dispatch(toggleSidebar())
     }
-
-
     const isAuth = userSession.status === "authenticated";
-    const user = userSession.data?.user;
-    const authenticatedUserName = userSession.data?.fullName || userSession.data?.user?.name;
     const userDataToDropdown = {
         name: userSession.data?.fullName ?? "",
         email: userSession.data?.email ?? "",
@@ -93,21 +83,28 @@ export default function Navbar() {
 
                     {/* Desktop Nav Links */}
                     {isAuth && PAGES_WITHOUT_NAVBAR.includes(path) && (
-                        <ul className="hidden md:flex  items-center gap-1 ms-2">
-                            {LINKS.map(({ href, label }) => (
-                                <li key={href}>
-                                    <Link
-                                        href={href}
-                                        className={`px-3 py-1.5 text-nowrap text-sm font-medium rounded-lg transition-all duration-200
-                                            ${path === href
-                                                ? "text-(--primary-color) bg-(--primary-light)"
-                                                : "text-(--text-secondary) hover:text-(--primary-color) hover:bg-(--primary-light)"
-                                            }`}
-                                    >
-                                        {label}
-                                    </Link>
-                                </li>
-                            ))}
+                        <ul className="hidden md:flex items-center gap-1 ms-2">
+                            {LINKS.map(({ href, label }) => {
+                                const isInstructor = userSession.data?.userRole?.includes("Instructor");
+                                if (href === "/createcourse" && !isInstructor) {
+                                    return null;
+                                }
+
+                                return (
+                                    <li key={href}>
+                                        <Link
+                                            href={href}
+                                            className={`px-3 py-1.5 text-nowrap text-sm font-medium rounded-lg transition-all duration-200
+                                                ${path === href
+                                                    ? "text-(--primary-color) bg-(--primary-light)"
+                                                    : "text-(--text-secondary) hover:text-(--primary-color) hover:bg-(--primary-light)"
+                                                }`}
+                                        >
+                                            {label}
+                                        </Link>
+                                    </li>
+                                );
+                            })}
                         </ul>
                     )}
                     {/* Search */}

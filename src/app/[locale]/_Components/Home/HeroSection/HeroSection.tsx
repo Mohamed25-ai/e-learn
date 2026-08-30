@@ -3,8 +3,8 @@ import { faArrowRight, faPlay, faUserGraduate, faBookOpen, faStar } from "@forta
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LANDING_IMAGE from "@/assets/images/photo-1771408427146-09be9a1d4535.jpg"
 import Image from "next/image";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export default function HeroSection() {
     const t = useTranslations("Home.hero");
@@ -49,7 +49,7 @@ export default function HeroSection() {
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                     <Link href="/courses" className="BUTTON_STYLE w-full sm:w-auto justify-center">
                         {t('exploreCourses')}
-                        <FontAwesomeIcon icon={faArrowRight} />
+                        <FontAwesomeIcon className="rtl:rotate-180" icon={faArrowRight} />
                     </Link>
 
                     <button className="flex items-center gap-2.5 text-sm font-medium

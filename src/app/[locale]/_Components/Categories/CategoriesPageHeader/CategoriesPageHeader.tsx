@@ -28,7 +28,7 @@ export default async function CategoriesPageHeader({categories,inCategoriesPage,
                     {t('Categories.pageHeader.browseAll')}
                     <FontAwesomeIcon
                         icon={faArrowRight}
-                        className="transition-transform duration-200 group-hover:translate-x-1"
+                        className="rtl:rotate-180 transition-transform duration-200 group-hover:translate-x-1"
                     />
                 </Link>}
             </header>

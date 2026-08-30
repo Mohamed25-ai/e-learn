@@ -1,50 +1,52 @@
 import { faDollarSign, faGlobe, faUsers, faArrowTrendUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { getTranslations } from 'next-intl/server'
 
-const features: { icon: IconDefinition; iconBg: string; iconColor: string; title: string; description: string }[] = [
-    {
-        icon: faDollarSign,
-        iconBg: 'bg-[#E8F8F0]',
-        iconColor: 'text-[#22C55E]',
-        title: 'Earn Revenue',
-        description: 'Keep up to 70% of every sale. Set your own price and earn every time a student enrolls.',
-    },
-    {
-        icon: faGlobe,
-        iconBg: 'bg-[#E9F7F7]',
-        iconColor: 'text-(--primary-color)',
-        title: 'Global Reach',
-        description: 'Teach students in 190+ countries. Your knowledge has no geographic limits.',
-    },
-    {
-        icon: faUsers,
-        iconBg: 'bg-[#EDE9FE]',
-        iconColor: 'text-[#7C3AED]',
-        title: 'Build Community',
-        description: 'Grow a loyal audience, get reviews, and shape careers around the world.',
-    },
-    {
-        icon: faArrowTrendUp,
-        iconBg: 'bg-[#FEF9E7]',
-        iconColor: 'text-[#F59E0B]',
-        title: 'Grow With Us',
-        description: 'Access marketing tools, analytics, and promotions to scale your courses.',
-    },
-]
+export default async function BecomeInstructorWhyTeach() {
+    const t = await getTranslations();
 
-export default function BecomeInstructorWhyTeach() {
-  
+    const features: { icon: IconDefinition; iconBg: string; iconColor: string; title: string; description: string }[] = [
+        {
+            icon: faDollarSign,
+            iconBg: 'bg-[#E8F8F0]',
+            iconColor: 'text-[#22C55E]',
+            title: t('BecomeInstructor.whyTeach.features.earnRevenue.title'),
+            description: t('BecomeInstructor.whyTeach.features.earnRevenue.description'),
+        },
+        {
+            icon: faGlobe,
+            iconBg: 'bg-[#E9F7F7]',
+            iconColor: 'text-(--primary-color)',
+            title: t('BecomeInstructor.whyTeach.features.globalReach.title'),
+            description: t('BecomeInstructor.whyTeach.features.globalReach.description'),
+        },
+        {
+            icon: faUsers,
+            iconBg: 'bg-[#EDE9FE]',
+            iconColor: 'text-[#7C3AED]',
+            title: t('BecomeInstructor.whyTeach.features.buildCommunity.title'),
+            description: t('BecomeInstructor.whyTeach.features.buildCommunity.description'),
+        },
+        {
+            icon: faArrowTrendUp,
+            iconBg: 'bg-[#FEF9E7]',
+            iconColor: 'text-[#F59E0B]',
+            title: t('BecomeInstructor.whyTeach.features.growWithUs.title'),
+            description: t('BecomeInstructor.whyTeach.features.growWithUs.description'),
+        },
+    ]
+
     return (
         <section className="px-5 md:px-10 py-16 bg-background">
 
             {/* Header */}
             <div className="flex flex-col items-center text-center gap-3 mb-12">
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground">
-                    Why Teach on EduPro?
+                    {t('BecomeInstructor.whyTeach.title')}
                 </h2>
                 <p className="text-sm md:text-base text-(--text-secondary) max-w-md">
-                    Everything you need to succeed as an online instructor
+                    {t('BecomeInstructor.whyTeach.subtitle')}
                 </p>
             </div>
 

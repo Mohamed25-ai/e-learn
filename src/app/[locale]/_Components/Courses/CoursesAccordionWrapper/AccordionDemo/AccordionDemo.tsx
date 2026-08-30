@@ -13,15 +13,20 @@ import {
     faFileLines,
     faFilePdf,
     faImage,
+    faLock,
     IconDefinition
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useRouter } from "@/i18n/navigation";
-import AccordionDemoInPlay from "./AccordionDemoInPlay";
+import AccordionDemoInPlay from "../../CourseLearning/AccordionDemoInPlayWrapper/AccordionDemoInPlay";
 import { useAppDispatch } from "@/hooks/hooks";
-import { setLessonId, setSelectedLesson, setSelectedLessonSection, setSelectedLessonUrl } from "@/store/redux/courselearninig/courselearning.slice";
+import {
+    setLessonId, setSelectedLesson,
+    setSelectedLessonSection, setSelectedLessonUrl
+}
+    from "@/store/redux/courselearninig/courselearning.slice";
 import { useLocale } from "next-intl";
-import { useSearchParams } from "next/navigation";
+
 
 const fileIcons: Record<string, IconDefinition> = {
     mp4: faCirclePlay,
@@ -35,7 +40,7 @@ const fileIcons: Record<string, IconDefinition> = {
     pdf: faFilePdf,
 };
 
-export function AccordionDemo({ contentData, section, inPlay }: AccordionDemoProps) {
+export function AccordionDemo({ contentData, section, isUserEnrolledToCourse }: AccordionDemoProps) {
     const [accordionValue, setAccordionValue] = useState("");
     const dispatch = useAppDispatch();
     const sectionId = section.id ?? "";
@@ -48,26 +53,23 @@ export function AccordionDemo({ contentData, section, inPlay }: AccordionDemoPro
         dispatch(setSelectedLessonSection(section.id))
         dispatch(setLessonId(lessionId));
     }
-    useEffect(() => {
 
-        
-    }, [])
     return (
         <div dir={locale === "ar" && "rtl" || ""}>
-            {!inPlay && <Accordion
+            {<Accordion
                 type="single"
                 collapsible
                 key={section.id}
                 onValueChange={setAccordionValue}
-                className={`w-full ${inPlay ? "w-full" : "md:w-3/4"}`}
+                className={`w-full md:w-3/4`}
             >
                 <AccordionItem
                     value={sectionId}
-                    className={`border-2 border-border overflow-hidden ${!inPlay && "my-2 rounded-xl"}`}
+                    className={`border-2 border-border overflow-hidden ${"my-2 rounded-xl"}`}
                 >
                     {/* Trigger */}
                     <AccordionTrigger
-                        className={`${inPlay && "customaccordiontrigger"} px-4 py-3 outline-none 
+                        className={` px-4 py-3 outline-none 
                             focus-visible:ring-0 transition-colors duration-200
                                         hover:no-underline
                                         ${isOpen
@@ -98,16 +100,15 @@ export function AccordionDemo({ contentData, section, inPlay }: AccordionDemoPro
                             </div>
                         </div>
                     </AccordionTrigger>
-
                     {/* Content items */}
                     <div className="divide-y divide-border">
-                        {!inPlay && contentData.map((content) => {
-                            const urlExtension = content.url.split(".").pop()?.toLowerCase();
+                        {contentData.map((content) => {
+                            const urlExtension = content.url?.split(".").pop()?.toLowerCase();
                             const icon = fileIcons[urlExtension ?? ""] ?? faFile;
-
                             return (
                                 <div key={content.id}>
-                                    <Link onClick={() => handleSelectedLessonInViewOnly(section.id, content.id, content.url)}
+                                    {isUserEnrolledToCourse && <Link onClick={() =>
+                                        handleSelectedLessonInViewOnly(section.id, content.id, content.url!)}
                                         href={`/course-learn/${section.courseId}/play?lessonId=${content.id}`}>
                                         <AccordionContent
                                             className="p-0 bg-white"
@@ -115,7 +116,6 @@ export function AccordionDemo({ contentData, section, inPlay }: AccordionDemoPro
                                             <div className="flex items-center justify-between gap-3 px-4 py-3
                                                     hover:bg-(--primary-light) group/item
                                                     transition-colors duration-200 cursor-pointer">
-
                                                 <div className="flex items-center gap-3">
                                                     <FontAwesomeIcon
                                                         icon={icon}
@@ -127,16 +127,47 @@ export function AccordionDemo({ contentData, section, inPlay }: AccordionDemoPro
                                                         {content.title || ""}
                                                     </span>
                                                 </div>
+                                                <div className="flex items-center gap-1">
+                                                    <span className="text-(--text-secondary)">
+                                                        {content.duration}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </AccordionContent>
-                                    </Link>
+                                    </Link>}
+                                    {!isUserEnrolledToCourse && <AccordionContent
+                                        className="p-0 bg-white"
+                                    >
+                                        <div className="flex items-center justify-between gap-3 px-4 py-3
+                                                    hover:bg-(--primary-light) group/item
+                                                    transition-colors duration-200 cursor-pointer">
+                                            <div className="flex items-center gap-3">
+                                                <FontAwesomeIcon
+                                                    icon={icon}
+                                                    className="text-(--text-secondary) group-hover/item:text-(--primary-color)
+                                                            transition-colors duration-200 shrink-0"
+                                                />
+                                                <span className="text-sm text-(--text-secondary) group-hover/item:text-(--primary-color)
+                                                            transition-colors duration-200">
+                                                    {content.title || ""}
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <span className="text-(--text-secondary)">
+                                                    {content.duration}
+                                                </span>
+                                                <FontAwesomeIcon
+                                                    className="text-(--text-secondary) "
+                                                    icon={faLock} />
+                                            </div>
+                                        </div>
+                                    </AccordionContent>}
                                 </div>
                             );
                         })}
                     </div>
                 </AccordionItem>
             </Accordion>}
-            {inPlay && <AccordionDemoInPlay contentData={contentData} section={section} inPlay={inPlay} />}
         </div>
     )
 }

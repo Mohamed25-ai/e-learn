@@ -14,9 +14,8 @@ export default async function CourseDetailsHeader({ data }: CourseDetailsHeaderP
 
             <div className='px-8 py-5'>
                 <div className='mb-4 '>
-
                     <Link href={`/courses`} className='text-foreground hover:text-white'>
-                        <FontAwesomeIcon className='me-1 ' icon={faArrowLeft} />
+                        <FontAwesomeIcon className=' rtl:rotate-180 me-1 ' icon={faArrowLeft} />
                         {t('CourseDetails.backToCourses')}</Link>
                 </div>
                 {/* Title */}

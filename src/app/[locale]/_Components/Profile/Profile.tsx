@@ -45,10 +45,9 @@ export default function Profile({ data, enrolledCoursesWithMetaData }: ProfilePr
         if (res.status == 200) {
             console.log("editProfileRes", res);
             dispatch(setEditUserProfileState(false));
-            // router.refresh();
+            router.refresh();
             toast.success(t('Profile.updateSuccess'));
             await userSession.update();
-
         } else {
             toast.error(res.data?.title);
         }

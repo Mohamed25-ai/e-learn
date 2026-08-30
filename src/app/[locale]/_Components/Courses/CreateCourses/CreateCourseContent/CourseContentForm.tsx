@@ -33,10 +33,7 @@ import { setAddedContent, setCreatedContentId } from "@/store/redux/createcourse
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-hot-toast";
 import { ButtonLoader } from "../../../Loaders/ButtonLoader/ButtonLoader";
-import {  uploadCloudinaryFiles } from "@/services/courses/cloudinary.service";
-
-
-
+import axios from "axios";
 
 export default function CourseContentForm({
   fromOrder,
@@ -94,7 +91,8 @@ export default function CourseContentForm({
       formData.append("Title",data.Title)
       formData.append("SectionId",data.SectionId);
       if(data.File&&!isEdit){
-        formData.append("File",data.File)
+        formData.append("File",data.File);
+        // if(data.File.type===)
       }
       if(isEdit&&createCourseSote.createdContentId[fromOrder]){
         formData.append("Id",createCourseSote.createdContentId[fromOrder])
@@ -104,7 +102,6 @@ export default function CourseContentForm({
 
       // 3. Edit
       if (isAddedBefore && isEdit && editCurrentCard[fromOrder]) {
-
         const res = await editCourseContentAction(formData);
         console.log("ers",res)
         if (res.status === 200) {
@@ -116,10 +113,10 @@ export default function CourseContentForm({
       // 4. Create
       if (!isAddedBefore) {
         const res = await createCourseContentAction(formData);
+        console.log("createdContent res",res)
         dispatch(setAddedContent(fromOrder));
         handleAddedSuccessContent(fromOrder, true);
         toast.success("Lesson added successfully");
-        console.log("ressss",res)
         dispatch(
           setCreatedContentId({
             key: fromOrder,
@@ -128,7 +125,7 @@ export default function CourseContentForm({
         );
       }
     } catch (error) {
-      console.error(error);
+      const err=axios.isAxiosError(error)
       toast.error("Failed to upload lesson");
     } finally {
       setisLoading(false);

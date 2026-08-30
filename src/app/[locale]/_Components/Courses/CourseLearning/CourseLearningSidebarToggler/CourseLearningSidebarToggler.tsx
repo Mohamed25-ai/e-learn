@@ -1,6 +1,6 @@
 "use client"
 
-import { usePathname, useRouter } from "@/i18n/navigation"
+import { useRouter } from "@/i18n/navigation"
 import { faBars, faCircleXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { CourseLearningSidebarTogglerProps } from "../course.learning.types";

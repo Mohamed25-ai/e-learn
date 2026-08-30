@@ -7,15 +7,12 @@ import { ContentType, FilesFieldPropsType } from './createcoursecontent.types';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Watch } from 'react-hook-form';
 const uploadConfig: { type: string, label: string; hint: string, icon: React.ReactNode }[] = [
-    { type: "Document", label: "Click to upload File", hint: "Video, Pdf, or image (max 50MB)", icon: <FontAwesomeIcon size={"xl"} icon={faFile} /> },
+    { type: "Document", label: "Click to upload File", hint: "Video, Pdf, or image (max 100MB)", icon: <FontAwesomeIcon size={"xl"} icon={faFile} /> },
 ];
 export default function FilesField({ onChange, setfieldValue, isFieldHasError, isEditContent
     , setisFileExist, setFieldError, isContentAddedBefore }: FilesFieldPropsType) {
     const [filePreview, setfilePreview] = useState<string | null>(null)
     const [file, setfile] = useState<File | null>(null)
-    // const selectedConfig = uploadConfig.filter(
-    //     (item) => item.type === selectedFileType
-    // );
     const fileType = file?.type.split("/")[0];
     const validType = file?.type.split("/")[0] == "video" || file?.type.split("/")[0] === "image" || file?.type == "application/pdf"
     const disableCancel = !isContentAddedBefore && validType;

@@ -1,7 +1,6 @@
-import React from 'react'
-import { CourseDetailsProps } from '../CourseDetails/coursedetails.types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import { CourseDetailsProps } from '../../CourseDetails/coursedetails.types';
 
 export default function CourseDetailsOverview({ data,inPlayPage }: CourseDetailsProps) {
   const middle = Math.ceil(data?.objectives.length / 2);

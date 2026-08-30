@@ -34,7 +34,6 @@ export interface FormValues {
 export interface SubmitContentFormType {
     Title: string,
     File?: File,
-    // ContentType: ContentType,
     SectionId: string
 }
 export interface Section {

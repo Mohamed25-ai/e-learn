@@ -15,7 +15,6 @@ export default function AddToCartBtn({ courseId }: AddToCartBtnProps) {
     const t = useTranslations();
     const { numberOfCartItems, addedCourses } = useAppSelector((state) => state.userCartSlice);
     const userSession = useSession();
-    console.log(userSession)
     const dispatch = useAppDispatch();
     const [isLoading, setisLoading] = useState(false);
     async function handleAddCourseToCart() {
@@ -47,6 +46,5 @@ export default function AddToCartBtn({ courseId }: AddToCartBtnProps) {
             </button>}
             {isLoading && <ButtonLoader size={25} />}
         </>
-
     )
 }

@@ -1,28 +1,18 @@
 'use client'
-import { applyToBecomeInstructorAction } from '@/actions/application-user/application-user.actions';
 import { faBahai } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useSession } from 'next-auth/react';
-import Link from 'next/link'
-import toast from 'react-hot-toast';
-
-const stats = [
-    { value: '1.2M+', label: 'Active Students' },
-    { value: '70%', label: 'Revenue Share' },
-    { value: '190+', label: 'Countries Reached' },
-]
+import { useTranslations } from 'next-intl';
 
 export default function BecomeInstructorShareKnowledge() {
-    const userSession=useSession();
-    async function handleBecomeInstructor() {
-        const res = await applyToBecomeInstructorAction();
-        if (res.status == 200) {
-            toast.success("Welcome, You are now an instructor");
-            // await userSession.update();
-        } else {
-            toast.error(res.data?.error?.description);
-        }
-    }
+    const t = useTranslations();
+
+    const stats = [
+        { value: '1.2M+', label: t('BecomeInstructor.shareKnowledge.stats.activeStudents') },
+        { value: '70%', label: t('BecomeInstructor.shareKnowledge.stats.revenueShare') },
+        { value: '190+', label: t('BecomeInstructor.shareKnowledge.stats.countriesReached') },
+    ]
+
+
     return (
         <section className="bg-foreground px-5 py-16
                             flex flex-col items-center justify-center gap-10 text-center">
@@ -31,31 +21,30 @@ export default function BecomeInstructorShareKnowledge() {
             <div className="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2">
                 <FontAwesomeIcon icon={faBahai} className="text-(--primary-color)" />
                 <p className="text-sm text-white/70">
-                    Join 340+ instructors already earning on EduPro
+                    {t('BecomeInstructor.shareKnowledge.badge')}
                 </p>
             </div>
 
             {/* Heading */}
             <header className="flex flex-col items-center gap-3">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-                    Share Your Knowledge,<br />
-                    <span className="text-(--primary-color)">Build Your Income</span>
+                    {t('BecomeInstructor.shareKnowledge.headingPart1')}<br />
+                    <span className="text-(--primary-color)">{t('BecomeInstructor.shareKnowledge.headingHighlight')}</span>
                 </h2>
                 <p className="text-sm md:text-base text-white/60 leading-relaxed max-w-xl">
-                    Turn your expertise into a thriving online course. EduPro gives
-                    you the tools, audience, and support to teach what you love — on your schedule.
+                    {t('BecomeInstructor.shareKnowledge.description')}
                 </p>
             </header>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center gap-4 my-5">
-                <button onClick={handleBecomeInstructor} className="BUTTON_STYLE">
-                    Start Your Application
+                <button  className="BUTTON_STYLE">
+                    {t('BecomeInstructor.shareKnowledge.startApplication')}
                 </button>
                 <button className="flex items-center gap-2 text-sm font-medium
                                     text-white/80 hover:text-white
                                     transition-colors duration-200 underline underline-offset-4">
-                    How it Works
+                    {t('BecomeInstructor.shareKnowledge.howItWorks')}
                 </button>
             </div>
 

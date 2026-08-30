@@ -15,13 +15,13 @@ export default async function CartItems({ BasketItems }: CartItemsProps) {
     <div className="w-full lg:w-3/4 flex flex-col gap-3">
       <header className="flex  items-center gap-3">
         <h3 className="text-foreground font-semibold">{t('Cart.shoppingCart')}</h3>
-        {BasketItems.length>0 && (
+        {BasketItems?.length>0 && (
           <p className="bg-gray-200 text-(--text-secondary) px-3 rounded-full ">
             {t('Cart.coursesCount', { count: BasketItems.length })}
           </p>
         )}
       </header>
-      {BasketItems.length==0 ? (
+      {BasketItems?.length==0 ? (
         <div>
           <h2 className="text-foreground text-2xl font-bold flex items-center justify-center">
             {t('Cart.emptyCart')}

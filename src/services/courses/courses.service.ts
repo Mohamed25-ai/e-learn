@@ -61,7 +61,6 @@ export async function addCourseSection(data: CreateSectionType) {
                     "Content-Type": "application/json",
                 },
             })
-        console.log("sectionResult", res.data)
         return {
             status: res.status,
             data: res.data
@@ -83,7 +82,6 @@ export async function editCourseSection(data: CreateSectionType) {
                     "Content-Type": "application/json",
                 },
             })
-        console.log("editSectionResult", res.data)
         return {
             status: res.status,
             data: res.data
@@ -212,6 +210,21 @@ export async function getCourseContentBySectionIdForViewOnly(sectionId: string) 
     const api = await privateServerApi();
     try {
         const res = await api.get(`/Content/PreviewList?SectionId=${sectionId}`);
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error?.response?.data;
+        }
+        throw error;
+    }
+}
+export async function checkIsUserEnrolledInCourseByCourseId(courseId: string) {
+    const api = await privateServerApi();
+    try {
+        const res = await api.get(`/Enrollment/Check-User-Enrollment/${courseId}`);
         return {
             status: res.status,
             data: res.data

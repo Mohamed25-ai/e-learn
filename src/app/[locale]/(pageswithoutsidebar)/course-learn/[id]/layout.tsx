@@ -5,11 +5,11 @@ import CourseLearningSidebar from '@/app/[locale]/_Components/Courses/CourseLear
 import CourseLearningSidebarToggler from '@/app/[locale]/_Components/Courses/CourseLearning/CourseLearningSidebarToggler/CourseLearningSidebarToggler';
 import CourseLearningSidebarWrapper from '@/app/[locale]/_Components/Courses/CourseLearning/CourseLearningSidebarWrapper/CourseLearningSidebarWrapper';
 import VideoLearningWrapper from '@/app/[locale]/_Components/Courses/CourseLearning/VideoLearningWrapper/VideoLearningWrapper';
-import CourseLearningVideoScreen from '@/app/[locale]/_Components/Courses/CourseLearningVideoScreen/CourseLearningVideoScreen';
+import CourseLearningVideoScreen from '@/app/[locale]/_Components/Courses/CourseLearning/CourseLearningVideoScreen/CourseLearningVideoScreen';
 import FormLoader from '@/app/[locale]/_Components/Loaders/FormLoader/FormLoader';
 import CourseDeatils3Buttons from '@/app/[locale]/_Components/Courses/CourseDetails/CourseDeatils3Buttons/CourseDeatils3Buttons';
 const CourseLearningVideoScreenComponent = dynamic(
-    () => import('@/app/[locale]/_Components/Courses/CourseLearningVideoScreen/CourseLearningVideoScreen'),
+    () => import('@/app/[locale]/_Components/Courses/CourseLearning/CourseLearningVideoScreen/CourseLearningVideoScreen'),
 {
     loading:()=><FormLoader />
 }
@@ -24,17 +24,13 @@ export default async function Layout({ children, params }: layoutProps) {
     const { id } = await params;
     const locale = await getLocale();
     const courseDeatils = await getCreatedCourseByCourseIdAction(id);
-
+    console.log("courseDeatils",courseDeatils)
     // Define your RTL locales here
     const isRtl = locale === 'ar';
 
     return (
         <section dir={isRtl ? 'rtl' : 'ltr'}>
             <CourseLearningSidebarToggler courseId={id} />
-            {/* Using flex ensures that items are ordered correctly based on the 'dir' attribute.
-                Tailwind's 'flex-row' will automatically flip to 'row-reverse' in RTL mode
-                when using logical properties or standard flex containers.
-            */}
             <div className='flex flex-row'>
                 <VideoLearningWrapper>
                     <CourseLearningVideoScreenComponent />

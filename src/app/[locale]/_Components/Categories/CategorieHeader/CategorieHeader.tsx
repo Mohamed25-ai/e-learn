@@ -2,13 +2,12 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { CategorieHeaderProps } from "./categorie.header.types"
-import { faArrowRight, faCode, faUserGroup } from "@fortawesome/free-solid-svg-icons"
+import { faArrowLeft, faArrowRight, faCode, faUserGroup } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "@/i18n/navigation"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
 export default function CategorieHeader({ categorie, inCategoriesPage,inCoursesPage,inHomePage }: CategorieHeaderProps) {
     const t = useTranslations();
-    
     const seeAllBtn=inCoursesPage||inHomePage
     
     return (
@@ -54,8 +53,9 @@ export default function CategorieHeader({ categorie, inCategoriesPage,inCoursesP
                     {t('CategorieHeader.seeAll')}
                     <FontAwesomeIcon
                         icon={faArrowRight}
-                        className="transition-transform duration-200 group-hover:translate-x-1"
+                        className="rtl:rotate-180 transition-transform duration-200 group-hover:translate-x-1"
                     />
+                    
                 </Link>
             )}
 

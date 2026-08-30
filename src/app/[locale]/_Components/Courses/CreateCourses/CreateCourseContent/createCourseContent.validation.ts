@@ -14,86 +14,11 @@ export const titleRules: RegisterOptions<SubmitContentFormType, "Title"> = {
         message: "Lesson title must be less than 100 characters",
     },
 };
-// export const getTitleRules = (
-//     isEdit: boolean
-// ): RegisterOptions<SubmitContentFormType, "Title"> => ({
-//     required: isEdit ? false : "Lesson title is required",
-//     minLength: {
-//         value: 3,
-//         message: "Lesson title must be at least 3 characters",
-//     },
-//     maxLength: {
-//         value: 100,
-//         message: "Lesson title must be less than 100 characters",
-//     },
-// });
+
 export const sectionRules: RegisterOptions<SubmitContentFormType, "SectionId"> = {
     required: "Section is required",
 };
-// export const getSectionRules = (
-//     isEdit: boolean
-// ): RegisterOptions<SubmitContentFormType, "SectionId"> => ({
-//     required: isEdit ? false : "Section is required",
-// });
-// export const contentTypeRules: RegisterOptions<
-//     SubmitContentFormType,
-//     "File"
-// > = {
-//     required: "Content type is required",
-// };
-// export function validateFileType(
-//     file: File,
-//     selectedFileType: SubmitContentFormType["ContentType"]
-// ) {
-//     if (selectedFileType === "Quiz") return true;
-
-//     if (selectedFileType === "Video") {
-//         return file.type.startsWith("video/");
-//     }
-
-//     if (selectedFileType === "Image") {
-//         return file.type.startsWith("image/");
-//     }
-
-//     if (selectedFileType === "Document") {
-//         return [
-//             "application/pdf",
-//             "application/msword",
-//             "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-//             "text/plain",
-//         ].includes(file.type);
-//     }
-
-//     return false;
-// }
-// export const getFileRules = (): RegisterOptions<
-//     SubmitContentFormType,
-//     "File"
-// > => ({
-//     required: "File is required",
-
-//     validate: (file) => {
-//         if (!file) return "File is required";
-
-//         const type = file.type;
-
-//         if (type.startsWith("image/")) {
-//             return true;
-//         }
-
-//         if (type.startsWith("video/")) {
-//             return true;
-//         }
-
-//         if (type === "application/pdf") {
-//             return true;
-//         }
-
-//         return "Only PDF, image, or video files are allowed.";
-//     },
-// });
-
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const MAX_FILE_SIZE = 100 * 1024 * 1024;
 export const getFileRules = (
     isEdit: boolean
 ): RegisterOptions<SubmitContentFormType, "File"> => ({
@@ -107,7 +32,7 @@ export const getFileRules = (
             return "File is required";
         }
         if(file.size>MAX_FILE_SIZE){
-            return "Maximum size is 5 MB";
+            return "Maximum size is 100 MB";
         }
         const type = file.type;
 

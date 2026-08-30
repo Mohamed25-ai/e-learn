@@ -54,21 +54,12 @@ export const nextAuthConfig: NextAuthOptions = {
     },
     callbacks: {
         async jwt({ token, user, account, trigger }) {
-            // 1) First login
-            // console.log("user1", user)
-            // // if(token.){
-            // console.log("================================");
-            // console.log("JWT CALLBACK");
-            // console.log("USER:", user);
-            // console.log("TOKEN:", token);
-            // console.log("ACCOUNT:", account);
-            // // }
             if (user) {
                 if (account?.provider === "google") {
                     try {
                         const data = await signInWithGoogle(account.id_token || "");
-                        console.log("Back google data", data)
-                        console.log("Back googgle user", user)
+                        // console.log("Back google data", data)
+                        // console.log("Back googgle user", user)
                         token.id = data.data.id;
                         token.email = data.data.email;
                         token.message = data.data.message;

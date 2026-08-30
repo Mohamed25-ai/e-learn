@@ -3,17 +3,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'lucide-react'
 import React from 'react'
 import CategoriesOverview from '../../Categories/CategoriesOverview/CategoriesOverview'
+import { getTranslations } from 'next-intl/server'
 
-export default function CoursePageHeader() {
+export default async function CoursePageHeader() {
+    const t = await getTranslations();
     return (
         <div>
             <header className="p-5 flex justify-between items-center">
                 <div>
                     <h2 className="text-4xl font-bold leading-tight text-foreground">
-                        Explore Courses
+                        {t('CoursesPage.header.title')}
                     </h2>
                     <p className="mt-1.5 text-sm text-(--text-secondary)">
-                        Discover courses across every field of expertise
+                        {t('CoursesPage.header.subtitle')}
                     </p>
                 </div>
             </header>

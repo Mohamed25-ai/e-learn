@@ -1,6 +1,6 @@
 "use client"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { AccordionDemoInPlayProps, AccordionDemoProps } from './Accordion.demo.types'
+import { AccordionDemoInPlayProps, AccordionDemoProps } from '../../CoursesAccordionWrapper/AccordionDemo/Accordion.demo.types'
 import {
     Accordion,
     AccordionContent,
@@ -27,7 +27,7 @@ const fileIcons: Record<string, IconDefinition> = {
     pdf: faFilePdf,
 };
 
-export default function AccordionDemoInPlay({ contentData, section, inPlay }: AccordionDemoProps) {
+export default function AccordionDemoInPlay({ contentData, section }: AccordionDemoProps) {
     const courseLearningStore = useAppSelector((state) => state.courseLearning);
     const dispatch = useAppDispatch();
     const locale = useLocale();
@@ -37,7 +37,7 @@ export default function AccordionDemoInPlay({ contentData, section, inPlay }: Ac
     const isOpen = accordionValue === section.id;
     function setSelectedContentInPlay(sectionId: string, lessonId: string, lessionUrl: string) {
         if (searchParams.get("lessonId") == lessonId) {
-            return
+            return ;
         }
         dispatch(steInitialState());
         const params = new URLSearchParams(searchParams.toString())
@@ -51,7 +51,7 @@ export default function AccordionDemoInPlay({ contentData, section, inPlay }: Ac
 
     useEffect(() => {
         setAccordionValue(courseLearningStore.lessonSection);
-    }, [courseLearningStore.lessonSection])
+    }, [])
 
     return (
         <div dir={locale === "ar" && "rtl" || ""}>
@@ -60,16 +60,16 @@ export default function AccordionDemoInPlay({ contentData, section, inPlay }: Ac
                 collapsible
                 defaultValue={courseLearningStore.lessonSection}
                 onValueChange={setAccordionValue}
-                className={`w-full ${inPlay ? "w-full" : "md:w-3/4"}`}
+                className={`w-full  `}
             >
                 <AccordionItem
                     key={section.id}
                     value={section.id}
-                    className={`border-2 border-border overflow-hidden ${!inPlay && "my-2 rounded-xl"}`}
+                    className={`border-2 border-border overflow-hidden  rounded-0`}
                 >
                     {/* Trigger */}
                     <AccordionTrigger
-                        className={`${inPlay && "customaccordiontrigger"} px-4 py-3 outline-none focus-visible:ring-0 transition-colors duration-200
+                        className={`customaccordiontrigger  px-4 py-3 outline-none focus-visible:ring-0 transition-colors duration-200
                                         hover:no-underline
                                         ${isOpen
                                 ? 'bg-(--primary-light)'
@@ -101,15 +101,15 @@ export default function AccordionDemoInPlay({ contentData, section, inPlay }: Ac
                     </AccordionTrigger>
                     {/* Content items */}
                     <div className="divide-y divide-border">
-                        {inPlay && contentData.map((content) => {
-                            const urlExtension = content.url.split(".").pop()?.toLowerCase();
+                        {contentData.map((content) => {
+                            const urlExtension = content.url?.split(".").pop()?.toLowerCase();
                             const icon = fileIcons[urlExtension ?? ""] ?? faFile;
                             const openContent = content.id == courseLearningStore.selectedLesson[section.id];
                             return (
                                 <div key={content.id || ""}>
                                     <AccordionContent
                                         className={`p-0 ${openContent ? " bg-(--primary-color) " : "bg-white "} `}
-                                        onClick={() => setSelectedContentInPlay(section.id, content.id, content.url)}
+                                        onClick={() => setSelectedContentInPlay(section.id, content.id, content.url!)}
                                     >
                                         <div className="flex items-center justify-between gap-3 px-4 py-3
                                                     hover:bg-(--primary-light) group/item

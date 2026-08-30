@@ -1,4 +1,4 @@
-import CourseDetailsCurriculum from "@/app/[locale]/_Components/Courses/CourseDetailsCurriculum/CourseDetailsCurriculum";
+import CourseDetailsCurriculum from "@/app/[locale]/_Components/Courses/CourseDetailsContent/CourseDetailsCurriculum/CourseDetailsCurriculum";
 
 type layoutProps = {
     params: Promise<{ id: string }>

@@ -124,6 +124,7 @@
       "completed": "Completed",
       "certificates": "Certificates"
     },
+    "noEnrolledCourses": "Not Exist Enrolled Courses",
     "card": {
       "defaultTitle": "Course Name",
       "webDevelopment": "Web Development",
@@ -247,6 +248,71 @@
         "cookiePolicy": "Cookie Policy",
         "gdpr": "GDPR"
       }
+    }
+  },
+  "BecomeInstructor": {
+    "shareKnowledge": {
+      "badge": "Join 340+ instructors already earning on EduPro",
+      "headingPart1": "Share Your Knowledge,",
+      "headingHighlight": "Build Your Income",
+      "description": "Turn your expertise into a thriving online course. EduPro gives you the tools, audience, and support to teach what you love — on your schedule.",
+      "startApplication": "Start Your Application",
+      "howItWorks": "How it Works",
+      "applySuccess": "Welcome, You are now an instructor",
+      "stats": {
+        "activeStudents": "Active Students",
+        "revenueShare": "Revenue Share",
+        "countriesReached": "Countries Reached"
+      }
+    },
+    "whyTeach": {
+      "title": "Why Teach on EduPro?",
+      "subtitle": "Everything you need to succeed as an online instructor",
+      "features": {
+        "earnRevenue": {
+          "title": "Earn Revenue",
+          "description": "Keep up to 70% of every sale. Set your own price and earn every time a student enrolls."
+        },
+        "globalReach": {
+          "title": "Global Reach",
+          "description": "Teach students in 190+ countries. Your knowledge has no geographic limits."
+        },
+        "buildCommunity": {
+          "title": "Build Community",
+          "description": "Grow a loyal audience, get reviews, and shape careers around the world."
+        },
+        "growWithUs": {
+          "title": "Grow With Us",
+          "description": "Access marketing tools, analytics, and promotions to scale your courses."
+        }
+      }
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "subtitle": "Four simple steps to launch your teaching career",
+      "steps": {
+        "apply": {
+          "title": "Apply",
+          "description": "Fill out a short application telling us about your expertise and course idea."
+        },
+        "create": {
+          "title": "Create",
+          "description": "Use our course builder to create your curriculum, record lessons, and add materials."
+        },
+        "review": {
+          "title": "Review",
+          "description": "Our team reviews your course for quality and helps you polish before publishing."
+        },
+        "earn": {
+          "title": "Earn",
+          "description": "Go live and start earning. Track performance in your instructor dashboard."
+        }
+      }
+    },
+    "footer": {
+      "title": "Ready to Start Teaching?",
+      "description": "Join thousands of instructors who have already changed lives — and built theirs — on EduPro.",
+      "applyButton": "Apply to Become an Instructor"
     }
   },
   "Auth": {
@@ -436,5 +502,16 @@
         }
       }
     }
+  },
+  "CoursesPage": {
+    "header": {
+      "title": "Explore Courses",
+      "subtitle": "Discover courses across every field of expertise"
+    }
+  },
+  "CategorizedCourse": {
+    "allCourses": "All Courses",
+    "placeholderDescription": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, laboriosam!",
+    "coursesCount": "{count} Courses"
   }
 }
