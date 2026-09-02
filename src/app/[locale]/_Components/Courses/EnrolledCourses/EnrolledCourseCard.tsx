@@ -10,8 +10,9 @@ import { Link } from '@/i18n/navigation'
 import { getTranslations } from 'next-intl/server'
 import { useTranslations } from 'next-intl'
 
-export default  function EnrolledCourseCard({ enrolledCourseData }: EnrolledCourseCardProps) {
-    const t =  useTranslations();
+export default function EnrolledCourseCard({ enrolledCourseData }: EnrolledCourseCardProps) {
+    const t = useTranslations();
+    console.log("enrolledCourseData", enrolledCourseData)
     return (
         <Link href={`/course-learn/${enrolledCourseData.courseId}/play`}>
             <Card className=" lg:flex lg:flex-row mb-3 p-0 overflow-hidden gap-0

@@ -13,7 +13,8 @@ export default async function AllEnrolledCoursesCards({ allEnrolledCoursesWithDa
             <section className="px-5 mt-5">
                 {allEnrolledCoursesWithData?.data.map((course) => {
                     return (
-                        <EnrolledCourseCard key={course.courseId} enrolledCourseData={course} />
+                        <EnrolledCourseCard key={course.courseId}
+                            enrolledCourseData={course} />
                     )
                 })}
             </section>

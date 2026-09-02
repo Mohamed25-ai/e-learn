@@ -1,8 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 import { CourseDetailsProps } from '../../CourseDetails/coursedetails.types';
+import { getTranslations } from 'next-intl/server'
 
-export default function CourseDetailsOverview({ data,inPlayPage }: CourseDetailsProps) {
+export default async function CourseDetailsOverview({ data,inPlayPage }: CourseDetailsProps) {
+  const t = await getTranslations();
   const middle = Math.ceil(data?.objectives.length / 2);
   const firstColumn = data?.objectives.slice(0, middle);
   const secondColumn = data?.objectives.slice(middle);
@@ -10,7 +12,7 @@ export default function CourseDetailsOverview({ data,inPlayPage }: CourseDetails
     <section className='mt-5 px-5'>
       {!inPlayPage&&<article>
         <h2 className='text-foreground text-3xl font-bold'>
-          What You'll Learn
+          {t('CourseDetails.whatYoullLearn')}
         </h2>
         <div className="list">
           <ul className="my-3 md:flex gap-5">
@@ -40,7 +42,7 @@ export default function CourseDetailsOverview({ data,inPlayPage }: CourseDetails
       </article>}
       <article className="descripition w-full">
         <h2 className='text-foreground text-3xl font-bold'>
-          Course Description
+          {t('CourseDetails.courseDescription')}
         </h2>
         <p className='mt-2 whitespace-normal wrap-break-word text-(--text-secondary)'>{data?.description}</p>
       </article>

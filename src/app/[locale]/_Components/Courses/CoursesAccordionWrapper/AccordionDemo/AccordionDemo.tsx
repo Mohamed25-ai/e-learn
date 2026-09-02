@@ -46,7 +46,6 @@ export function AccordionDemo({ contentData, section, isUserEnrolledToCourse }: 
     const sectionId = section.id ?? "";
     const locale = useLocale();
     const isOpen = accordionValue === sectionId;
-
     function handleSelectedLessonInViewOnly(sectionId: string, lessionId: string, lessionUrl: string) {
         dispatch(setSelectedLesson({ sectionId: sectionId, lessionId: lessionId }));
         dispatch(setSelectedLessonUrl({ lessionId: lessionId, lessionUrl: lessionUrl }))
@@ -95,14 +94,14 @@ export function AccordionDemo({ contentData, section, isUserEnrolledToCourse }: 
                                     {section.title || ""}
                                 </h3>
                                 <span className="text-xs text-(--text-muted)">
-                                    {contentData.length} lectures
+                                    {contentData?.length??0} lectures
                                 </span>
                             </div>
                         </div>
                     </AccordionTrigger>
                     {/* Content items */}
                     <div className="divide-y divide-border">
-                        {contentData.map((content) => {
+                        {contentData?.map((content) => {
                             const urlExtension = content.url?.split(".").pop()?.toLowerCase();
                             const icon = fileIcons[urlExtension ?? ""] ?? faFile;
                             return (

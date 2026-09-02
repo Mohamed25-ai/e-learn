@@ -1,13 +1,12 @@
 "use client";
 
-import { useAppSelector } from "@/hooks/hooks";
+import {  useAppSelector } from "@/hooks/hooks";
 export default function VideoLearningWrapper({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const {isOpen} =useAppSelector((state) => state.courseLearningSidebarSlice);
-
+    const { isOpen } = useAppSelector((state) => state.courseLearningSidebarSlice);
 
     return (
         <div

@@ -14,6 +14,7 @@ import { setLessonId, setSelectedLesson, setSelectedLessonSection, setSelectedLe
 import { useLocale } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from '@/i18n/navigation';
+import UpdateCourseProgress from '../UpdateCourseProgress/UpdateCourseProgress';
 
 const fileIcons: Record<string, IconDefinition> = {
     mp4: faCirclePlay,
@@ -37,7 +38,7 @@ export default function AccordionDemoInPlay({ contentData, section }: AccordionD
     const isOpen = accordionValue === section.id;
     function setSelectedContentInPlay(sectionId: string, lessonId: string, lessionUrl: string) {
         if (searchParams.get("lessonId") == lessonId) {
-            return ;
+            return;
         }
         dispatch(steInitialState());
         const params = new URLSearchParams(searchParams.toString())
@@ -114,17 +115,22 @@ export default function AccordionDemoInPlay({ contentData, section }: AccordionD
                                         <div className="flex items-center justify-between gap-3 px-4 py-3
                                                     hover:bg-(--primary-light) group/item
                                                     transition-colors duration-200 cursor-pointer">
-
                                             <div className="flex items-center gap-3">
                                                 <FontAwesomeIcon
                                                     icon={icon}
                                                     className="text-(--text-secondary) group-hover/item:text-(--primary-color)
-                                                           transition-colors duration-200 shrink-0"
+                                                                transition-colors duration-200 shrink-0"
                                                 />
                                                 <span className="text-sm text-(--text-secondary) group-hover/item:text-(--primary-color)
                                                             transition-colors duration-200">
                                                     {content.title || ""}
                                                 </span>
+                                            </div>
+                                            <div>
+                                                <UpdateCourseProgress
+                                                    key={content.id}
+                                                    isContentCompleted={content.isCompleted ?? false}
+                                                    contentId={content.id} />
                                             </div>
                                         </div>
                                     </AccordionContent>

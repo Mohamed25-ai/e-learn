@@ -3,6 +3,7 @@ import { privateServerApi } from "../private-server-api";
 
 export async function addCourseToCart(courseId: string) {
     const api = await privateServerApi();
+   
     try {
         const res = await api.post(`/Basket/Add/${courseId}`);
         return {
@@ -21,6 +22,7 @@ export async function addCourseToCart(courseId: string) {
 }
 export async function removeCourseFromCart(courseId: string) {
     const api = await privateServerApi();
+   
     try {
         const res = await api.delete(`/Basket/Delete/${courseId}`);
         return {
@@ -39,6 +41,7 @@ export async function removeCourseFromCart(courseId: string) {
 }
 export async function removeAllItemsCart() {
     const api = await privateServerApi();
+   
     try {
         const res = await api.delete(`/Basket/Clear`);
         return {
@@ -57,6 +60,7 @@ export async function removeAllItemsCart() {
 }
 export async function payUserCart(basketId: string) {
     const api = await privateServerApi();
+   
     try {
         const res = await api.post(`/Payment/CreatePaymentIntent/${basketId}`);
         return {
@@ -75,6 +79,7 @@ export async function payUserCart(basketId: string) {
 }
 export async function getUserCart() {
     const api = await privateServerApi();
+   
     try {
         const res = await api.get(`/Basket/List`);
         return {

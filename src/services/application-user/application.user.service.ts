@@ -3,6 +3,7 @@ import { privateServerApi } from "../private-server-api";
 
 export async function getProfileUserData(userId: string) {
     const api = await privateServerApi();
+   
     try {
         const res = await api.get(`/User/GetById/${userId}`)
         return {
@@ -23,10 +24,11 @@ export async function getProfileUserData(userId: string) {
 }
 export async function editProfileUserData(userData: FormData) {
     const api = await privateServerApi();
+   
     try {
-        const res = await api.put(`/User/Edit`,userData,{
-            headers:{
-                "Content-Type":"multipart/form-data"
+        const res = await api.put(`/User/Edit`, userData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
             }
         })
         return {
@@ -47,10 +49,11 @@ export async function editProfileUserData(userData: FormData) {
 }
 export async function changeProfileUserPassword(userData: FormData) {
     const api = await privateServerApi();
+   
     try {
-        const res = await api.put(`/User/ChangePassword`,userData,{
-            headers:{
-                "Content-Type":"multipart/form-data"
+        const res = await api.put(`/User/ChangePassword`, userData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
             }
         })
         return {
@@ -71,6 +74,7 @@ export async function changeProfileUserPassword(userData: FormData) {
 }
 export async function applyToBecomeInstructor() {
     const api = await privateServerApi();
+   
     try {
         const res = await api.post(`/User/Add-Instructor-Role`)
         return {
@@ -90,15 +94,16 @@ export async function applyToBecomeInstructor() {
     }
 }
 
-export async function getEnrolledCourses(pageNumber?:number,pageSize?:number,orderBy?:string,search?:string) {
+export async function getEnrolledCourses(pageNumber?: number, pageSize?: number, orderBy?: string, search?: string) {
     const api = await privateServerApi();
+   
     try {
-        const res = await api.get(`/Enrollment/Paginated`,{
-            params:{
-                PageNumber:pageNumber,
-                PageSize:pageSize,
-                OrderBy:orderBy,
-                Search:search
+        const res = await api.get(`/Enrollment/Paginated`, {
+            params: {
+                PageNumber: pageNumber,
+                PageSize: pageSize,
+                OrderBy: orderBy,
+                Search: search
             }
         });
         return {

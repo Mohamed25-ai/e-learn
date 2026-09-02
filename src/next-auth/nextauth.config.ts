@@ -11,7 +11,7 @@ function transformDate(dateStr: string) {
 
 export const nextAuthConfig: NextAuthOptions = {
     session: {
-        strategy: "jwt"
+        strategy: "jwt",
     },
 
     providers: [

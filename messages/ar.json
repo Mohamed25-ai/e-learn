@@ -202,8 +202,11 @@
     "certificateOfCompletion": "شهادة إتمام",
     "downloadableResources": "موارد قابلة للتحميل",
     "enrollNow": "سجّل الآن",
+    "startLearning":"أبدأ التعلم",
     "addToWishlist": "أضف إلى المفضلة",
     "discountOff": "خصم {percent}%",
+    "whatYoullLearn": "ماذا ستتعلم",
+    "courseDescription": "وصف الكورس",
     "tabs": {
       "overview": "نظرة عامة",
       "curriculum": "المنهج",
@@ -513,5 +516,20 @@
     "allCourses": "كل الكورسات",
     "placeholderDescription": "نص تجريبي (Lorem ipsum) — سيتم استبداله لاحقًا.",
     "coursesCount": "{count} كورسات"
+  },
+  "CourseCurriculum": {
+    "title": "منهج الكورس",
+    "sectionsCount": "{count} أقسام",
+    "noSections": "لا توجد أقسام مضافة"
+  },
+  "FilterEnrolledCourses": {
+    "placeholder": "تصفية",
+    "options": {
+      "all": "الكل",
+      "title": "العنوان",
+      "price": "السعر",
+      "averageRating": "متوسط التقييم",
+      "noOfStudents": "عدد الطلاب"
+    }
   }
 }

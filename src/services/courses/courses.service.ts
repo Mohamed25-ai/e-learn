@@ -31,6 +31,7 @@ export async function getCoursesByCategorieId(categoryid: string, pageSize?: num
 }
 export async function createCourseBasicInformation(data: FormData) {
     const api = await privateServerApi();
+   
     try {
         const res = await api.post(`/Course/Create`, data, {
             headers: {
@@ -54,6 +55,7 @@ export async function createCourseBasicInformation(data: FormData) {
 }
 export async function addCourseSection(data: CreateSectionType) {
     const api = await privateServerApi();
+   
     try {
         const res = await api.post(`/Section/Create`, data,
             {
@@ -75,6 +77,7 @@ export async function addCourseSection(data: CreateSectionType) {
 };
 export async function editCourseSection(data: CreateSectionType) {
     const api = await privateServerApi();
+   
     try {
         const res = await api.put(`/Section/Edit`, data,
             {
@@ -96,6 +99,7 @@ export async function editCourseSection(data: CreateSectionType) {
 };
 export async function getCreatedSectionByCourseId(courseId: string) {
     const api = await privateServerApi();
+   
     try {
         const res = await api.get(`/Section/Paginated?CourseId=${courseId}`);
         return {
@@ -111,6 +115,7 @@ export async function getCreatedSectionByCourseId(courseId: string) {
 }
 export async function createCourseContent(data: FormData) {
     const api = await privateServerApi();
+   
     try {
         const res = await api.post(`/Content/Create`, data, {
             headers: { "Content-Type": "multipart/form-data" },
@@ -129,6 +134,7 @@ export async function createCourseContent(data: FormData) {
 }
 export async function editCourseContent(data: FormData) {
     const api = await privateServerApi();
+   
     try {
         const res = await api.put(`/Content/Edit`, data, {
             headers: { "Content-Type": "multipart/form-data" },
@@ -163,6 +169,7 @@ export async function getCourseSection(courseId: string) {
 }
 export async function getCourseContentById(contentId: string) {
     const api = await privateServerApi();
+   
     try {
         const res = await api.get(`/Content/GetById/${contentId}`);
         return {
@@ -193,6 +200,7 @@ export async function getCreatedCourseByCourseId(courseId: string) {
 }
 export async function getPaidCourseContentBySectionId(sectionId: string) {
     const api = await privateServerApi();
+   
     try {
         const res = await api.get(`/Content/List?SectionId=${sectionId}`);
         return {
@@ -207,7 +215,7 @@ export async function getPaidCourseContentBySectionId(sectionId: string) {
     }
 }
 export async function getCourseContentBySectionIdForViewOnly(sectionId: string) {
-    const api = await privateServerApi();
+    const api = publicApi;
     try {
         const res = await api.get(`/Content/PreviewList?SectionId=${sectionId}`);
         return {
@@ -223,8 +231,51 @@ export async function getCourseContentBySectionIdForViewOnly(sectionId: string) 
 }
 export async function checkIsUserEnrolledInCourseByCourseId(courseId: string) {
     const api = await privateServerApi();
+   
+    if (api) {
+        try {
+            const res = await api.get(`/Enrollment/Check-User-Enrollment/${courseId}`);
+            return {
+                status: res.status,
+                data: res.data
+            }
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                return error?.response?.data;
+            }
+            throw error;
+        }
+    }
+}
+
+export async function getCourseProgressByCourseId(courseId: string) {
+    const api = await privateServerApi();
+   
     try {
-        const res = await api.get(`/Enrollment/Check-User-Enrollment/${courseId}`);
+        const res = await api.get(`/Progress/Get-Course-Progress/${courseId}`);
+        return {
+            status: res.status,
+            data: res.data
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error?.response?.data;
+        }
+        throw error;
+    }
+}
+export async function changeProgressStatusByContentId(contentId: string, status: boolean) {
+    const api = await privateServerApi();
+   
+    try {
+        const res = await api.post(`/Progress/Change-Content-Status`, {
+            contentId: contentId,
+            isCompleted: status
+        }, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
         return {
             status: res.status,
             data: res.data

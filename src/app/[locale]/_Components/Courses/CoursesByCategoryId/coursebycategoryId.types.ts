@@ -55,12 +55,13 @@ export interface SectionType {
     message: string[]
 }
 export interface ContentData {
-    duration: number
-    id: string
-    url?: string
-    title: string
-    sectionId: string
-    publicId: string
+    duration: number,
+    id: string,
+    url?: string,
+    title: string,
+    sectionId: string,
+    publicId: string,
+    isCompleted?:boolean
 }
 export interface ContentType {
     data: ContentData[]
@@ -72,4 +73,13 @@ export interface ContentType {
     totalCount: number,
     totalPages: number,
     message: string[]
+}
+
+export interface CourseProgressData {
+    percent: number,
+    totalCompleted: number,
+    totalContent: number
+}
+export interface CourseProgressDataType {
+    data:CourseProgressData
 }

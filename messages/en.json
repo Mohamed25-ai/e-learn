@@ -202,8 +202,11 @@
     "certificateOfCompletion": "Certificate of completion",
     "downloadableResources": "Downloadable resources",
     "enrollNow": "Enroll Now",
+    "startLearning":"Start Learning",
     "addToWishlist": "Add to Wishlist",
     "discountOff": "{percent}% off",
+    "whatYoullLearn": "What You'll Learn",
+    "courseDescription": "Course Description",
     "tabs": {
       "overview": "Overview",
       "curriculum": "Curriculum",
@@ -513,5 +516,20 @@
     "allCourses": "All Courses",
     "placeholderDescription": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, laboriosam!",
     "coursesCount": "{count} Courses"
+  },
+  "CourseCurriculum": {
+    "title": "Course Curriculum",
+    "sectionsCount": "{count} sections",
+    "noSections": "No Created Sections"
+  },
+  "FilterEnrolledCourses": {
+    "placeholder": "Filter",
+    "options": {
+      "all": "All",
+      "title": "Title",
+      "price": "Price",
+      "averageRating": "Average Rating",
+      "noOfStudents": "Number Of Students"
+    }
   }
 }

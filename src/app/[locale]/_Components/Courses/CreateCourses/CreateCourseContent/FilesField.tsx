@@ -50,7 +50,6 @@ export default function FilesField({ onChange, setfieldValue, isFieldHasError, i
             {file && disableCancel && <span
                 onClick={handleClosePreview}
                 className="z-20 absolute  text-foreground bg-(--error) right-0 top-0 flex items-center justify-center w-7 h-7 rounded-full cursor-pointer transition-colors"
-            // style={{ backgroundColor: "", color: "var(--primary-foreground)" }}
             >
                 {<FontAwesomeIcon icon={faXmark} size="sm" />}
             </span>
@@ -59,7 +58,7 @@ export default function FilesField({ onChange, setfieldValue, isFieldHasError, i
                 <div className="space-y-4 w-full flex justify-center items-center">
                     {fileType === "video" && (
                         <video
-                            controls
+                            controls 
                             src={filePreview!}
                             className="w-full rounded-xl border"
                         />
@@ -79,7 +78,9 @@ export default function FilesField({ onChange, setfieldValue, isFieldHasError, i
                         </iframe>
                     )}
                 </div>
-                {!filePreview && <Label className={` ${!isContentAddedBefore && "hover:border-(--primary-color)"} ${isContentAddedBefore ? " cursor-no-drop " : " cursor-pointer "}  w-full flex flex-col justify-center rounded-2xl border gap-y-1  border-dashed items-center py-6 px-4 transition-colors`}>
+                {!filePreview && <Label className={` ${!isContentAddedBefore && "hover:border-(--primary-color)"} ${isContentAddedBefore ? " cursor-no-drop " : " cursor-pointer "}
+                        w-full flex flex-col justify-center rounded-2xl border gap-y-1 
+                        border-dashed items-center py-6 px-4 transition-colors`}>
                     {uploadConfig && (
                         uploadConfig.map((conf) => (
                             <div key={conf.type} className={`${isContentAddedBefore && "opacity-40"} flex flex-col items-center gap-2 text-center`}>

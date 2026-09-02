@@ -5,6 +5,7 @@ export async function privateServerApi() {
     const token = await getUserToken();
     if(!token){
         throw new Error("Token Not Exist");
+        // return undefined
     }
     return axios.create({
         baseURL: process.env.BASE_URL,
@@ -12,5 +13,4 @@ export async function privateServerApi() {
             "Authorization": `Bearer ${token}`,
         }
     });
-
 }

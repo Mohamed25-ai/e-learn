@@ -2,6 +2,7 @@ import { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const nextConfig: NextConfig = {
+    reactStrictMode:false,
     experimental: {
         serverActions: {
             bodySizeLimit: '10mb', // or whatever size you need

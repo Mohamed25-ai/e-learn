@@ -22,7 +22,6 @@ export default function EnrolledCoursesFilters({ certificates, completed,
     ]
 
     const [currentShow, setCurrentShow] = useState("enrolledCourses");
-
     function handleChangeShow(clickedShow: string) {
         setCurrentShow(clickedShow);
     }

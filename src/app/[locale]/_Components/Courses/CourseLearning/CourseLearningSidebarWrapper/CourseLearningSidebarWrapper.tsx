@@ -1,6 +1,8 @@
 "use client";
 
-import { useAppSelector } from "@/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import { steInitialState } from "@/store/redux/courselearninig/courselearning.slice";
+import { useEffect } from "react";
 
 export default function CourseLearningSidebarWrapper({
     children,
@@ -8,6 +10,14 @@ export default function CourseLearningSidebarWrapper({
     children: React.ReactNode;
 }) {
     const {isOpen} = useAppSelector((state) => state.courseLearningSidebarSlice);
+    //     const dispatch = useAppDispatch()
+
+    // useEffect(() => {
+
+    //     return () => {
+    //         dispatch(steInitialState());
+    //     }
+    // }, [dispatch])
     return (
         <div
             className={`transition-all duration-300 ease-in-out overflow-hidden 

@@ -12,8 +12,9 @@ import {
     faPlay
 } from '@fortawesome/free-solid-svg-icons'
 import { getTranslations } from 'next-intl/server'
+import { Link } from '@/i18n/navigation'
 
-export default async function CourseDetailsCard({ data }: CourseDetailsProps) {
+export default async function CourseDetailsCard({ data,isUserEnrolledCourse }: CourseDetailsProps) {
     const t = await getTranslations();
     const price = data?.price ?? 0;
     const discountPercentage = data?.discountPercentage ?? 0;
@@ -42,7 +43,7 @@ export default async function CourseDetailsCard({ data }: CourseDetailsProps) {
                             className="object-cover"
                         />
                         {/* Play overlay */}
-                        <div className="absolute inset-0 flex items-center justify-center
+                        {!isUserEnrolledCourse&&<div className="absolute inset-0 flex items-center justify-center
                                     bg-black/30 opacity-0 group-hover:opacity-100
                                     transition-opacity duration-300">
                             <div className="w-14 h-14 rounded-full border-2 border-white
@@ -50,7 +51,18 @@ export default async function CourseDetailsCard({ data }: CourseDetailsProps) {
                                         bg-white/20 backdrop-blur-sm">
                                 <FontAwesomeIcon icon={faPlay} className="text-white text-xl ml-1" />
                             </div>
-                        </div>
+                        </div>}
+                        {isUserEnrolledCourse&&<Link
+                        href={`/course-learn/${data.id}/play`} 
+                        className="absolute inset-0 flex items-center justify-center
+                                    bg-black/30 opacity-0 group-hover:opacity-100
+                                    transition-opacity duration-300">
+                            <div className="w-14 h-14 rounded-full border-2 border-white
+                                        flex items-center justify-center
+                                        bg-white/20 backdrop-blur-sm">
+                                <FontAwesomeIcon icon={faPlay} className="text-white text-xl ml-1" />
+                            </div>
+                        </Link>}
                     </div>
                 </CardHeader>
 
@@ -79,9 +91,12 @@ export default async function CourseDetailsCard({ data }: CourseDetailsProps) {
 
                     {/* Buttons */}
                     <div className="flex flex-col gap-3">
-                        <button className="BUTTON_STYLE w-full justify-center text-base">
+                        {isUserEnrolledCourse&&<button className="BUTTON_STYLE w-full justify-center text-base">
+                            {t('CourseDetails.startLearning')}
+                        </button>}
+                        {!isUserEnrolledCourse&&<button className="BUTTON_STYLE w-full justify-center text-base">
                             {t('CourseDetails.enrollNow')}
-                        </button>
+                        </button>}
                         <button className="MAIN_BUTTON w-full justify-center py-3 text-base">
                             <FontAwesomeIcon icon={faHeart} />
                             {t('CourseDetails.addToWishlist')}

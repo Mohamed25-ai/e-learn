@@ -11,11 +11,12 @@ export default async function CourseLearningSidebar({ courseId }: CourseLearning
 
     return (
         <aside className='fixed rtl:left-0 ltr:right-0 
-                top-26 w-1/2 lg:w-1/4 bg-(--primary-light) rtl:border-r-2 ltr:border-l-2 border-(--primary-color)  h-screen '>
-            {sections?.data?.data.map((section: SectionData) => (<AccordionDemoInPlayWrapper 
-                data={section} 
+                top-26 w-3/4 lg:w-1/4 bg-(--primary-light) rtl:border-r-2 
+                ltr:border-l-2 border-(--primary-color)  h-screen '>
+            {sections?.data?.data.map((section: SectionData) => (<AccordionDemoInPlayWrapper
+                data={section} key={section.id}
+                
             />))}
-
         </aside>
     )
 }
